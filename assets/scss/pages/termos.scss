@@ -1,0 +1,237 @@
+.termos {
+    .banners {
+        margin-top: 0;
+        position: relative;
+        overflow: hidden;
+        
+        @media #{$mq-md-max} {
+            margin-top: 4.375rem;
+        }
+        
+        .swiper {
+            width: 100%;
+            height: 25.5rem;
+        }
+        
+        .swiper-slide {
+            position: relative;
+            overflow: hidden;
+            
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            
+            .slide-content {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                text-align: center;
+                color: $white;
+            }
+            
+            .slide-text {
+                max-width: 37.5rem;
+                color: $white;
+                margin-top: 8rem;
+                padding-left: 2rem;
+                
+                @media #{$mq-md-max} {
+                    max-width: 28.125rem;
+                    margin-top: 5.5rem;
+                    padding-left: 1rem;
+                }
+                
+                h2 {
+                    font-family: $font-title;
+                    font-size: 8rem;
+                    font-weight: $bold;
+                    line-height: 0.8;
+                    margin: 0 0 0.5rem;
+                    text-transform: uppercase;
+                    letter-spacing: -0.1875rem;
+                    
+                    span {
+                        display: inline-block;
+                        font-weight: $light;
+                        text-transform: lowercase;
+                    }
+                    
+                    @media #{$mq-lg-max} {
+                        font-size: 5.625rem;
+                    }
+                    
+                    @media #{$mq-md-max} {
+                        font-size: 4.375rem;
+                        margin-bottom: 0.3125rem;
+                    }
+                    
+                    @media #{$mq-sm-max} {
+                        font-size: 3.125rem;
+                    }
+                }
+                
+                .conectada {
+                    font-family: $font-title;
+                    font-size: 5rem;
+                    font-weight: $light;
+                    line-height: 1;
+                    margin: 0 0 1.25rem;
+                    text-transform: lowercase;
+                    letter-spacing: -0.125rem;
+                    
+                    @media #{$mq-lg-max} {
+                        font-size: 3.75rem;
+                    }
+                    
+                    @media #{$mq-md-max} {
+                        font-size: 3.125rem;
+                        margin-bottom: 0.9375rem;
+                    }
+                    
+                    @media #{$mq-sm-max} {
+                        font-size: 2.25rem;
+                    }
+                }
+                
+                h3 {
+                    font-size: 1.5rem;
+                    font-weight: $regular;
+                    margin: 0 0 1.563rem;
+                    line-height: 1.4;
+                    
+                    strong {
+                        font-weight: $bold;
+                    }
+                    
+                    @media #{$mq-lg-max} {
+                        font-size: 1.25rem;
+                    }
+                    
+                    @media #{$mq-md-max} {
+                        font-size: 1.125rem;
+                        margin-bottom: 1.25rem;
+                    }
+                    
+                    @media #{$mq-sm-max} {
+                        font-size: 1rem;
+                    }
+                }
+    
+                .badge-wrapper {
+                    margin-bottom: 1.563rem;
+                    
+                    .badge {
+                        display: inline-block;
+                        background-color: $white;
+                        color: $black;
+                        font-size: 1rem;
+                        font-weight: $semi-bold;
+                        padding: 0.5rem 1.125rem;
+                        border-radius: 0.25rem;
+                        text-transform: uppercase;
+                        
+                        @media #{$mq-md-max} {
+                            font-size: 0.875rem;
+                            padding: 0.375rem 0.938rem;
+                        }
+                        
+                        @media #{$mq-sm-max} {
+                            font-size: 0.75rem;
+                            padding: 0.313rem 0.75rem;
+                        }
+                    }
+                }
+                
+                .btn-secondary {
+                    display: inline-block;
+                    padding: 0.75rem 1.563rem;
+                    background-color: transparent;
+                    border: 0.125rem solid $white;
+                    color: $white;
+                    text-decoration: none;
+                    border-radius: 0.25rem;
+                    font-weight: $medium;
+                    font-size: 1rem;
+                    transition: all 0.3s ease;
+                    
+                    &:hover {
+                        background-color: $white;
+                        color: $black;
+                    }
+                    
+                    @media #{$mq-md-max} {
+                        padding: 0.625rem 1.25rem;
+                        font-size: 0.875rem;
+                    }
+                }
+            }
+        }
+        
+        .swiper-pagination-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0.375rem;
+            background-color: rgba($white, 0.3);
+            z-index: 10;
+            
+            &-fill {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 0;
+                background-color: $green; // Green progress bar using variable
+                transition-property: width;
+            }
+        }
+        
+        .slider-nav {
+            position: absolute;
+            bottom: 1.25rem;
+            right: 1.25rem;
+            display: flex;
+            z-index: 10;
+            
+            .swiper-button-next,
+            .swiper-button-prev {
+                position: static;
+                width: 2.75rem;
+                height: 2.75rem;
+                background-color: rgba($white, 0.2);
+                border-radius: 50%;
+                margin: 0 0.313rem;
+                color: $white;
+                
+                &:after {
+                    font-size: 1.125rem;
+                }
+                
+                &:hover {
+                    background-color: rgba($white, 0.4);
+                }
+                
+                @media #{$mq-sm-max} {
+                    width: 2.25rem;
+                    height: 2.25rem;
+                    
+                    &:after {
+                        font-size: 1rem;
+                    }
+                }
+            }
+        }
+    }
+
+    .termos-content{
+        padding: 4rem 0;
+    }
+    
+}

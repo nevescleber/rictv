@@ -1,0 +1,148 @@
+.blog-section {
+    padding: 3rem 0;
+    background-color: #EBEBEB;
+
+    a{
+        display: block;
+        text-decoration: none;
+    }
+
+    .card {
+        border-radius: 1.5rem;
+        overflow: hidden;
+        border: none;
+        background: transparent;
+    }
+
+    .card-img-overlay {
+        background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.8) 100%);
+        border-radius: 1.5rem;
+        padding: 2rem;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+
+    .badge {
+        font-size: 1.5rem;
+        font-weight: 600;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        border-radius: 10px;
+        width: 130px;
+        text-align: center;
+
+        &.curso{
+            color: $white;
+            background-color: rgba(255, 69, 0, 0.85);
+        }
+
+        &.artigo{
+            color: $white;
+            background-color: rgba(30, 113, 184, 0.85);
+        }
+
+        &.estudo{
+            color: $white; 
+            background-color: rgba(35, 165, 79, 0.85);
+        }
+    }
+
+    .text-white{
+        color: $white;
+    }
+
+    .btn-link {
+        color: #ff4500;
+        padding: 0;
+        font-size: 2.5rem;
+        text-decoration: none;
+        background-color: transparent;
+        border: none;
+        text-align: left;
+    }
+
+    .card img {
+        border-radius: 1.5rem;
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }
+
+    .card-bg-img {
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        border-radius: 1.5rem;
+        overflow: hidden;
+        width: 100%;
+        position: relative;
+        min-height: 240px; // altura mínima para os cards pequenos
+    }
+
+    // Card grande
+    .col-lg-7 .card-bg-img {
+        height: 700px;
+        min-height: 700px;
+    }
+
+    // Card pequeno
+    .col-lg-5 .card-bg-img {
+        height: 340px;
+        min-height: 340px;
+    }
+
+    .col-lg-5 .row.g-4 {
+        gap: 1.5rem;
+    }
+
+    .justify-content-between{
+        margin-bottom: 2rem;
+    }
+
+    h2{
+        font-size: 2.5rem;
+        margin: 0;
+        margin-top: 2rem;
+    }
+
+    .justify-content-lg-end{
+        display: flex;
+        justify-content: right;
+        align-items: center;
+
+        a{
+            display: block;;
+            font-size: 1.15rem;
+            padding: .9rem 2rem;
+            transition: background .2s, box-shadow .2s;
+            box-shadow: none;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 10px;
+            border: 1px solid #0066cc;
+            margin-left: 1rem;
+            color: #0066cc;
+            font-weight: bold;
+
+            &.active{
+                background-color: #0066cc;
+                color: $white;
+            }
+
+            &:hover{
+                background-color: #0066cc;
+                color: $white; 
+            }
+        }
+    }
+
+    h3{
+        font-size: 1.5rem;
+    }
+
+    p{
+        font-size: 1.1rem;
+    }
+}

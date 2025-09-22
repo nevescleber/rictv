@@ -1,0 +1,44 @@
+// variables
+@import 'variables/colors';
+@import 'variables/fonts';
+@import 'variables/breakpoints';
+@import 'variables/texts';
+@import 'variables/reusable';
+
+// mixins
+//@import 'mixins/gradients';
+
+// breakpoint indicator (comentar em prod)
+@import 'atoms/breakpoints';
+@import 'atoms/containers';
+@import 'atoms/buttons';
+
+// components
+@import 'components/menu';
+@import 'components/slider';
+@import 'components/footer';
+@import 'components/blog';
+@import 'components/partners';
+
+
+//pages
+@import 'pages/index';
+@import 'pages/projetos-especiais';
+@import 'pages/projetos-inner';
+@import 'pages/programas';
+@import 'pages/programas-inner';
+@import 'pages/cases';
+@import 'pages/cases-inner';
+@import 'pages/blog';
+@import 'pages/blog-inner';
+@import 'pages/midia-kit';
+@import 'pages/midia-kit-inner';
+@import 'pages/contato';
+@import 'pages/unidades';
+@import 'pages/termos';
+@import 'pages/error';
+@import 'pages/veiculos';
+@import 'pages/veiculos-inner';
+@import 'pages/codigo';
+@import 'pages/instituto';
+@import 'pages/historia';

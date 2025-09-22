@@ -1,0 +1,345 @@
+/*
+Theme name: RIC TV
+Theme URI: localhost:30
+Author: Fourleaf Solutions Websites
+Author URI: 
+Description: RIC TV
+Version: 1.0
+ric, tv, cursos
+*/
+
+:root {
+    --primary-color: #0056a6;
+    --secondary-color: #ffffff;
+    --accent-color: #1e88e5;
+    --text-color: #333333;
+    --background-color: #f5f5f5;
+    --button-color: #1e88e5;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: "Arial", sans-serif;
+    color: var(--text-color);
+    background-color: var(--background-color);
+  }
+  
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  /* Header Styles */
+  .header {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    padding: 15px 0;
+    position: relative;
+    z-index: 100;
+  }
+  
+  .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .logo-img {
+    height: 50px;
+    width: auto;
+  }
+  
+  /* Desktop Menu */
+  .desktop-menu {
+    display: flex;
+  }
+  
+  .menu-list {
+    display: flex;
+    list-style: none;
+  }
+  
+  .menu-item {
+    margin: 0 15px;
+  }
+  
+  .menu-link {
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+    transition: opacity 0.3s;
+  }
+  
+  .menu-link:hover {
+    opacity: 0.8;
+  }
+  
+  /* Header Actions */
+  .header-actions {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-button {
+    background: none;
+    border: none;
+    color: var(--secondary-color);
+    cursor: pointer;
+    margin-right: 15px;
+  }
+  
+  .action-button {
+    background-color: var(--button-color);
+    color: var(--secondary-color);
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+  }
+  
+  .action-button:hover {
+    background-color: #1565c0;
+  }
+  
+  /* Mobile Menu Toggle */
+  .mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 15px;
+    width: 30px;
+    height: 24px;
+    position: relative;
+  }
+  
+  .mobile-menu-toggle span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: var(--secondary-color);
+    position: absolute;
+    left: 0;
+    transition: all 0.3s;
+  }
+  
+  .mobile-menu-toggle span:nth-child(1) {
+    top: 0;
+  }
+  
+  .mobile-menu-toggle span:nth-child(2) {
+    top: 10px;
+  }
+  
+  .mobile-menu-toggle span:nth-child(3) {
+    top: 20px;
+  }
+  
+  /* Mobile Menu */
+  .mobile-menu {
+    display: none;
+    background-color: var(--primary-color);
+    padding: 20px 0;
+    width: 100%;
+  }
+  
+  .mobile-menu-link,
+  .mobile-menu-action {
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    display: block;
+    text-align: center;
+    padding: 15px;
+  }
+  
+  .mobile-menu-action {
+    background-color: var(--button-color);
+    border-radius: 4px;
+    margin: 10px 20px;
+  }
+  
+  /* Hero Section */
+  .hero {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    padding: 80px 0;
+    position: relative;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    background-image: linear-gradient(to right, rgba(0, 86, 166, 0.9), rgba(0, 86, 166, 0.7)), url("hero-bg.jpg");
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .hero-content {
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  .hero-text {
+    max-width: 600px;
+  }
+  
+  .hero-title {
+    font-size: 72px;
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+  
+  .ric {
+    font-weight: 700;
+  }
+  
+  .tv {
+    font-weight: 300;
+  }
+  
+  .conectada {
+    display: block;
+    font-size: 48px;
+    background-color: white;
+    color: var(--primary-color);
+    padding: 5px 15px;
+    margin-top: 10px;
+    width: fit-content;
+  }
+  
+  .hero-subtitle {
+    font-size: 24px;
+    margin-bottom: 30px;
+    line-height: 1.4;
+  }
+  
+  .hero-button {
+    display: inline-block;
+    background-color: transparent;
+    color: var(--secondary-color);
+    text-decoration: none;
+    padding: 12px 30px;
+    border: 2px solid var(--secondary-color);
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.3s;
+  }
+  
+  .hero-button:hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+  }
+  
+  .hero-navigation {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .nav-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    color: var(--secondary-color);
+  }
+  
+  .nav-button:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  /* Swiper Styles */
+  .swiper-pagination-bullet {
+    background-color: var(--secondary-color);
+    opacity: 0.5;
+  }
+  
+  .swiper-pagination-bullet-active {
+    opacity: 1;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 992px) {
+    .desktop-menu {
+      display: none;
+    }
+  
+    .mobile-menu-toggle {
+      display: block;
+    }
+  
+    .mobile-menu.active {
+      display: block;
+    }
+  
+    .hero-title {
+      font-size: 60px;
+    }
+  
+    .conectada {
+      font-size: 40px;
+    }
+  
+    .hero-subtitle {
+      font-size: 20px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .hero-title {
+      font-size: 48px;
+    }
+  
+    .conectada {
+      font-size: 32px;
+    }
+  
+    .hero-subtitle {
+      font-size: 18px;
+    }
+  
+    .hero {
+      padding: 60px 0;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .hero-title {
+      font-size: 36px;
+    }
+  
+    .conectada {
+      font-size: 24px;
+    }
+  
+    .hero-subtitle {
+      font-size: 16px;
+    }
+  
+    .hero-button {
+      padding: 10px 20px;
+    }
+  
+    .nav-button {
+      width: 40px;
+      height: 40px;
+    }
+  }
+  
