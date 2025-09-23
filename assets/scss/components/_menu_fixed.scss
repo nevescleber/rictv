@@ -445,8 +445,8 @@
                         top: 8rem; // altura do header
                         left: 0;
                         right: 0;
-                        //width: 100vw;
-                        //background-color: $white;
+                        width: 100vw;
+                        background-color: $white;
                         padding: 0;
                         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
                         opacity: 0;
@@ -479,18 +479,16 @@
                         .mega-menu-content {
                             display: flex;
                             min-height: 420px;
-                            width: auto;
+                            max-width: 1200px;
                             margin: 0 auto;
-                            max-width: calc(280px + 1200px); // sidebar + 4 colunas de 300px
                             
                             .mega-menu-sidebar {
-                                width: 280px;
-                                min-width: 280px;
-                                background:  linear-gradient(90deg, #0066CC 0%, #00CC66 100%);
+                                width: 300px;
+                                background: linear-gradient(135deg, #4CAF50, #2E7D32);
                                 color: white;
-                                padding: 40px 30px;
+                                padding: 60px 40px;
                                 display: flex;
-                                align-items: flex-start;
+                                align-items: center;
                                 position: relative;
                                 
                                 .mega-sidebar-content {
@@ -499,10 +497,12 @@
                                         font-weight: 900;
                                         margin: 0 0 25px 0;
                                         line-height: 0.9;
+                                        text-transform: uppercase;
                                         letter-spacing: -0.5px;
                                     }
                                     
                                     p {
+                                        font-size: 15px;
                                         line-height: 1.6;
                                         margin: 0;
                                         opacity: 0.9;
@@ -514,21 +514,20 @@
                             .mega-menu-columns {
                                 flex: 1;
                                 display: grid;
-                                grid-template-columns: 300px 300px 300px 300px;
+                                grid-template-columns: repeat(4, 1fr);
                                 gap: 0;
                                 background: white;
-                                overflow-x: auto;
                                 
                                 .mega-column {
-                                    padding: 30px 20px;
+                                    padding: 40px 25px;
                                     border-right: 1px solid #e8e8e8;
-                                    min-width: 300px;
                                     
                                     &:last-child {
                                         border-right: none;
                                     }
                                     
                                     h3 {
+                                        font-size: 14px;
                                         font-weight: bold;
                                         color: #2c5aa0;
                                         margin: 0 0 25px 0;
@@ -547,113 +546,6 @@
                                         
                                         &:hover {
                                             color: #4CAF50;
-                                        }
-                                    }
-                                    
-                                    // Submenu styles no desktop
-                                    .mega-submenu {
-                                        margin-bottom: 20px;
-                                        
-                                        .mega-submenu-header {
-                                            display: flex;
-                                            align-items: center;
-                                            justify-content: space-between;
-                                            padding: 8px 0;
-                                            color: #333;
-                                            cursor: pointer;
-                                            font-size: 15px;
-                                            font-weight: 600;
-                                            border-bottom: 1px solid #e8e8e8;
-                                            
-                                            span {
-                                                flex: 1;
-                                            }
-                                            
-                                            .mega-toggle {
-                                                font-size: 12px;
-                                                color: #666;
-                                                transition: transform 0.3s ease;
-                                            }
-                                            
-                                            &:hover {
-                                                color: #4CAF50;
-                                            }
-                                            
-                                            &.active .mega-toggle {
-                                                transform: rotate(180deg);
-                                            }
-                                        }
-                                        
-                                        .mega-submenu-content {
-                                            display: none;
-                                            padding: 10px 0 0 15px;
-                                            
-                                            &.active {
-                                                display: block;
-                                            }
-                                            
-                                            a {
-                                                display: block;
-                                                padding: 5px 0;
-                                                color: #666;
-                                                text-decoration: none;
-                                                font-size: 14px;
-                                                font-weight: 400;
-                                                transition: color 0.3s ease;
-                                                
-                                                &:hover {
-                                                    color: #4CAF50;
-                                                    padding-left: 5px;
-                                                }
-                                            }
-                                            
-                                            // Nested submenu styles
-                                            .mega-nested-submenu {
-                                                margin: 10px 0;
-                                                
-                                                .mega-nested-header {
-                                                    display: flex;
-                                                    align-items: center;
-                                                    justify-content: space-between;
-                                                    padding: 6px 0;
-                                                    color: #555;
-                                                    cursor: pointer;
-                                                    font-size: 14px;
-                                                    font-weight: 500;
-                                                    
-                                                    .mega-nested-toggle {
-                                                        font-size: 10px;
-                                                        color: #666;
-                                                        transition: transform 0.3s ease;
-                                                    }
-                                                    
-                                                    &:hover {
-                                                        color: #4CAF50;
-                                                    }
-                                                    
-                                                    &.active .mega-nested-toggle {
-                                                        transform: rotate(180deg);
-                                                    }
-                                                }
-                                                
-                                                .mega-nested-content {
-                                                    display: none;
-                                                    padding-left: 15px;
-                                                    
-                                                    &.active {
-                                                        display: block;
-                                                    }
-                                                    
-                                                    a {
-                                                        font-size: 13px;
-                                                        color: #777;
-                                                        
-                                                        &:hover {
-                                                            color: #4CAF50;
-                                                        }
-                                                    }
-                                                }
-                                            }
                                         }
                                     }
                                 }

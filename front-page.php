@@ -29,7 +29,7 @@
 
             <div class="row">
                 <div class="col-12">
-                    <p class="text-medium-big">
+                    <p class="text-medium-big desc">
                         <b>O Grupo RIC Paraná</b> é a escolha certa para marcas que 
                         buscam <b>publicidade multiplataforma com alto impacto.</b>
                     </p>

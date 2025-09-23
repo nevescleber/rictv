@@ -6,31 +6,55 @@
                     <div class="swiper-wrapper">
                         <!-- 10 imagens do slider -->
                         <div class="swiper-slide">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/rictv_record.png" alt="RIC TV">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logos_novas/logo-bandabcombr.png" alt="RIC TV">
                         </div>
                         <div class="swiper-slide">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/jpfm.png" alt="JP FM">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logos_novas/logo-banda-b-fm.png" alt="JP FM">
                         </div>
                         <div class="swiper-slide">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/jpnews.png" alt="JP News">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logos_novas/logo-inst-ric.png" alt="JP News">
                         </div>
                         <div class="swiper-slide">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/rico.png" alt="RIC.com.br">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logos_novas/logo-jooy.png" alt="RIC.com.br">
                         </div>
                         <div class="swiper-slide">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/topview.png" alt="TopView">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logos_novas/logo-jp.png" alt="TopView">
                         </div>
                         <div class="swiper-slide">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/instituto_ric.png" alt="Instituto RIC">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logos_novas/logo-jp-news.png" alt="Instituto RIC">
                         </div>
                         <div class="swiper-slide">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/rictv.png" alt="RIC TV Record">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logos_novas/logo-quinal-ventures.png" alt="RIC TV Record">
                         </div>
                         <div class="swiper-slide">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/record.png" alt="Record">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logos_novas/logo-r7.png" alt="Record">
                         </div>
                         <div class="swiper-slide">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/jpfm.png" alt="JP FM">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logos_novas/logo-record.png" alt="JP FM">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logos_novas/logo-ric.png" alt="JP FM">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logos_novas/logo-ric-business.png" alt="JP FM">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logos_novas/logo-riccombr.png" alt="JP FM">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logos_novas/logo-ric-creators.png" alt="JP FM">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logos_novas/logo-ric-ooh.png" alt="JP FM">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logos_novas/logo-ric-rural.png" alt="JP FM">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logos_novas/logo-ric-tv-conectada.png" alt="JP FM">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logos_novas/logo-topview.png" alt="JP FM">
                         </div>
                     </div>
                     <!-- Navigation arrows - only visible on mobile -->

@@ -48,4 +48,12 @@
     .partners-swiper .swiper-button-prev:after {
         font-size: 24px;
     }
+
+    .partners-swiper .swiper-button-next{
+        right:0;
+    }
+
+    .partners-swiper .swiper-button-prev{
+        left:0;
+    }
 }

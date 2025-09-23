@@ -33,6 +33,10 @@ body.home{
         .text-medium-big{
             color: $blue-light;
             padding-top: 2rem;
+
+            &.desc{
+                text-align: center;
+            }
         }
     
         .about-content{
