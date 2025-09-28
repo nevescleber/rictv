@@ -19,7 +19,7 @@
             <div class="col-lg-2 col-6 mb-4">
                 <h5 class="text-medium text-white mb-3">Sobre Nós</h5>
                 <ul class="list-unstyled">
-                    <li><a href="#" class="text-white text-decoration-none mb-2 d-block hover-underline">Nossa História</a></li>
+                    <li><a href="/ric-wp/nossa-historia" class="text-white text-decoration-none mb-2 d-block hover-underline">Nossa História</a></li>
                     <li><a href="/ric/codigo-de-cultura.php" class="text-white text-decoration-none mb-2 d-block hover-underline">Código de Cultura</a></li>
                     <li><a href="/ric/unidades-de-negocio.php" class="text-white text-decoration-none mb-2 d-block hover-underline">Principios Editoriais</a></li>
                     <!--<li><a href="/ric/unidades-de-negocio.php" class="text-white text-decoration-none mb-2 d-block hover-underline">Unidades De Negócio</a></li>-->

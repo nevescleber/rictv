@@ -22,7 +22,7 @@
                             <div class="submenu">
                                 <div class="submenu-content">
                                     <div class="submenu-column">
-                                        <a href="#">Nossa História</a>
+                                        <a href="/ric-wp/nossa-historia">Nossa História</a>
                                         <a href="#">Cultura</a>
                                         <a href="#">Princípios Editoriais</a>
                                     </div>

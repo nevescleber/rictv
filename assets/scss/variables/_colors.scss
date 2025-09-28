@@ -16,7 +16,7 @@ $blue-light:            #1e71b8;
 $blue:                  #0521b0;
 $dark-blue:             rgba(10, 65, 119, 0.8);
 $green:                 #11A84B;
-
+$green-light:            #48C672;
 // create a color map
 $colors: (
     'transparent':      $transparent,
@@ -36,5 +36,6 @@ $colors: (
     'blue-light':       $blue-light,
     'blue':             $blue,
     'dark-blue':        $dark-blue,
-    'green':            $green
+    'green':            $green,
+    'green-light':      $green-light
 );

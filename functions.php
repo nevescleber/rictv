@@ -1,7 +1,7 @@
 <?php
 
-//define( 'DEBORA_URL', 'https://deboragarofalo.com/');
-define( 'DEBORA_URL', 'http://localhost/ric-wp/');
+//define( 'RIC_URL', 'https://deboragarofalo.com/');
+define( 'RIC_URL', 'http://localhost/ric-wp/');
 
 // Custom classes for css and js /
 add_filter( 'body_class','ric_body_class' );
@@ -14,17 +14,17 @@ function ric_body_class( $classes ) {
     if ( is_page_template( 'page-projetos-especiais.php' ) ) {
         $classes[] = 'projetos-especiais';
     } 
+
+    if ( is_page_template( 'page-nossa-historia.php' ) ) {
+        $classes[] = 'historia';
+    } 
 	
     if ( is_singular( 'projetos-especiais' ) ) {
         $classes[] = 'projetos-inner';
     }
 
-    if ( is_page_template( 'page-trainers.php' ) ) {
-        $classes[] = 'trainers internal';
-    } 
-
-    if ( is_page_template( 'page-contact.php' ) ) {
-        $classes[] = 'contact internal';
+    if ( is_page_template( 'page-instituto-ric.php' ) ) {
+        $classes[] = 'instituto-ric';
     } 
 
     if ( is_home() ) {

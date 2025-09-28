@@ -757,7 +757,38 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Swiper da linha do tempo da história com navegação customizada
+    // Swiper da timeline da história
+    if (document.querySelector('.historia-timeline-swiper')) {
+        const historiaTimelineSwiper = new Swiper('.historia-timeline-swiper', {
+            slidesPerView: 3,
+            spaceBetween: 30,
+            loop: false,
+            centeredSlides: false,
+            navigation: {
+                nextEl: '.timeline-next',
+                prevEl: '.timeline-prev',
+            },
+            breakpoints: {
+                320: {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                    centeredSlides: true
+                },
+                768: {
+                    slidesPerView: 1,
+                    spaceBetween: 25,
+                    centeredSlides: true
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                    centeredSlides: false
+                }
+            }
+        });
+    }
+
+    // Swiper da linha do tempo da história com navegação customizada (código antigo mantido para compatibilidade)
     if (document.querySelector('.historia-swiper')) {
         const historiaSwiper = new Swiper('.historia-swiper', {
             slidesPerView: 1,
@@ -784,6 +815,68 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // FAQ Toggle Functionality
+    function initFAQ() {
+        const faqHeaders = document.querySelectorAll('.faq-header');
+        
+        faqHeaders.forEach(header => {
+            header.addEventListener('click', function() {
+                const faqItem = this.closest('.faq-item');
+                const faqContent = faqItem.querySelector('.faq-content');
+                const faqToggle = this.querySelector('.faq-toggle');
+                const isActive = faqItem.classList.contains('active');
+                
+                // Fecha todos os outros FAQs
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    if (item !== faqItem) {
+                        item.classList.remove('active');
+                        const otherContent = item.querySelector('.faq-content');
+                        const otherToggle = item.querySelector('.faq-toggle');
+                        if (otherToggle) {
+                            otherToggle.textContent = '+';
+                        }
+                        if (otherContent) {
+                            otherContent.style.maxHeight = '0px';
+                        }
+                    }
+                });
+                
+                // Alterna o FAQ atual
+                if (isActive) {
+                    // Fechar FAQ com animação suave
+                    faqItem.classList.remove('active');
+                    
+                    // Remove inline styles para permitir que o CSS controle a animação
+                    faqContent.style.maxHeight = '';
+                    
+                    // Aguarda a animação completar antes de mudar o ícone
+                    setTimeout(() => {
+                        faqToggle.textContent = '+';
+                    }, 200);
+                    
+                } else {
+                    // Abrir FAQ
+                    faqToggle.textContent = '−';
+                    faqItem.classList.add('active');
+                    
+                    // Calcula a altura do conteúdo para animação suave
+                    requestAnimationFrame(() => {
+                        const contentInner = faqContent.querySelector('.faq-content-inner');
+                        const contentHeight = contentInner.scrollHeight + 20; // adiciona espaço do padding
+                        faqContent.style.maxHeight = contentHeight + 'px';
+                        
+                        // Depois da animação, permite altura automática
+                        setTimeout(() => {
+                            if (faqItem.classList.contains('active')) {
+                                faqContent.style.maxHeight = 'none';
+                            }
+                        }, 400);
+                    });
+                }
+            });
+        });
+    }
+
     // Inicialização unificada do Fancybox
     $(document).ready(function() {
         if (typeof $.fancybox !== 'undefined') {
@@ -806,5 +899,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             });
         }
+        
+        // Inicializa FAQ
+        initFAQ();
     });
 });
