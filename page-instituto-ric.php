@@ -7,20 +7,16 @@ Template Name: Instituto RIC
 <?php get_header(); ?>
 
 <div class="banners">
-    <div class="swiper main-slider">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <?php if (has_post_thumbnail()) : ?>
-                    <?php the_post_thumbnail('full', array('alt' => get_the_title())); ?>
-                <?php else : ?>
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/img/instituto-ric-novo.png" alt="RIC TV">
-                <?php endif; ?>
-                <div class="slide-content">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12">
-                            </div>
-                        </div>
+    <div class="banner-content">
+        <?php if (has_post_thumbnail()) : ?>
+            <?php the_post_thumbnail('full', array('alt' => get_the_title())); ?>
+        <?php else : ?>
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/instituto-ric-novo.png" alt="RIC TV">
+        <?php endif; ?>
+        <div class="banner-overlay">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
                     </div>
                 </div>
             </div>
@@ -152,11 +148,13 @@ Template Name: Instituto RIC
 <section class="instituto-ric-participar-do-minuto">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-md-7 col-12">
-                <span class="participar-texto">Se a sua instituição deseja participar do projeto, entre em contato conosco pelo email</span>
+            <div class="col-md-6 col-left">
+                <p class="text-medium">
+                    Se a sua instituição deseja participar do projeto, entre em contato conosco pelo email
+                </p>
             </div>
-            <div class="col-md-5 col-12 text-md-end text-center mt-3 mt-md-0">
-                <a href="mailto:institutoric@gruporic.com.br" class="participar-email">institutoric@gruporic.com.br</a>
+            <div class="col-md-6 col-right text-center">
+                <a href="mailto:institutoric@gruporic.com.br" class="text-medium-big">institutoric@gruporic.com.br</a>
             </div>
         </div>
     </div>
@@ -164,55 +162,64 @@ Template Name: Instituto RIC
 
 <section class="instituto-ric-projetos">
     <div class="container">
-        <h2>Juntos nós podemos conquistar</h2>
-        <div class="objetivos-lista">
-            <!-- Box 1 -->
-            <div class="objetivo-box">
-            <div class="objetivo-numero">1</div>
-            <div class="objetivo-icone"><img src="<?php echo get_template_directory_uri(); ?>/assets/img/icone-01.png" alt="Erradicação da pobreza" /></div>
-            <div class="objetivo-titulo">Erradicação da <br>pobreza</div>
+        <div class="row">
+            <div class="col-12">
+                <h2 class="text-big">Juntos nós podemos conquistar</h2>
             </div>
-            <!-- Box 2 -->
-            <div class="objetivo-box">
-            <div class="objetivo-numero">2</div>
-            <div class="objetivo-icone"><img src="<?php echo get_template_directory_uri(); ?>/assets/img/icone-02.png" alt="Fome zero e agricultura sustentável" /></div>
-            <div class="objetivo-titulo">Fome zero e <br>agricultura <br>sustentável</div>
-            </div>
-            <!-- Box 3 -->
-            <div class="objetivo-box">
-            <div class="objetivo-numero">3</div>
-            <div class="objetivo-icone"><img src="<?php echo get_template_directory_uri(); ?>/assets/img/icone-03.png" alt="Saúde e bem-estar" /></div>
-            <div class="objetivo-titulo">Saúde e <br>bem-estar</div>
-            </div>
-            <!-- Box 4 -->
-            <div class="objetivo-box">
-            <div class="objetivo-numero">4</div>
-            <div class="objetivo-icone"><img src="<?php echo get_template_directory_uri(); ?>/assets/img/icone-04.png" alt="Educação de Qualidade" /></div>
-            <div class="objetivo-titulo">Educação <br>de Qualidade</div>
-            </div>
-            <!-- Box 5 -->
-            <div class="objetivo-box">
-            <div class="objetivo-numero">5</div>
-            <div class="objetivo-icone"><img src="<?php echo get_template_directory_uri(); ?>/assets/img/icone-05.png" alt="Igualdade de gênero" /></div>
-            <div class="objetivo-titulo">Igualdade <br>de gênero</div>
-            </div>
-            <!-- Box 6 -->
-            <div class="objetivo-box">
-            <div class="objetivo-numero">6</div>
-            <div class="objetivo-icone"><img src="<?php echo get_template_directory_uri(); ?>/assets/img/icone-06.png" alt="Água potável e saneamento" /></div>
-            <div class="objetivo-titulo">Água potável e <br>saneamento</div>
-            </div>
-            <!-- Box 7 -->
-            <div class="objetivo-box">
-            <div class="objetivo-numero">7</div>
-            <div class="objetivo-icone"><img src="<?php echo get_template_directory_uri(); ?>/assets/img/icone-07.png" alt="Energia limpa e acessível" /></div>
-            <div class="objetivo-titulo">Energia limpa e <br>acessível</div>
-            </div>
-            <!-- Box 8 -->
-            <div class="objetivo-box">
-            <div class="objetivo-numero">8</div>
-            <div class="objetivo-icone"><img src="<?php echo get_template_directory_uri(); ?>/assets/img/icone-08.png" alt="Trabalho decente e crescimento econômico" /></div>
-            <div class="objetivo-titulo">Trabalho decente <br>e crescimento <br>econômico</div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="objetivos-lista">
+                    <!-- Box 1 -->
+                    <div class="objetivo-box">
+                    <div class="objetivo-numero">1</div>
+                    <div class="objetivo-icone"><img src="<?php echo get_template_directory_uri(); ?>/assets/img/icone-01.png" alt="Erradicação da pobreza" /></div>
+                    <div class="objetivo-titulo text-medium">Erradicação da <br>pobreza</div>
+                    </div>
+                    <!-- Box 2 -->
+                    <div class="objetivo-box">
+                    <div class="objetivo-numero">2</div>
+                    <div class="objetivo-icone"><img src="<?php echo get_template_directory_uri(); ?>/assets/img/icone-02.png" alt="Fome zero e agricultura sustentável" /></div>
+                    <div class="objetivo-titulo text-medium">Fome zero e <br>agricultura <br>sustentável</div>
+                    </div>
+                    <!-- Box 3 -->
+                    <div class="objetivo-box">
+                    <div class="objetivo-numero">3</div>
+                    <div class="objetivo-icone"><img src="<?php echo get_template_directory_uri(); ?>/assets/img/icone-03.png" alt="Saúde e bem-estar" /></div>
+                    <div class="objetivo-titulo text-medium">Saúde e <br>bem-estar</div>
+                    </div>
+                    <!-- Box 4 -->
+                    <div class="objetivo-box">
+                    <div class="objetivo-numero">4</div>
+                    <div class="objetivo-icone"><img src="<?php echo get_template_directory_uri(); ?>/assets/img/icone-04.png" alt="Educação de Qualidade" /></div>
+                    <div class="objetivo-titulo text-medium">Educação <br>de Qualidade</div>
+                    </div>
+                    <!-- Box 5 -->
+                    <div class="objetivo-box">
+                    <div class="objetivo-numero">5</div>
+                    <div class="objetivo-icone"><img src="<?php echo get_template_directory_uri(); ?>/assets/img/icone-05.png" alt="Igualdade de gênero" /></div>
+                    <div class="objetivo-titulo text-medium">Igualdade <br>de gênero</div>
+                    </div>
+                    <!-- Box 6 -->
+                    <div class="objetivo-box">
+                    <div class="objetivo-numero">6</div>
+                    <div class="objetivo-icone"><img src="<?php echo get_template_directory_uri(); ?>/assets/img/icone-06.png" alt="Água potável e saneamento" /></div>
+                    <div class="objetivo-titulo text-medium">Água potável e <br>saneamento</div>
+                    </div>
+                    <!-- Box 7 -->
+                    <div class="objetivo-box">
+                    <div class="objetivo-numero">7</div>
+                    <div class="objetivo-icone"><img src="<?php echo get_template_directory_uri(); ?>/assets/img/icone-07.png" alt="Energia limpa e acessível" /></div>
+                    <div class="objetivo-titulo text-medium">Energia limpa e <br>acessível</div>
+                    </div>
+                    <!-- Box 8 -->
+                    <div class="objetivo-box">
+                    <div class="objetivo-numero">8</div>
+                    <div class="objetivo-icone"><img src="<?php echo get_template_directory_uri(); ?>/assets/img/icone-08.png" alt="Trabalho decente e crescimento econômico" /></div>
+                    <div class="objetivo-titulo text-medium">Trabalho decente <br>e crescimento <br>econômico</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -226,10 +233,10 @@ Template Name: Instituto RIC
             </div>
             <div class="col-md-6 col-12 d-flex flex-column justify-content-center align-items-start py-5 px-4 ricicla-text-col">
                 <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logo-recicla.png" alt="RICcicla" class="logo-recicla" />
-                <p class="ricicla-descricao">
+                <p class="text-medium">
                     O projeto RICicla reflete um compromisso substancial com a sustentabilidade e a preservação ambiental. Ao adotarmos práticas de reciclagem e gestão adequada de resíduos, estamos reduzindo nossa pegada de carbono e contribuindo para a conservação dos recursos naturais. Além disso, essa iniciativa tem um impacto positivo na comunidade, ao fomentar a consciência ambiental entre nossos colaboradores e parceiros.
                 </p>
-                <p class="ricicla-destaque fw-bold mt-3">
+                <p class="text-medium bold">
                     Junte-se a nós na busca por um futuro inovador e mais humano para inúmeras vidas!
                 </p>
             </div>

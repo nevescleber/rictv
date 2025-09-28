@@ -23,14 +23,14 @@
                                 <div class="submenu-content">
                                     <div class="submenu-column">
                                         <a href="/ric-wp/nossa-historia">Nossa História</a>
-                                        <a href="#">Cultura</a>
+                                        <a href="/ric-wp/codigo-de-cultura">Cultura</a>
                                         <a href="#">Princípios Editoriais</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="mobile-submenu">
-                                <a href="#">Nossa História</a>
-                                <a href="#">Cultura</a>
+                                <a href="/ric-wp/nossa-historia">Nossa História</a>
+                                <a href="/ric-wp/codigo-de-cultura">Cultura</a>
                                 <a href="#">Princípios Editoriais</a>
                             </div>
                         </li>
@@ -286,18 +286,12 @@
                             <div class="submenu">
                                 <div class="submenu-content">
                                     <div class="submenu-column">
-                                        <a href="#">Sobre o Instituto</a>
-                                        <a href="#">Projetos</a>
-                                        <a href="#">Voluntariado</a>
-                                        <a href="#">Como Ajudar</a>
+                                        <a href="/ric-wp/instituto-ric">Instituto RIC</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="mobile-submenu">
-                                <a href="#">Sobre o Instituto</a>
-                                <a href="#">Projetos</a>
-                                <a href="#">Voluntariado</a>
-                                <a href="#">Como Ajudar</a>
+                                <a href="/ric-wp/instituto-ric">Instituto RIC</a>
                             </div>
                         </li>
                     </ul>

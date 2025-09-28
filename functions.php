@@ -27,6 +27,10 @@ function ric_body_class( $classes ) {
         $classes[] = 'instituto-ric';
     } 
 
+    if ( is_page_template( 'page-codigo-cultura.php' ) ) {
+        $classes[] = 'codigo-cultura';
+    } 
+
     if ( is_home() ) {
         $classes[] = 'blog internal';
     }
