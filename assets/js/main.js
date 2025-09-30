@@ -903,4 +903,87 @@ document.addEventListener('DOMContentLoaded', function() {
         // Inicializa FAQ
         initFAQ();
     });
+
+    // Swiper da seção missão
+    if (document.querySelector('.missao-swiper')) {
+        const missaoSwiper = new Swiper('.missao-swiper', {
+            slidesPerView: 'auto',
+            spaceBetween: 20,
+            loop: false,
+            freeMode: true,
+            navigation: {
+                nextEl: '.swiper-button-next-custom',
+                prevEl: '.swiper-button-prev-custom',
+            },
+            breakpoints: {
+                320: {
+                    slidesPerView: 1,
+                    spaceBetween: 15,
+                    freeMode: false,
+                },
+                576: {
+                    slidesPerView: 2,
+                    spaceBetween: 15,
+                    freeMode: false,
+                },
+                768: {
+                    slidesPerView: 3,
+                    spaceBetween: 20,
+                    freeMode: false,
+                },
+                992: {
+                    slidesPerView: 4,
+                    spaceBetween: 20,
+                    freeMode: false,
+                },
+                1200: {
+                    slidesPerView: 'auto',
+                    spaceBetween: 20,
+                    freeMode: true,
+                }
+            },
+            on: {
+                init: function(swiper) {
+                    updateMissaoArrows(swiper);
+                },
+                slideChange: function(swiper) {
+                    updateMissaoArrows(swiper);
+                },
+                reachBeginning: function(swiper) {
+                    updateMissaoArrows(swiper);
+                },
+                reachEnd: function(swiper) {
+                    updateMissaoArrows(swiper);
+                },
+                fromEdge: function(swiper) {
+                    updateMissaoArrows(swiper);
+                },
+                progress: function(swiper) {
+                    updateMissaoArrows(swiper);
+                }
+            }
+        });
+
+        // Função para atualizar o estado dos arrows da missão
+        function updateMissaoArrows(swiper) {
+            const prevButton = document.querySelector('.swiper-button-prev-custom');
+            const nextButton = document.querySelector('.swiper-button-next-custom');
+            
+            if (!prevButton || !nextButton) return;
+            
+            // Remove classes existentes
+            prevButton.classList.remove('swiper-button-disabled');
+            nextButton.classList.remove('swiper-button-disabled');
+            
+            // Verifica se está no início
+            if (swiper.isBeginning) {
+                prevButton.classList.add('swiper-button-disabled');
+            }
+            
+            // Verifica se está no final
+            if (swiper.isEnd) {
+                nextButton.classList.add('swiper-button-disabled');
+            }
+        }
+    }
 });

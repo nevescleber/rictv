@@ -24,14 +24,14 @@
                                     <div class="submenu-column">
                                         <a href="/ric-wp/nossa-historia">Nossa História</a>
                                         <a href="/ric-wp/codigo-de-cultura">Cultura</a>
-                                        <a href="#">Princípios Editoriais</a>
+                                        <a href="/ric-wp/principios-editoriais">Princípios Editoriais</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="mobile-submenu">
                                 <a href="/ric-wp/nossa-historia">Nossa História</a>
                                 <a href="/ric-wp/codigo-de-cultura">Cultura</a>
-                                <a href="#">Princípios Editoriais</a>
+                                <a href="/ric-wp/principios-editoriais">Princípios Editoriais</a>
                             </div>
                         </li>
                         <li class="has-mega-menu">

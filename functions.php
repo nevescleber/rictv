@@ -31,6 +31,14 @@ function ric_body_class( $classes ) {
         $classes[] = 'codigo-cultura';
     } 
 
+    if ( is_page_template( 'page-principios-editoriais.php' ) ) {
+        $classes[] = 'principios-editoriais';
+    } 
+
+    if ( is_page_template( 'page-equipe-comercial.php' ) ) {
+        $classes[] = 'equipe-comercial';
+    } 
+
     if ( is_home() ) {
         $classes[] = 'blog internal';
     }

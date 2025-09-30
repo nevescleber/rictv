@@ -341,9 +341,9 @@ Template Name: Código de Cultura
                     </div>
                     <div class="col-md-6">
                         <p class="text-medium">
-                            Acreditamos que as pessoas são o coração do nosso negócio, e o sucesso nasce da valorização de cada indivíduo. Nossa força está na diversidade e na interdependência, que ampliam talentos e aceleram o aprendizado.
+                            Acreditamos que as pessoas são o coração do nosso negócio, e o sucesso nasce da valorização de cada indivíduo.Nossa força está na diversidade e na interdependência, que ampliam talentos e aceleram o aprendizado.
                             Evoluímos continuamente como profissionais e como organização.
-                            Temos um compromisso genuíno com a sustentabilidade, cuidando do ambiente, da sociedade e da economia. Somos uma empresa humana e consciente, que protege direitos e faz do Grupo Ric o melhor lugar do mundo para se trabalhar.
+                            Temos um compromisso genuíno com a sustentabilidade, cuidando do ambiente, da sociedade e da economia.Somos uma empresa humana e consciente, que protege direitos e faz do Grupo Ric o melhor lugar do mundo para se trabalhar.
                         </p>
                     </div>
                 </div>
@@ -383,11 +383,11 @@ Template Name: Código de Cultura
                     </h2>
 
                     <p class="text-medium">
-                        Damos voz à sociedade, impulsionamos o protagonismo  do estado e, acima de tudo, agimos com ética em tudo  o que fazemos! 
+                        Damos voz à sociedade, impulsionamos o protagonismo do estado e, acima de tudo, agimos com ética em tudo o que fazemos!
                         <br><br>
-                        E quem está com a gente nessa? 
+                        E quem está com a gente nessa?
                         <br><br>
-                        A nossa missão só faz sentido quando é compartilhada.  Por isso, buscamos pessoas que acreditem nos nossos  valores e que estejam dispostas a construir algo grande  com a gente.
+                        A nossa missão só faz sentido quando é compartilhada. Por isso, buscamos pessoas que acreditem nos nossos valores e que estejam dispostas a construir algo grande  com a gente.
                     </p>
                 </div>
             </div>
@@ -395,10 +395,115 @@ Template Name: Código de Cultura
     </section>
 
     <section class="missao">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
-                <div class="col-12">
-                    <p>missao</p>
+                <div class="col-lg-6 col-12 missao-left">
+                    <div class="missao-content">
+                        <h2 class="text-bigger">Nossos parceiros de missão</h2>
+                    </div>
+                    
+                    <div class="missao-swiper-container">
+                        <div class="swiper-navigation">
+                            <div class="swiper-button-prev-custom">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M15 18L9 12L15 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="swiper-button-next-custom">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 18L15 12L9 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <div class="swiper missao-swiper">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="slide-content">
+                                        <div class="slide-number">1</div>
+                                        <div class="slide-text">
+                                            <p class="text-medium">Encaram desafios de frente com resiliência, flexibilidade e determinação.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="slide-content">
+                                        <div class="slide-number">2</div>
+                                        <div class="slide-text">
+                                            <p class="text-medium">Acreditam em nosso sonho e se conectam à nossa visão de futuro.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="slide-content">
+                                        <div class="slide-number">3</div>
+                                        <div class="slide-text">
+                                            <p class="text-medium">Adaptam-se com agilidade navegando por mudanças e novos cenários.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="slide-content">
+                                        <div class="slide-number">4</div>
+                                        <div class="slide-text">
+                                            <p class="text-medium">Têm um olhar otimista confiando em um Brasil melhor e no crescimento sustentável da nossa empresa.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="slide-content">
+                                        <div class="slide-number">5</div>
+                                        <div class="slide-text">
+                                            <p class="text-medium">Sabem que crescimento e ética andam juntos pavimentando o caminho para a nossa liderança.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="slide-content">
+                                        <div class="slide-number">6</div>
+                                        <div class="slide-text">
+                                            <p class="text-medium">São versáteis para atuar em diferentes cenários e desafios.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="slide-content">
+                                        <div class="slide-number">7</div>
+                                        <div class="slide-text">
+                                            <p class="text-medium">Abraçam a transformação, evoluindo junto com o mercado e com a nossa organização.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="slide-content">
+                                        <div class="slide-number">8</div>
+                                        <div class="slide-text">
+                                            <p class="text-medium">Transformam ideias em ação, aceitando desafios com energia e comprometimento.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="slide-content">
+                                        <div class="slide-number">9</div>
+                                        <div class="slide-text">
+                                            <p class="text-medium">Entregam resultados com excelência, sempre com alegria e brilho nos olhos.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="slide-content">
+                                        <div class="slide-number">10</div>
+                                        <div class="slide-text">
+                                            <p class="text-medium">Amam bater metas e superar limites, celebrando conquistas e indo além do esperado.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 d-lg-block d-none missao-right">
+                    <!-- Área direita vazia -->
                 </div>
             </div>
         </div>

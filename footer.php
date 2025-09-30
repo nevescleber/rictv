@@ -20,8 +20,8 @@
                 <h5 class="text-medium text-white mb-3">Sobre Nós</h5>
                 <ul class="list-unstyled">
                     <li><a href="/ric-wp/nossa-historia" class="text-white text-decoration-none mb-2 d-block hover-underline">Nossa História</a></li>
-                    <li><a href="/ric/codigo-de-cultura" class="text-white text-decoration-none mb-2 d-block hover-underline">Código de Cultura</a></li>
-                    <li><a href="/ric/unidades-de-negocio" class="text-white text-decoration-none mb-2 d-block hover-underline">Principios Editoriais</a></li>
+                    <li><a href="/ric-wp/codigo-de-cultura" class="text-white text-decoration-none mb-2 d-block hover-underline">Código de Cultura</a></li>
+                    <li><a href="/ric-wp/principios-editoriais" class="text-white text-decoration-none mb-2 d-block hover-underline">Principios Editoriais</a></li>
                     <!--<li><a href="/ric/unidades-de-negocio.php" class="text-white text-decoration-none mb-2 d-block hover-underline">Unidades De Negócio</a></li>-->
                     <!--<li><a href="#" class="text-white text-decoration-none mb-2 d-block hover-underline">Apresentação</a></li>-->
                 </ul>
