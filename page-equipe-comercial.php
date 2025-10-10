@@ -112,6 +112,16 @@ Template Name: Equipe Comercial
                             <h3 class="card-name">José Paulo Travagin</h3>
                             <p class="card-position">Diretor Exec. Mercado Nacional</p>
                         </div>
+                        <div class="card-contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <span>41 99685-0225</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>jose.travagin@gruporic.com.br</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -207,5 +217,40 @@ Template Name: Equipe Comercial
             </div>
         </div>
     </section>
+
+    <section class="equipe-comercial-acionistas">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="text-big">
+                        Conselho de Acionistas
+                    </h2>
+                </div>
+                <div class="col-md-6">
+                    <p class="text-medium">
+                        John Doe
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <p class="text-medium">
+                        John Doe
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <p class="text-medium">
+                        John Doe
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <p class="text-medium">
+                        John Doe
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <?php get_template_part('components/anuncie-grupo-ric'); ?>
 
 <?php get_footer(); ?>

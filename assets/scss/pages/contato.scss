@@ -249,30 +249,32 @@
           display: flex;
           flex-direction: column;
           justify-content: center;
+
           h2 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: #222;
+            font-weight: 700; 
+            color: $black;
+            margin: 0;
           }
+
           p {
-            color: #444;
+            color: $black;
             margin-bottom: 0.5rem;
             font-size: 1rem;
           }
+
           .contato-link {
             display: inline-block;
             margin-top: 1rem;
             padding: 0.75rem 1.5rem;
-            border: 2px solid #0074d9;
+            border: 1px solid #0074d9;
             border-radius: 2rem;
             background: transparent;
             color: #0074d9;
-            font-weight: 600;
             text-decoration: none;
-            font-size: 1.1rem;
             transition: background 0.2s, color 0.2s;
             text-align: center;
+            font-weight: $bold;
+
             &:hover {
               background: #0074d9;
               color: #fff;
@@ -297,6 +299,7 @@
         padding: 2rem 1rem 1rem 1rem;
         box-shadow: 0 2px 16px rgba(0,0,0,0.03);
         margin-bottom: 2rem;
+
         .form-control {
           margin-bottom: 1rem;
           border-radius: 6px;
@@ -307,7 +310,9 @@
           color: #222;
           width: 100%;
           box-sizing: border-box;
+          height: 4rem;
         }
+        
         .form-check {
           margin-bottom: 0.5rem;
           display: flex;
@@ -338,15 +343,19 @@
             box-shadow: 0 4px 12px rgba(0, 102, 204, 0.2);
           }
         }
+        
         .contato-privacidade {
           margin-top: 1.5rem;
           color: #888;
-          font-size: 0.95rem;
           text-align: center;
           width: 100%;
           display: flex;
           justify-content: center;
+          font-style: italic;
+          border-top: 1px solid #e5e5e5;
+          padding-top: 1rem;
         }
+
         @media (max-width: 991px) {
           padding: 1rem 0.5rem;
           .row > div {

@@ -48,8 +48,8 @@
             <div class="col-lg-2 mb-4">
                 <h5 class="text-white mb-3">Valor Social</h5>
                 <ul class="list-unstyled">
-                    <li><a href="/ric/instituto-ric.php" class="text-white text-decoration-none mb-2 d-block hover-underline">Instituto RIC</a></li>
-                    <li><a href="/ric/blog.php" class="text-white text-decoration-none mb-2 d-block hover-underline">News</a></li>
+                    <li><a href="/ric-wp/instituto-ric" class="text-white text-decoration-none mb-2 d-block hover-underline">Instituto RIC</a></li>
+                    <li><a href="/ric-wp/blog" class="text-white text-decoration-none mb-2 d-block hover-underline">News</a></li>
                 </ul>
             </div>
 

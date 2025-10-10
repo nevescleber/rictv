@@ -254,15 +254,15 @@
                             <div class="submenu">
                                 <div class="submenu-content">
                                     <div class="submenu-column">
-                                        <a href="#">Equipe Comercial</a>
-                                        <a href="#">Carreira / UNIRIC</a>
-                                        <a href="#">Vagas</a>
+                                        <a href="/ric-wp/equipe-comercial">Equipe Comercial</a>
+                                        <a href="/ric-wp/carreira-uniric">Carreira / UNIRIC</a>
+                                        <a href="/ric-wp/vagas">Vagas</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="mobile-submenu">
-                                <a href="#">Equipe Comercial</a>
-                                <a href="#">Carreira / UNIRIC</a>
+                                <a href="/ric-wp/equipe-comercial">Equipe Comercial</a>
+                                <a href="/ric-wp/carreira-uniric">Carreira / UNIRIC</a>
                                 <a href="#">Vagas</a>
                             </div>
                         </li>
@@ -271,14 +271,14 @@
                             <div class="submenu">
                                 <div class="submenu-content">
                                     <div class="submenu-column">
-                                        <a href="#">Cases</a>
-                                        <a href="#">Ric Notícias</a>
+                                        <a href="cases">Cases</a>
+                                        <a href="/ric-wp/blog">Ric Notícias</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="mobile-submenu">
-                                <a href="#">Cases</a>
-                                <a href="#">Ric Notícias</a>
+                                <a href="cases">Cases</a>
+                                <a href="/ric-wp/blog">Ric Notícias</a>
                             </div>
                         </li>
                         <li class="has-submenu">
@@ -298,7 +298,7 @@
                 </nav>
                 
                 <div class="header-actions">
-                    <div class="search-icon">
+                    <div class="search-icon" style="display: none;">
                         <img src="<?php echo get_template_directory_uri(); ?>/assets/img/search-icon.svg" alt="Search">
                     </div>
                     <div class="">

@@ -31,9 +31,9 @@
             <div class="col-lg-2 col-6 mb-4">
                 <h5 class="text-medium text-white mb-3">Pessoas</h5>
                 <ul class="list-unstyled">
-                    <li><a href="/ric/contato" class="text-white text-decoration-none mb-2 d-block hover-underline">Equipe Comercial</a></li>
-                    <li><a href="/ric/contato" class="text-white text-decoration-none mb-2 d-block hover-underline">Carreira /UNIRIC</a></li>
-                    <li><a href="/ric/contato" class="text-white text-decoration-none mb-2 d-block hover-underline">Vagas</a></li>
+                    <li><a href="/ric-wp/equipe-comercial" class="text-white text-decoration-none mb-2 d-block hover-underline">Equipe Comercial</a></li>
+                    <li><a href="/ric-wp/carreira-uniric" class="text-white text-decoration-none mb-2 d-block hover-underline">Carreira /UNIRIC</a></li>
+                    <li><a href="/ric-wp/vagas" class="text-white text-decoration-none mb-2 d-block hover-underline">Vagas</a></li>
                 </ul>
             </div>
 
@@ -41,8 +41,8 @@
             <div class="col-lg-2 col-6 mb-4">
                 <h5 class="text-medium text-white mb-3">Negócios</h5>
                 <ul class="list-unstyled">
-                    <li><a href="#" class="text-white text-decoration-none mb-2 d-block hover-underline">Nossas soluções</a></li>
-                    <li><a href="#" class="text-white text-decoration-none mb-2 d-block hover-underline">Planos Comerciais</a></li>
+                    <!--<li><a href="#" class="text-white text-decoration-none mb-2 d-block hover-underline">Nossas soluções</a></li>-->
+                    <!--<li><a href="#" class="text-white text-decoration-none mb-2 d-block hover-underline">Planos Comerciais</a></li>-->
                     <li><a href="#" class="text-white text-decoration-none mb-2 d-block hover-underline">Tabelas Comerciais	</a></li>
                     <li><a href="#" class="text-white text-decoration-none mb-2 d-block hover-underline">Unidades de Negócio</a></li>
                     <li><a href="#" class="text-white text-decoration-none mb-2 d-block hover-underline">Projetos</a></li>
@@ -57,9 +57,9 @@
             <div class="col-lg-2 col-6 mb-4">
                 <h5 class="text-medium text-white mb-3">Social</h5>
                 <ul class="list-unstyled">
-                    <li><a href="/ric/instituto-ric.php" class="text-white text-decoration-none mb-2 d-block hover-underline">Instituto RIC</a></li>
-                    <li><a href="/ric/blog.php" class="text-white text-decoration-none mb-2 d-block hover-underline">News</a></li>
-                    <li><a href="/ric/contato.php" class="text-white text-decoration-none mb-2 d-block hover-underline">Contato</a></li>
+                    <li><a href="/ric-wp/instituto-ric" class="text-white text-decoration-none mb-2 d-block hover-underline">Instituto RIC</a></li>
+                    <li><a href="/ric-wp/blog" class="text-white text-decoration-none mb-2 d-block hover-underline">News</a></li>
+                    <li><a href="/ric-wp/contato" class="text-white text-decoration-none mb-2 d-block hover-underline">Contato</a></li>
                 </ul>
             </div>
 
@@ -70,8 +70,6 @@
                     <!--<li><a href="#" class="text-white text-decoration-none mb-2 d-block hover-underline">Privacidade</a></li>-->
                     <li><a href="/ric/termos.php" class="text-white text-decoration-none mb-2 d-block hover-underline">Privacidade</a></li>
                     <li><a href="/ric/termos.php" class="text-white text-decoration-none mb-2 d-block hover-underline">Termos De Uso</a></li>
-                    <li><a href="/ric/termos.php" class="text-white text-decoration-none mb-2 d-block hover-underline">Cookies</a></li>
-                    <li><a href="/ric/termos.php" class="text-white text-decoration-none mb-2 d-block hover-underline">Titular</a></li>
                     <!--<li><a href="#" class="text-white text-decoration-none mb-2 d-block hover-underline">Cookies</a></li>
                     <li><a href="#" class="text-white text-decoration-none mb-2 d-block hover-underline">Titular</a></li>-->
                 </ul>

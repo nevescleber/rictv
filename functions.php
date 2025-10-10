@@ -39,9 +39,29 @@ function ric_body_class( $classes ) {
         $classes[] = 'equipe-comercial';
     } 
 
+    if ( is_page_template( 'page-cases.php' ) ) {
+        $classes[] = 'cases';
+    } 
+
+    if ( is_page_template( 'page-carreira.php' ) ) {
+        $classes[] = 'carreira';
+    } 
+
+    if ( is_singular( 'cases' ) ) {
+        $classes[] = 'cases-inner';
+    }
+    
+    if ( is_singular( 'post' ) ) {
+        $classes[] = 'blog-inner';
+    }
+
     if ( is_home() ) {
         $classes[] = 'blog internal';
     }
+
+    if ( is_page_template( 'page-contato.php' ) ) {
+        $classes[] = 'contato';
+    } 
    
   /*if ( is_single()) {
       $classes[] = 'internal';
@@ -153,6 +173,119 @@ function ric_register_taxonomies() {
 
 // Hook para registrar as taxonomias
 add_action('init', 'ric_register_taxonomies');
+
+// Registrar post type Cases
+function ric_register_cases_post_type() {
+    $labels = array(
+        'name'                  => 'Cases',
+        'singular_name'         => 'Case',
+        'menu_name'             => 'Cases',
+        'name_admin_bar'        => 'Case',
+        'archives'              => 'Arquivo de Cases',
+        'attributes'            => 'Atributos do Case',
+        'parent_item_colon'     => 'Case Pai:',
+        'all_items'             => 'Todos os Cases',
+        'add_new_item'          => 'Adicionar Novo Case',
+        'add_new'               => 'Adicionar Novo',
+        'new_item'              => 'Novo Case',
+        'edit_item'             => 'Editar Case',
+        'update_item'           => 'Atualizar Case',
+        'view_item'             => 'Ver Case',
+        'view_items'            => 'Ver Cases',
+        'search_items'          => 'Buscar Cases',
+        'not_found'             => 'Nenhum case encontrado',
+        'not_found_in_trash'    => 'Nenhum case encontrado na lixeira',
+        'featured_image'        => 'Imagem Destacada',
+        'set_featured_image'    => 'Definir imagem destacada',
+        'remove_featured_image' => 'Remover imagem destacada',
+        'use_featured_image'    => 'Usar como imagem destacada',
+        'insert_into_item'      => 'Inserir no case',
+        'uploaded_to_this_item' => 'Enviado para este case',
+        'items_list'            => 'Lista de cases',
+        'items_list_navigation' => 'Navegação da lista de cases',
+        'filter_items_list'     => 'Filtrar lista de cases',
+    );
+    
+    $args = array(
+        'label'                 => 'Case',
+        'description'           => 'Cases de sucesso da RIC',
+        'labels'                => $labels,
+        'supports'              => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'),
+        'taxonomies'            => array('regiao', 'perfil', 'plataforma'),
+        'hierarchical'          => false,
+        'public'                => true,
+        'show_ui'               => true,
+        'show_in_menu'          => true,
+        'menu_position'         => 5,
+        'menu_icon'             => 'dashicons-portfolio',
+        'show_in_admin_bar'     => true,
+        'show_in_nav_menus'     => true,
+        'can_export'            => true,
+        'has_archive'           => true,
+        'exclude_from_search'   => false,
+        'publicly_queryable'    => true,
+        'show_in_rest'          => true,
+        'rewrite'               => array('slug' => 'cases'),
+    );
+    
+    register_post_type('cases', $args);
+}
+
+add_action('init', 'ric_register_cases_post_type');
+
+// Adicionar meta box para casos crossmedia
+function ric_add_cases_meta_boxes() {
+    add_meta_box(
+        'cases_crossmedia',
+        'Configurações do Case',
+        'ric_cases_meta_box_callback',
+        'cases',
+        'side',
+        'default'
+    );
+}
+add_action('add_meta_boxes', 'ric_add_cases_meta_boxes');
+
+// Callback da meta box
+function ric_cases_meta_box_callback($post) {
+    wp_nonce_field('ric_save_cases_meta_box_data', 'ric_cases_meta_box_nonce');
+    
+    $is_crossmedia = get_post_meta($post->ID, '_is_crossmedia', true);
+    
+    echo '<p>';
+    echo '<input type="checkbox" id="is_crossmedia" name="is_crossmedia" value="1" ' . checked(1, $is_crossmedia, false) . ' />';
+    echo '<label for="is_crossmedia"> Este é um projeto crossmedia</label>';
+    echo '</p>';
+}
+
+// Salvar dados da meta box
+function ric_save_cases_meta_box_data($post_id) {
+    if (!isset($_POST['ric_cases_meta_box_nonce'])) {
+        return;
+    }
+    
+    if (!wp_verify_nonce($_POST['ric_cases_meta_box_nonce'], 'ric_save_cases_meta_box_data')) {
+        return;
+    }
+    
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    
+    if (isset($_POST['post_type']) && 'cases' == $_POST['post_type']) {
+        if (!current_user_can('edit_page', $post_id)) {
+            return;
+        }
+    } else {
+        if (!current_user_can('edit_post', $post_id)) {
+            return;
+        }
+    }
+    
+    $is_crossmedia = isset($_POST['is_crossmedia']) ? 1 : 0;
+    update_post_meta($post_id, '_is_crossmedia', $is_crossmedia);
+}
+add_action('save_post', 'ric_save_cases_meta_box_data');
 
 // Função para adicionar taxonomias a post types existentes
 function ric_add_taxonomies_to_post_types() {

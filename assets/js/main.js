@@ -743,11 +743,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 categoryButtons.forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
 
-                const categoria = this.textContent.trim().toLowerCase();
+                const categoria = this.getAttribute('data-category');
+                
                 blogCards.forEach(card => {
-                    // Busca todas as tags do card
-                    const tags = Array.from(card.querySelectorAll('.blog-post-tag')).map(t => t.textContent.trim().toLowerCase());
-                    if (categoria === 'todas' || tags.some(tag => tag === categoria)) {
+                    const cardCategories = card.getAttribute('data-categories');
+                    
+                    if (categoria === 'all' || (cardCategories && cardCategories.includes(categoria))) {
                         card.style.display = '';
                     } else {
                         card.style.display = 'none';
@@ -986,4 +987,42 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     }
+
+    // Funcionalidade de expansão dos cards da equipe comercial
+    function initEquipeComercialCards() {
+        const comercialCards = document.querySelectorAll('.equipe-comercial-nacional-card');
+        
+        comercialCards.forEach(card => {
+            const expandBtn = card.querySelector('.card-btn-more');
+            
+            if (expandBtn) {
+                expandBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // Fechar outros cards expandidos
+                    comercialCards.forEach(otherCard => {
+                        if (otherCard !== card && otherCard.classList.contains('expanded')) {
+                            otherCard.classList.remove('expanded');
+                        }
+                    });
+                    
+                    // Alternar estado do card atual
+                    card.classList.toggle('expanded');
+                });
+            }
+        });
+        
+        // Fechar cards ao clicar fora
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.equipe-comercial-nacional-card')) {
+                comercialCards.forEach(card => {
+                    card.classList.remove('expanded');
+                });
+            }
+        });
+    }
+
+    // Inicializar funcionalidades
+    initEquipeComercialCards();
 });

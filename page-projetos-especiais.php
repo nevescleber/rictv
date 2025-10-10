@@ -15,11 +15,11 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-12">
-                                    <h1><?php echo get_the_title(); ?></h1>
-                                    <p>
+                                    <h1 class="text-big">Projetos</h1>
+                                    <!--<p>
                                         Aqui você encontra nossa seleção de Projetos Especiais vigentes em todos os nossos canais.
                                         Busque e <br> confira nossas linhas mais segmentadas para mídia e perfomance crossmedia.
-                                    </p>
+                                    </p>-->
                                 </div>
                             </div>
                         </div>
@@ -29,7 +29,7 @@
         </div>
     </div>
 
-    <section class="banner-projetos">
+    <section class="banner-projetos" style="display: none;">
         <div class="container">
             <div class="row">
                 <div class="col-12">

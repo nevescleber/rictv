@@ -508,8 +508,6 @@
         .projeto-header {
             .projeto-title {
                 h1 {
-                    font-family: $font-title;
-                    font-size: 2.5rem;
                     font-weight: $bold;
                     margin-bottom: 1rem;
                     color: $black;
@@ -574,8 +572,6 @@
             border-radius: 0.5rem;
     
             h2 {
-                font-family: $font-title;
-                font-size: 1.5rem;
                 color: $white;
                 margin: 0;
             }
@@ -601,6 +597,20 @@
     
         .perfil-content{
             margin-bottom: 4rem;
+            
+            h2, p, h3, h4{
+                font-family: $font-body;
+                color: $black;
+                @extend .text-medium;
+            }
+
+            ul{
+                li{
+                    font-family: $font-body;
+                    color: $black;
+                    @extend .text-medium;
+                }
+            }
         }
     }
     

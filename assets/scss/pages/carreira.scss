@@ -1,0 +1,264 @@
+.carreira {
+    background-color: #f3f3f3;
+
+    .banners {
+        margin-top: 0;
+        position: relative;
+      
+        .banner-content {
+            position: relative;
+            width: 100%;
+            height: auto;
+         
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            
+            .banner-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                text-align: center;
+                color: $white;
+                z-index: 2;
+  
+                @media #{$mq-lg-max} {
+                  height: auto;
+                  padding-top: 3rem;
+                }
+  
+                .text-bigger{
+                  font-weight: $semi-bold;
+                }
+            }
+        }
+    }
+
+    .carreira-content{
+        padding-top: 4rem;
+        padding-bottom: 5rem;
+        background: linear-gradient(90deg, #1E71B8 0%, #2C9942 100%);
+        color: $white;
+        position: relative;
+        z-index: 1;
+    }
+
+    .carreira-content-2{
+        position: relative;
+        margin-top: -2rem;
+        
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            
+            @media (max-width: 991px) {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+        
+        .card-item {
+            background: #fff;
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+            text-align: left;
+            
+            &:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            }
+        }
+        
+        .card-icon {
+            margin-bottom: 1.5rem;
+            
+            img {
+                width: 80px;
+                height: 80px;
+                object-fit: contain;
+                //filter: brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%);
+            }
+        }
+        
+        .card-title {
+            @extend .text-medium-big;
+            color: #1976d2;
+            font-weight: $bold;
+            margin-bottom: 1rem;
+        }
+        
+        .card-description {
+            @extend .text-medium;
+            color: #6c757d;
+            line-height: 1.6;
+            margin: 0;
+        }
+    }
+
+    .carreira-tags{
+        padding: 2rem 0;
+        
+        .word-cloud {
+            border-bottom: 1px solid #e9ecef;
+            border-top: 1px solid #e9ecef;
+            padding: 3rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            margin-top: 2rem;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+            
+            .word-row {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 0.8rem;
+                flex-wrap: wrap;
+                
+                @media (max-width: 768px) {
+                    gap: 0.5rem;
+                    flex-direction: column;
+                }
+                
+                &.row-1 {
+                    // DESENVOLVIMENTO CULTURA pessoas
+                    justify-content: space-between;
+                    gap: 1.2rem;
+                    
+                    @media (max-width: 768px) {
+                        justify-content: center;
+                        gap: 0.8rem;
+                    }
+                }
+                
+                &.row-2 {
+                    // legado TRANSFORMAÇÃO
+                    justify-content: center;
+                    gap: 1.5rem;
+                    
+                    @media (max-width: 768px) {
+                        gap: 1rem;
+                    }
+                }
+                
+                &.row-3 {
+                    // PROPÓSITO aprendizagem inovação
+                    justify-content: space-between;
+                    gap: 1rem;
+                    
+                    @media (max-width: 768px) {
+                        justify-content: center;
+                        gap: 0.8rem;
+                    }
+                }
+            }
+        }
+        
+        .word {
+            display: inline-block;
+            line-height: 1;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: $font-body;
+            
+            &:hover {
+                transform: scale(1.1);
+            }
+            
+            // Tamanhos das palavras
+            &.word-smallest {
+                font-size: 1.1rem;
+            }
+            
+            &.word-small {
+                font-size: 2.8rem;
+            }
+            
+            &.word-medium {
+                font-size: 2.8rem;
+            }
+            
+            &.word-large {
+                font-size: 2.8rem;
+            }
+            
+            &.word-largest {
+                font-size: 3.5rem;
+                
+                @media (max-width: 768px) {
+                    font-size: 2.5rem;
+                }
+            }
+            
+            // Cores das palavras
+            &.word-blue-dark {
+                color: #1976d2;
+            }
+            
+            &.word-blue-light {
+                color: #64b5f6;
+            }
+            
+            &.word-purple {
+                color: #9e9e9e;
+            }
+            
+            &.word-pink {
+                color: #e91e63;
+            }
+            
+            &.word-orange {
+                color: #ff9800;
+            }
+            
+            &.word-green {
+                color: #4caf50;
+            }
+            
+            &.word-teal {
+                color: #26a69a;
+            }
+            
+            &.word-blue {
+                color: #2196f3;
+            }
+            
+            // Estilos de fonte
+            &.word-bold {
+                font-weight: $bold;
+            }
+            
+            &.word-italic {
+                font-style: italic;
+            }
+        }
+    }
+
+    .carreira-cursos{
+        padding: 4rem 0;
+
+        h2, p{
+            color: $black;
+            margin: 0;
+        }
+    }
+
+    .divisor{
+        margin-top: 0;
+    }
+}

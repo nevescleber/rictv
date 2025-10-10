@@ -8,7 +8,6 @@
                         <?php if (has_post_thumbnail()) : ?>
                             <?php the_post_thumbnail('full', array('alt' => get_the_title())); ?>
                         <?php else : ?>
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/Banner.jpg" alt="<?php the_title(); ?>">
                         <?php endif; ?>
                     </div>
                 </div>
@@ -21,7 +20,7 @@
                     <div class="col-12">
                         <div class="projeto-header">
                             <div class="projeto-title">
-                                <h1><?php the_title(); ?></h1>
+                                <h1 class="text-big"><?php the_title(); ?></h1>
                                 <div class="projeto-meta">
                                     <?php
                                     // Buscar todas as regiões
