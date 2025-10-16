@@ -62,6 +62,14 @@ function ric_body_class( $classes ) {
     if ( is_page_template( 'page-contato.php' ) ) {
         $classes[] = 'contato';
     } 
+
+    if ( is_page_template( 'page-planos-comerciais.php' ) ) {
+        $classes[] = 'planos-comerciais';
+    }
+
+    if ( is_singular( 'planos-comerciais' ) ) {
+        $classes[] = 'planos-comerciais-inner';
+    }
    
   /*if ( is_single()) {
       $classes[] = 'internal';
@@ -96,7 +104,7 @@ remove_filter('the_excerpt','wpautop');
 function ric_register_taxonomies() {
     
     // Taxonomia: Região
-    register_taxonomy('regiao', array('projetos-especiais', 'post'), array(
+    register_taxonomy('regiao', array('projetos-especiais', 'planos-comerciais', 'post'), array(
         'labels' => array(
             'name' => 'Regiões',
             'singular_name' => 'Região',
@@ -121,7 +129,7 @@ function ric_register_taxonomies() {
     ));
 
     // Taxonomia: Perfil
-    register_taxonomy('perfil', array('projetos-especiais', 'post'), array(
+    register_taxonomy('perfil', array('projetos-especiais', 'planos-comerciais', 'post'), array(
         'labels' => array(
             'name' => 'Perfis',
             'singular_name' => 'Perfil',
@@ -146,7 +154,7 @@ function ric_register_taxonomies() {
     ));
 
     // Taxonomia: Plataforma
-    register_taxonomy('plataforma', array('projetos-especiais', 'post'), array(
+    register_taxonomy('plataforma', array('projetos-especiais', 'planos-comerciais', 'post'), array(
         'labels' => array(
             'name' => 'Plataformas',
             'singular_name' => 'Plataforma',
@@ -232,6 +240,65 @@ function ric_register_cases_post_type() {
 }
 
 add_action('init', 'ric_register_cases_post_type');
+
+// Registrar post type Planos Comerciais
+function ric_register_planos_comerciais_post_type() {
+    $labels = array(
+        'name'                  => 'Planos Comerciais',
+        'singular_name'         => 'Plano Comercial',
+        'menu_name'             => 'Planos Comerciais',
+        'name_admin_bar'        => 'Plano Comercial',
+        'archives'              => 'Arquivo de Planos Comerciais',
+        'attributes'            => 'Atributos do Plano',
+        'parent_item_colon'     => 'Plano Pai:',
+        'all_items'             => 'Todos os Planos',
+        'add_new_item'          => 'Adicionar Novo Plano',
+        'add_new'               => 'Adicionar Novo',
+        'new_item'              => 'Novo Plano',
+        'edit_item'             => 'Editar Plano',
+        'update_item'           => 'Atualizar Plano',
+        'view_item'             => 'Ver Plano',
+        'view_items'            => 'Ver Planos',
+        'search_items'          => 'Buscar Planos',
+        'not_found'             => 'Nenhum plano encontrado',
+        'not_found_in_trash'    => 'Nenhum plano encontrado na lixeira',
+        'featured_image'        => 'Imagem Destacada',
+        'set_featured_image'    => 'Definir imagem destacada',
+        'remove_featured_image' => 'Remover imagem destacada',
+        'use_featured_image'    => 'Usar como imagem destacada',
+        'insert_into_item'      => 'Inserir no plano',
+        'uploaded_to_this_item' => 'Enviado para este plano',
+        'items_list'            => 'Lista de planos',
+        'items_list_navigation' => 'Navegação da lista de planos',
+        'filter_items_list'     => 'Filtrar lista de planos',
+    );
+    
+    $args = array(
+        'label'                 => 'Plano Comercial',
+        'description'           => 'Planos Comerciais da RIC',
+        'labels'                => $labels,
+        'supports'              => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'),
+        'taxonomies'            => array('regiao', 'perfil', 'plataforma'),
+        'hierarchical'          => false,
+        'public'                => true,
+        'show_ui'               => true,
+        'show_in_menu'          => true,
+        'menu_position'         => 5,
+        'menu_icon'             => 'dashicons-clipboard',
+        'show_in_admin_bar'     => true,
+        'show_in_nav_menus'     => true,
+        'can_export'            => true,
+        'has_archive'           => true,
+        'exclude_from_search'   => false,
+        'publicly_queryable'    => true,
+        'show_in_rest'          => true,
+        'rewrite'               => array('slug' => 'planos-comerciais'),
+    );
+    
+    register_post_type('planos-comerciais', $args);
+}
+
+add_action('init', 'ric_register_planos_comerciais_post_type');
 
 // Adicionar meta box para casos crossmedia
 function ric_add_cases_meta_boxes() {
@@ -677,3 +744,572 @@ function ric_save_projeto_pdf_meta_box($post_id) {
     }
 }
 add_action('save_post', 'ric_save_projeto_pdf_meta_box');
+
+// ===== FUNCIONALIDADES PARA PLANOS COMERCIAIS =====
+
+// Adicionar body class para planos-comerciais
+add_filter('body_class', 'ric_planos_comerciais_body_class');
+function ric_planos_comerciais_body_class($classes) {
+    if (is_page_template('page-planos-comerciais.php')) {
+        $classes[] = 'planos-comerciais';
+    }
+    
+    if (is_singular('planos-comerciais')) {
+        $classes[] = 'planos-inner';
+    }
+    
+    return $classes;
+}
+
+// Adicionar meta box para o mês do plano comercial
+function ric_add_plano_mes_meta_box() {
+    add_meta_box(
+        'plano_mes',
+        'Mês do Plano',
+        'ric_plano_mes_meta_box_callback',
+        'planos-comerciais',
+        'side',
+        'default'
+    );
+}
+add_action('add_meta_boxes', 'ric_add_plano_mes_meta_box');
+
+// Callback do meta box
+function ric_plano_mes_meta_box_callback($post) {
+    wp_nonce_field('save_plano_mes', 'plano_mes_nonce');
+    $mes_plano = get_post_meta($post->ID, 'mes_plano', true);
+    
+    $meses = array(
+        '1' => 'Janeiro',
+        '2' => 'Fevereiro', 
+        '3' => 'Março',
+        '4' => 'Abril',
+        '5' => 'Maio',
+        '6' => 'Junho',
+        '7' => 'Julho',
+        '8' => 'Agosto',
+        '9' => 'Setembro',
+        '10' => 'Outubro',
+        '11' => 'Novembro',
+        '12' => 'Dezembro'
+    );
+    
+    echo '<select name="mes_plano" style="width: 100%;">';
+    echo '<option value="">Selecione o mês</option>';
+    foreach ($meses as $num => $nome) {
+        $selected = ($mes_plano == $num) ? ' selected' : '';
+        echo '<option value="' . $num . '"' . $selected . '>' . $nome . '</option>';
+    }
+    echo '</select>';
+    echo '<p><em>Selecione o mês em que o plano será realizado.</em></p>';
+}
+
+// Salvar meta box
+function ric_save_plano_mes_meta_box($post_id) {
+    if (!isset($_POST['plano_mes_nonce']) || !wp_verify_nonce($_POST['plano_mes_nonce'], 'save_plano_mes')) {
+        return;
+    }
+    
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+    
+    if (isset($_POST['mes_plano'])) {
+        update_post_meta($post_id, 'mes_plano', sanitize_text_field($_POST['mes_plano']));
+    }
+}
+add_action('save_post', 'ric_save_plano_mes_meta_box');
+
+// Adicionar meta box para marcar plano como destaque
+function ric_add_plano_destaque_meta_box() {
+    add_meta_box(
+        'plano_destaque',
+        'Plano em Destaque',
+        'ric_plano_destaque_meta_box_callback',
+        'planos-comerciais',
+        'side',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'ric_add_plano_destaque_meta_box');
+
+// Callback do meta box destaque
+function ric_plano_destaque_meta_box_callback($post) {
+    wp_nonce_field('save_plano_destaque', 'plano_destaque_nonce');
+    $destaque = get_post_meta($post->ID, 'destaque', true);
+    
+    echo '<label for="destaque_plano">';
+    echo '<input type="checkbox" id="destaque_plano" name="destaque_plano" value="Sim"' . checked($destaque, 'Sim', false) . ' />';
+    echo ' Marcar este plano como destaque';
+    echo '</label>';
+    echo '<p><em>Planos em destaque aparecem em uma seção especial na página.</em></p>';
+}
+
+// Salvar meta box destaque
+function ric_save_plano_destaque_meta_box($post_id) {
+    if (!isset($_POST['plano_destaque_nonce']) || !wp_verify_nonce($_POST['plano_destaque_nonce'], 'save_plano_destaque')) {
+        return;
+    }
+    
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+    
+    if (isset($_POST['destaque_plano'])) {
+        update_post_meta($post_id, 'destaque', 'Sim');
+    } else {
+        update_post_meta($post_id, 'destaque', 'Não');
+    }
+}
+add_action('save_post', 'ric_save_plano_destaque_meta_box');
+
+// Adicionar coluna "Destaque" na lista de planos comerciais
+function ric_planos_comerciais_columns($columns) {
+    $columns['destaque'] = 'Destaque';
+    return $columns;
+}
+add_filter('manage_planos-comerciais_posts_columns', 'ric_planos_comerciais_columns');
+
+// Conteúdo da coluna "Destaque"
+function ric_planos_comerciais_column_content($column, $post_id) {
+    if ($column == 'destaque') {
+        $destaque = get_post_meta($post_id, 'destaque', true);
+        if ($destaque == 'Sim' || $destaque == 'True' || $destaque == '1' || $destaque == 'true' || $destaque == 'yes') {
+            echo '<span style="color: #ffd700; font-weight: bold;">⭐ DESTAQUE</span>';
+        } else {
+            echo '<span style="color: #ccc;">—</span>';
+        }
+    }
+}
+add_action('manage_planos-comerciais_posts_custom_column', 'ric_planos_comerciais_column_content', 10, 2);
+
+// Tornar a coluna "Destaque" ordenável
+function ric_planos_comerciais_sortable_columns($columns) {
+    $columns['destaque'] = 'destaque';
+    return $columns;
+}
+add_filter('manage_edit-planos-comerciais_sortable_columns', 'ric_planos_comerciais_sortable_columns');
+
+// Adicionar meta box para URL do PDF
+function ric_add_plano_pdf_meta_box() {
+    add_meta_box(
+        'plano_pdf',
+        'PDF do Plano',
+        'ric_plano_pdf_meta_box_callback',
+        'planos-comerciais',
+        'side',
+        'default'
+    );
+}
+add_action('add_meta_boxes', 'ric_add_plano_pdf_meta_box');
+
+// Callback do meta box PDF
+function ric_plano_pdf_meta_box_callback($post) {
+    wp_nonce_field('save_plano_pdf', 'plano_pdf_nonce');
+    $pdf_url = get_post_meta($post->ID, 'PDF', true);
+    
+    echo '<label for="pdf_url_plano">URL do PDF:</label>';
+    echo '<input type="url" id="pdf_url_plano" name="pdf_url_plano" value="' . esc_attr($pdf_url) . '" style="width: 100%; margin-top: 10px;" placeholder="https://exemplo.com/arquivo.pdf" />';
+    echo '<p><em>Cole aqui a URL completa do arquivo PDF para download.</em></p>';
+}
+
+// Salvar meta box PDF
+function ric_save_plano_pdf_meta_box($post_id) {
+    if (!isset($_POST['plano_pdf_nonce']) || !wp_verify_nonce($_POST['plano_pdf_nonce'], 'save_plano_pdf')) {
+        return;
+    }
+    
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+    
+    if (isset($_POST['pdf_url_plano'])) {
+        update_post_meta($post_id, 'PDF', esc_url_raw($_POST['pdf_url_plano']));
+    }
+}
+add_action('save_post', 'ric_save_plano_pdf_meta_box');
+
+// AJAX para busca de planos comerciais
+function ric_ajax_buscar_planos() {
+    // Verificar nonce para segurança
+    if (!wp_verify_nonce($_POST['nonce'], 'planos_ajax_nonce')) {
+        wp_die('Acesso negado');
+    }
+    
+    // Pegar parâmetros da busca
+    $regiao = sanitize_text_field($_POST['regiao']);
+    $perfil = sanitize_text_field($_POST['perfil']);
+    $mes = sanitize_text_field($_POST['mes']);
+    $plataforma = sanitize_text_field($_POST['plataforma']);
+    $paged = (int) $_POST['paged'];
+    
+    // Preparar argumentos da query
+    $args = array(
+        'post_type' => 'planos-comerciais',
+        'posts_per_page' => 8,
+        'post_status' => 'publish',
+        'paged' => $paged,
+    );
+    
+    // Preparar meta query para o mês se selecionado
+    if (!empty($mes)) {
+        $args['meta_query'] = array(
+            array(
+                'key' => 'mes_plano',
+                'value' => $mes,
+                'compare' => '='
+            )
+        );
+    }
+    
+    // Preparar tax query se houver filtros de taxonomia
+    $tax_query = array();
+    
+    if (!empty($regiao)) {
+        $tax_query[] = array(
+            'taxonomy' => 'regiao',
+            'field' => 'slug',
+            'terms' => $regiao,
+        );
+    }
+    
+    if (!empty($perfil)) {
+        $tax_query[] = array(
+            'taxonomy' => 'perfil',
+            'field' => 'slug',
+            'terms' => $perfil,
+        );
+    }
+    
+    if (!empty($plataforma)) {
+        $tax_query[] = array(
+            'taxonomy' => 'plataforma',
+            'field' => 'slug',
+            'terms' => $plataforma,
+        );
+    }
+    
+    if (!empty($tax_query)) {
+        $args['tax_query'] = $tax_query;
+        if (count($tax_query) > 1) {
+            $args['tax_query']['relation'] = 'AND';
+        }
+    }
+    
+    // Executar query
+    $planos_query = new WP_Query($args);
+    
+    $html = '';
+    $paginacao = '';
+    
+    if ($planos_query->have_posts()) {
+        while ($planos_query->have_posts()) {
+            $planos_query->the_post();
+            
+            $html .= '<div class="col-lg-3 col-md-6 col-12">';
+            $html .= '<a href="' . get_permalink() . '" class="midia-kit-link">';
+            $html .= '<div class="midia-kit-box">';
+            
+            if (has_post_thumbnail()) {
+                $html .= get_the_post_thumbnail(get_the_ID(), 'medium', array('alt' => get_the_title()));
+            } else {
+                $html .= '<img src="' . get_template_directory_uri() . '/assets/img/01_Midia.jpg" alt="' . get_the_title() . '">';
+            }
+            
+            $html .= '</div>';
+            $html .= '</a>';
+            $html .= '</div>';
+        }
+        
+        // Gerar paginação
+        $total_pages = $planos_query->max_num_pages;
+        if ($total_pages > 1) {
+            $paginacao .= '<div class="paginacao" id="paginacao-container">';
+            
+            // Página anterior
+            if ($paged > 1) {
+                $paginacao .= '<button class="pagina prev" data-page="' . ($paged - 1) . '">';
+                $paginacao .= '<svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">';
+                $paginacao .= '<path d="M6.5 11L1.5 6L6.5 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
+                $paginacao .= '</svg>';
+                $paginacao .= '</button>';
+            }
+            
+            // Páginas numeradas
+            for ($i = 1; $i <= $total_pages; $i++) {
+                $active_class = ($i == $paged) ? ' active' : '';
+                $paginacao .= '<button class="pagina' . $active_class . '" data-page="' . $i . '">' . $i . '</button>';
+            }
+            
+            // Próxima página
+            if ($paged < $total_pages) {
+                $paginacao .= '<button class="pagina next" data-page="' . ($paged + 1) . '">';
+                $paginacao .= '<svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">';
+                $paginacao .= '<path d="M1.5 1L6.5 6L1.5 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
+                $paginacao .= '</svg>';
+                $paginacao .= '</button>';
+            }
+            
+            $paginacao .= '</div>';
+        }
+        
+    } else {
+        $html = '<div class="col-12"><p class="text-center">Nenhum plano comercial encontrado com os filtros selecionados.</p></div>';
+    }
+    
+    wp_reset_postdata();
+    
+    // Retornar resposta JSON
+    wp_send_json_success(array(
+        'html' => $html,
+        'paginacao' => $paginacao,
+        'total_pages' => $planos_query->max_num_pages,
+        'found_posts' => $planos_query->found_posts
+    ));
+}
+
+// Registrar AJAX para usuários logados e não logados
+add_action('wp_ajax_buscar_planos', 'ric_ajax_buscar_planos');
+add_action('wp_ajax_nopriv_buscar_planos', 'ric_ajax_buscar_planos');
+
+// Habilitar suporte a menus
+add_theme_support('menus');
+
+// Registrar posições dos menus
+function ric_register_menus() {
+    register_nav_menus(array(
+        'top-menu' => 'Top Menu',
+        'negocios-menu' => 'Menu Negócios',
+        'fs-menu' => 'FS Menu',
+        'footer-menu' => 'Footer Menu'
+    ));
+}
+add_action('init', 'ric_register_menus');
+
+// Custom Walker para Mega Menu - Gera HTML EXATAMENTE igual ao estático
+class RIC_Mega_Menu_Walker extends Walker_Nav_Menu {
+    
+    // Inicia lista de subitens
+    function start_lvl(&$output, $depth = 0, $args = null) {
+        // Depth 0 (colunas) -> Depth 1 (itens): Não precisa wrapper, itens ficam direto na coluna
+        if ($depth == 0) {
+            return;
+        }
+        
+        $indent = str_repeat("    ", $depth + 1);
+        
+        // Depth 1 -> Depth 2: Adiciona .mega-submenu-content
+        if ($depth == 1) {
+            $output .= "\n{$indent}<div class=\"mega-submenu-content\">\n";
+        }
+        // Depth 2 -> Depth 3: Adiciona .mega-nested-content
+        elseif ($depth == 2) {
+            $output .= "\n{$indent}<div class=\"mega-nested-content\">\n";
+        }
+        // Depth 3 -> Depth 4: Adiciona .mega-deep-content
+        elseif ($depth == 3) {
+            $output .= "\n{$indent}<div class=\"mega-deep-content\">\n";
+        }
+    }
+    
+    // Finaliza lista de subitens
+    function end_lvl(&$output, $depth = 0, $args = null) {
+        if ($depth == 0) {
+            return;
+        }
+        
+        $indent = str_repeat("    ", $depth + 1);
+        $output .= "{$indent}</div>\n";
+    }
+    
+    // Inicia item do menu
+    function start_el(&$output, $item, $depth = 0, $args = null, $id = 0) {
+        $indent = str_repeat("    ", $depth + 1);
+        $classes = empty($item->classes) ? array() : (array) $item->classes;
+        $has_children = in_array('menu-item-has-children', $classes);
+        
+        // DEPTH 0: Colunas (.mega-column)
+        if ($depth == 0) {
+            $output .= "\n{$indent}<div class=\"mega-column\">\n";
+            $output .= "{$indent}    <h3>" . esc_html($item->title) . "</h3>\n";
+        }
+        // DEPTH 1: Itens dentro das colunas
+        elseif ($depth == 1) {
+            if ($has_children) {
+                $output .= "\n{$indent}<div class=\"mega-submenu\">\n";
+                $output .= "{$indent}    <div class=\"mega-submenu-header\">\n";
+                $output .= "{$indent}        <span>" . esc_html($item->title) . "</span>\n";
+                $output .= "{$indent}        <div class=\"mega-toggle\">▼</div>\n";
+                $output .= "{$indent}    </div>\n";
+            } else {
+                $output .= "{$indent}<a href=\"" . esc_url($item->url) . "\">" . esc_html($item->title) . "</a>\n";
+            }
+        }
+        // DEPTH 2: Itens dentro de .mega-submenu-content
+        elseif ($depth == 2) {
+            if ($has_children) {
+                $output .= "\n{$indent}<div class=\"mega-nested-submenu\">\n";
+                $output .= "{$indent}    <div class=\"mega-nested-header\">\n";
+                $output .= "{$indent}        <span>" . esc_html($item->title) . "</span>\n";
+                $output .= "{$indent}        <div class=\"mega-nested-toggle\">▼</div>\n";
+                $output .= "{$indent}    </div>\n";
+            } else {
+                $output .= "{$indent}<a href=\"" . esc_url($item->url) . "\">" . esc_html($item->title) . "</a>\n";
+            }
+        }
+        // DEPTH 3: Itens dentro de .mega-nested-content
+        elseif ($depth == 3) {
+            if ($has_children) {
+                $output .= "\n{$indent}<div class=\"mega-deep-submenu\">\n";
+                $output .= "{$indent}    <div class=\"mega-deep-header\">\n";
+                $output .= "{$indent}        <span>" . esc_html($item->title) . "</span>\n";
+                $output .= "{$indent}        <div class=\"mega-deep-toggle\">▼</div>\n";
+                $output .= "{$indent}    </div>\n";
+            } else {
+                $output .= "{$indent}<a href=\"" . esc_url($item->url) . "\">" . esc_html($item->title) . "</a>\n";
+            }
+        }
+        // DEPTH 4+: Links
+        else {
+            $output .= "{$indent}<a href=\"" . esc_url($item->url) . "\">" . esc_html($item->title) . "</a>\n";
+        }
+    }
+    
+    // Finaliza item do menu
+    function end_el(&$output, $item, $depth = 0, $args = null) {
+        $indent = str_repeat("    ", $depth + 1);
+        $classes = empty($item->classes) ? array() : (array) $item->classes;
+        $has_children = in_array('menu-item-has-children', $classes);
+        
+        if ($depth == 0) {
+            $output .= "{$indent}</div><!-- .mega-column -->\n";
+        } elseif ($depth == 1 && $has_children) {
+            $output .= "{$indent}</div><!-- .mega-submenu -->\n";
+        } elseif ($depth == 2 && $has_children) {
+            $output .= "{$indent}</div><!-- .mega-nested-submenu -->\n";
+        } elseif ($depth == 3 && $has_children) {
+            $output .= "{$indent}</div><!-- .mega-deep-submenu -->\n";
+        }
+    }
+}
+
+// Função helper para renderizar o mega menu de negócios
+function ric_render_negocios_mega_menu() {
+    if (has_nav_menu('negocios-menu')) {
+        ?>
+        <div class="mega-menu">
+            <div class="mega-menu-content">
+                <!-- Área Verde Lateral -->
+                <div class="mega-menu-sidebar">
+                    <div class="mega-sidebar-content">
+                        <h2>RIC<br>Negócios</h2>
+                        <p class="text-medium">Conheça nossos projetos, canais de comunicação e nossos planos comerciais.</p>
+                    </div>
+                </div>
+                
+                <!-- 4 Colunas de Conteúdo -->
+                <div class="mega-menu-columns">
+                    <?php
+                    wp_nav_menu(array(
+                        'theme_location' => 'negocios-menu',
+                        'container' => false,
+                        'items_wrap' => '%3$s',
+                        'walker' => new RIC_Mega_Menu_Walker(),
+                        'depth' => 5
+                    ));
+                    ?>
+                </div>
+            </div>
+        </div>
+        <?php
+    }
+}
+
+// Custom Walker para versão mobile do mega menu - TODOS OS NÍVEIS (igual desktop)
+class RIC_Mega_Menu_Mobile_Walker extends Walker_Nav_Menu {
+    
+    function start_lvl(&$output, $depth = 0, $args = null) {
+        // Depth 0: Itens dentro da seção - não precisa wrapper
+        if ($depth == 0) {
+            return;
+        }
+        
+        $indent = str_repeat("    ", $depth + 1);
+        
+        // Todos os níveis 1+ usam .mega-mobile-content (sem quebra de linha antes para nextElementSibling funcionar)
+        $output .= "<div class=\"mega-mobile-content\">\n";
+    }
+    
+    function end_lvl(&$output, $depth = 0, $args = null) {
+        if ($depth == 0) {
+            return;
+        }
+        
+        $indent = str_repeat("    ", $depth + 1);
+        $output .= "{$indent}</div>\n";
+    }
+    
+    function start_el(&$output, $item, $depth = 0, $args = null, $id = 0) {
+        $indent = str_repeat("    ", $depth + 1);
+        $classes = empty($item->classes) ? array() : (array) $item->classes;
+        $has_children = in_array('menu-item-has-children', $classes);
+        
+        // DEPTH 0: Seções principais (.mega-mobile-section)
+        if ($depth == 0) {
+            $output .= "\n{$indent}<div class=\"mega-mobile-section\">\n";
+            $output .= "{$indent}    <h4>" . strtoupper(esc_html($item->title)) . "</h4>\n";
+        }
+        // DEPTH 1+: Todos os níveis podem ter toggle ou serem links
+        else {
+            if ($has_children) {
+                $output .= "\n{$indent}<div class=\"mega-mobile-submenu\" data-depth=\"{$depth}\">";
+                $output .= "<div class=\"mega-mobile-toggle\">" . esc_html($item->title) . " ▼</div>";
+            } else {
+                $output .= "\n{$indent}<a href=\"" . esc_url($item->url) . "\">" . esc_html($item->title) . "</a>";
+            }
+        }
+    }
+    
+    function end_el(&$output, $item, $depth = 0, $args = null) {
+        $indent = str_repeat("    ", $depth + 1);
+        $classes = empty($item->classes) ? array() : (array) $item->classes;
+        $has_children = in_array('menu-item-has-children', $classes);
+        
+        if ($depth == 0) {
+            $output .= "{$indent}</div><!-- .mega-mobile-section -->\n";
+        } elseif ($depth > 0 && $has_children) {
+            $output .= "{$indent}</div><!-- .mega-mobile-submenu -->\n";
+        }
+    }
+}
+
+// Função helper para renderizar o mega menu mobile de negócios
+function ric_render_negocios_mega_menu_mobile() {
+    if (has_nav_menu('negocios-menu')) {
+        ?>
+        <div class="mega-mobile-menu">
+            <?php
+            wp_nav_menu(array(
+                'theme_location' => 'negocios-menu',
+                'container' => false,
+                'items_wrap' => '%3$s',
+                'walker' => new RIC_Mega_Menu_Mobile_Walker(),
+                'depth' => 5 // Mobile: todos os níveis (igual ao desktop)
+            ));
+            ?>
+        </div>
+        <?php
+    }
+}

@@ -220,11 +220,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
+    // Evitar que cliques dentro do mega-mobile fechem o menu principal
+    document.querySelectorAll('.mega-mobile-menu').forEach(mm => {
+        mm.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    });
+
     // Fechar menu ao clicar fora (opcional)
     document.addEventListener('click', function(e) {
+        const clickedInsideMegaMobile = !!e.target.closest('.mega-mobile-menu');
         if (menuIsOpen && 
             !mainNav.contains(e.target) && 
-            !mobileToggle.contains(e.target)) {
+            !mobileToggle.contains(e.target) &&
+            !clickedInsideMegaMobile) {
             closeMobileMenu();
         }
     });
@@ -476,28 +485,29 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         
-        // Mobile mega submenu toggles
+        // Mobile mega submenu toggles - SIMPLIFICADO
         if (e.target.closest('.mega-mobile-toggle')) {
             e.preventDefault();
+            e.stopPropagation(); // Impede propagação
+            
             const toggle = e.target.closest('.mega-mobile-toggle');
-            const content = toggle.nextElementSibling;
-            const isActive = toggle.classList.contains('active');
+            const content = toggle.nextElementSibling; // .mega-mobile-content logo após
             
-            // Close all other mobile submenus in the same section
-            const section = toggle.closest('.mega-mobile-section');
-            section.querySelectorAll('.mega-mobile-toggle').forEach(t => {
-                t.classList.remove('active');
-                if (t.nextElementSibling) {
-                    t.nextElementSibling.classList.remove('active');
-                }
-            });
+            // Verifica se o content é válido
+            if (!content || !content.classList.contains('mega-mobile-content')) {
+                console.error('Content não encontrado ou inválido:', content);
+                return;
+            }
             
-            // Toggle current submenu
-            if (!isActive) {
+            // Simplesmente toggle active no elemento clicado
+            if (toggle.classList.contains('active')) {
+                // Se já está ativo, fecha
+                toggle.classList.remove('active');
+                content.classList.remove('active');
+            } else {
+                // Se não está ativo, abre
                 toggle.classList.add('active');
-                if (content) {
-                    content.classList.add('active');
-                }
+                content.classList.add('active');
             }
         }
     });

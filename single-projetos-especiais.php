@@ -14,15 +14,16 @@
             </div>
         </div>
 
-        <section class="projetos-info">
+        <section class="projetos-info" style="background-color: #7f3893;">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
+
                         <div class="projeto-header">
-                            <div class="projeto-title">
-                                <h1 class="text-big"><?php the_title(); ?></h1>
-                                <div class="projeto-meta">
-                                    <?php
+                            <h2 class="text-medium-big" >Perfil do Programa</h2>
+
+                            <div class="projetos-location">
+                                <?php
                                     // Buscar todas as regiões
                                     $regioes = get_the_terms(get_the_ID(), 'regiao');
                                     if ($regioes && !is_wp_error($regioes)) :
@@ -32,62 +33,11 @@
                                         }
                                         $regioes_texto = implode(', ', $nomes_regioes);
                                     ?>
-                                        <div class="location">
-                                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/map.svg" alt="Localização">
-                                            <span><?php echo esc_html($regioes_texto); ?></span>
-                                        </div>
-                                    <?php endif; ?>
-                                    
-                                    <div class="info-tags">
-                                        <?php
-                                        // Data de publicação
-                                        $mes_projeto = get_post_meta(get_the_ID(), 'mes_projeto', true);
-                                        if ($mes_projeto) {
-                                            $meses = array(
-                                                '1' => 'JANEIRO', '2' => 'FEVEREIRO', '3' => 'MARÇO',
-                                                '4' => 'ABRIL', '5' => 'MAIO', '6' => 'JUNHO',
-                                                '7' => 'JULHO', '8' => 'AGOSTO', '9' => 'SETEMBRO',
-                                                '10' => 'OUTUBRO', '11' => 'NOVEMBRO', '12' => 'DEZEMBRO'
-                                            );
-                                            echo '<span class="date">' . $meses[$mes_projeto] . ' ' . get_the_date('Y') . '</span>';
-                                        } else {
-                                            echo '<span class="date">' . strtoupper(get_the_date('F Y')) . '</span>';
-                                        }
-                                        
-                                        // Plataformas
-                                        $plataformas = get_the_terms(get_the_ID(), 'plataforma');
-                                        if ($plataformas && !is_wp_error($plataformas)) {
-                                            foreach ($plataformas as $plataforma) {
-                                                echo '<span class="type">' . strtoupper(esc_html($plataforma->name)) . '</span>';
-                                            }
-                                        }
-                                        ?>
+                                    <div class="location">
+                                        <img src="<?php echo get_template_directory_uri(); ?>/assets/img/map.svg" alt="Localização">
+                                        <span><?php echo esc_html($regioes_texto); ?></span>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="perfil-programa">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="perfil-header">
-                            <h2>Perfil do Programa</h2>
-                            <div class="categorias">
-                                <?php
-                                // Buscar taxonomias de perfil
-                                $perfis = get_the_terms(get_the_ID(), 'perfil');
-                                if ($perfis && !is_wp_error($perfis)) {
-                                    foreach ($perfis as $perfil) {
-                                        echo '<span>' . strtoupper(esc_html($perfil->name)) . '</span>';
-                                    }
-                                } else {
-                                    echo '<span>SEM CATEGORIAS DEFINIDAS</span>';
-                                }
-                                ?>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -95,12 +45,72 @@
 
                 <div class="row">
                     <div class="col-12">
+                        <div class="projeto-categoria">
+                            <div class="categorias">
+                                <?php
+                                // Buscar taxonomias de perfil
+                                    $perfis = get_the_terms(get_the_ID(), 'perfil');
+                                    if ($perfis && !is_wp_error($perfis)) {
+                                        foreach ($perfis as $perfil) {
+                                            echo '<span class="text-small">' . strtoupper(esc_html($perfil->name)) . '</span>';
+                                        }
+                                    } else {
+                                        echo '<span class="text-small"></span>';
+                                    }
+                                ?>
+                            </div>
+
+                            <div class="projeto-content">
+                            <div class="projeto-header">
+                                <div class="projeto-title">
+                                    <div class="projeto-meta">
+                                        
+                                        <div class="info-tags">
+                                            <?php
+                                            // Data de publicação
+                                            $mes_projeto = get_post_meta(get_the_ID(), 'mes_projeto', true);
+                                            if ($mes_projeto) {
+                                                $meses = array(
+                                                    '1' => 'JANEIRO', '2' => 'FEVEREIRO', '3' => 'MARÇO',
+                                                    '4' => 'ABRIL', '5' => 'MAIO', '6' => 'JUNHO',
+                                                    '7' => 'JULHO', '8' => 'AGOSTO', '9' => 'SETEMBRO',
+                                                    '10' => 'OUTUBRO', '11' => 'NOVEMBRO', '12' => 'DEZEMBRO'
+                                                );
+                                                echo '<span class="text-medium date">' . $meses[$mes_projeto] . ' ' . get_the_date('Y') . '</span>';
+                                            } else {
+                                                echo '<span class="text-medium date">' . strtoupper(get_the_date('F Y')) . '</span>';
+                                            }
+                                            
+                                            // Plataformas
+                                            $plataformas = get_the_terms(get_the_ID(), 'plataforma');
+                                            if ($plataformas && !is_wp_error($plataformas)) {
+                                                foreach ($plataformas as $plataforma) {
+                                                    echo '<span class="text-small type">' . strtoupper(esc_html($plataforma->name)) . '</span>';
+                                                }
+                                            }
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <section class="perfil-programa">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
                         <div class="perfil-content">
+                            <h1 class="text-big"><?php the_title(); ?></h1>
+
                             <?php 
                             if (get_the_content()) {
                                 the_content();
                             } else {
-                                echo '<p>Conteúdo não disponível para este projeto.</p>';
+                                echo '<p></p>';
                             }
                             ?>
                         </div>
@@ -136,7 +146,8 @@
                                     </button>
                                 <?php endif; ?>
                             </div>
-                        </div>
+                            </div> <!-- Fecha projeto-content -->
+                        </div> <!-- Fecha projeto-categoria -->
                     </div>
                 </div>
             </div>
@@ -146,7 +157,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h2>Outros Projetos</h2>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h2 class="text-big" style="margin: 0;">Outros Projetos</h2>
+                            <a href="<?php echo home_url('/'); ?>/projetos-especiais" class="text-medium btn btn-outline-primary related-btn">Outros Projetos</a>
+                        </div>
                     </div>
                 </div>
 

@@ -187,7 +187,7 @@
             <div class="d-flex justify-content-between align-items-start mb-5">
                 <div class="row align-items-center mb-5">
                     <div class="col-lg-6 col-6">
-                        <h2 class="text-medium-big display-4 fw-bold mb-3">RIC Notícias</h2>
+                        <h2 class="text-medium-big display-4 fw-bold mb-3">RIC Talks</h2>
                     </div>
                     <div class="col-lg-6 col-6 d-flex justify-content-lg-end gap-3 mt-3 mt-lg-0">
                         <a href="#" class="btn btn-outline-primary px-4 py-2">Ver mais</a>

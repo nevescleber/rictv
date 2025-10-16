@@ -45,7 +45,7 @@
                     <!--<li><a href="#" class="text-white text-decoration-none mb-2 d-block hover-underline">Planos Comerciais</a></li>-->
                     <li><a href="#" class="text-white text-decoration-none mb-2 d-block hover-underline">Tabelas Comerciais	</a></li>
                     <li><a href="#" class="text-white text-decoration-none mb-2 d-block hover-underline">Unidades de Negócio</a></li>
-                    <li><a href="#" class="text-white text-decoration-none mb-2 d-block hover-underline">Projetos</a></li>
+                    <li><a href="/ric-wp/projetos-especiais" class="text-white text-decoration-none mb-2 d-block hover-underline">Projetos</a></li>
                     <!--<li><a href="midia-kit.php" class="text-white text-decoration-none mb-2 d-block hover-underline">Mídia Kits</a></li>
                     <li><a href="cases.php" class="text-white text-decoration-none mb-2 d-block hover-underline">Cases</a></li>
                     <li><a href="/projetos-especiais" class="text-white text-decoration-none mb-2 d-block hover-underline">Projetos Especiais</a></li>
