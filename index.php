@@ -55,7 +55,7 @@
                     <div class="tags">
                         <span class="text-medium tag new-post">Novo Post</span>
                         <?php foreach ($category_names as $cat_name) : ?>
-                            <span class="text-medium tag <?php echo esc_attr(strtolower(str_replace(' ', '-', $cat_name))); ?>">
+                            <span class="text-medium tag cat <?php echo esc_attr(strtolower(str_replace(' ', '-', $cat_name))); ?>">
                                 <?php echo esc_html($cat_name); ?>
                             </span>
                         <?php endforeach; ?>
@@ -145,7 +145,7 @@
                         <?php if (has_post_thumbnail()) : ?>
                             <?php the_post_thumbnail('medium', array('alt' => get_the_title())); ?>
                         <?php else : ?>
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/imagem-blog-01.png" alt="<?php the_title(); ?>">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/blog-inner.jpg" alt="<?php the_title(); ?>">
                         <?php endif; ?>
                     </div>
                     <div class="blog-post-content">

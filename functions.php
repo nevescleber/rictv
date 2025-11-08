@@ -2,6 +2,7 @@
 
 //define( 'RIC_URL', 'https://deboragarofalo.com/');
 define( 'RIC_URL', 'http://localhost/ric-wp/');
+//define( 'RIC_URL', 'https://fourleafsolutions.com.br/jobs/rictv/');
 
 // Custom classes for css and js /
 add_filter( 'body_class','ric_body_class' );
@@ -70,6 +71,18 @@ function ric_body_class( $classes ) {
     if ( is_singular( 'planos-comerciais' ) ) {
         $classes[] = 'planos-comerciais-inner';
     }
+
+    if ( is_page_template( 'page-ooh.php' ) ) {
+        $classes[] = 'ooh';
+    }
+
+    if ( is_page_template( 'page-termos-e-condicoes.php' ) ) {
+        $classes[] = 'termos';
+    }
+
+    if ( is_404() ) {
+        $classes[] = 'termos';
+    }
    
   /*if ( is_single()) {
       $classes[] = 'internal';
@@ -87,6 +100,36 @@ add_filter( 'excerpt_length', 'custom_excerpt_length');
 
 //// Remove auto paragraph contact form 7
 add_filter( 'wpcf7_autop_or_not', '__return_false' );
+
+// Garantir que o Contact Form 7 carregue scripts corretamente
+function ric_ensure_cf7_scripts() {
+    // Forçar o CF7 a carregar scripts na página de contato
+    if (is_page_template('page-contato.php') || is_page('contato')) {
+        if (function_exists('wpcf7_enqueue_scripts')) {
+            wpcf7_enqueue_scripts();
+        }
+        if (function_exists('wpcf7_enqueue_styles')) {
+            wpcf7_enqueue_styles();
+        }
+    }
+}
+add_action('wp_enqueue_scripts', 'ric_ensure_cf7_scripts');
+
+// Garantir que o AJAX do CF7 funcione corretamente
+function ric_cf7_load_js() {
+    if (is_page_template('page-contato.php') || is_page('contato')) {
+        wp_add_inline_script('contact-form-7', '
+            document.addEventListener("DOMContentLoaded", function() {
+                if (typeof wpcf7 !== "undefined") {
+                    console.log("CF7 carregado corretamente");
+                } else {
+                    console.error("CF7 não carregado");
+                }
+            });
+        ');
+    }
+}
+add_action('wp_enqueue_scripts', 'ric_cf7_load_js', 100);
 
 
 add_theme_support('post-thumbnails');
@@ -564,6 +607,162 @@ function ric_ajax_buscar_projetos() {
 // Registrar AJAX para usuários logados e não logados
 add_action('wp_ajax_buscar_projetos', 'ric_ajax_buscar_projetos');
 add_action('wp_ajax_nopriv_buscar_projetos', 'ric_ajax_buscar_projetos');
+
+// AJAX para busca de cases
+function ric_ajax_buscar_cases() {
+    // Verificar nonce para segurança
+    if (!wp_verify_nonce($_POST['nonce'], 'cases_ajax_nonce')) {
+        wp_die('Acesso negado');
+    }
+    
+    // Pegar parâmetros da busca
+    $regiao = sanitize_text_field($_POST['regiao']);
+    $perfil = sanitize_text_field($_POST['perfil']);
+    $plataforma = sanitize_text_field($_POST['plataforma']);
+    $crossmedia = sanitize_text_field($_POST['crossmedia']);
+    $paged = (int) $_POST['paged'];
+    
+    // Preparar argumentos da query
+    $args = array(
+        'post_type' => 'cases',
+        'posts_per_page' => 9,
+        'post_status' => 'publish',
+        'paged' => $paged,
+    );
+    
+    // Preparar meta query para crossmedia se selecionado
+    if (!empty($crossmedia) && $crossmedia === '1') {
+        $args['meta_query'] = array(
+            array(
+                'key' => '_is_crossmedia',
+                'value' => '1',
+                'compare' => '='
+            )
+        );
+    }
+    
+    // Preparar tax query se houver filtros de taxonomia
+    $tax_query = array();
+    
+    if (!empty($regiao)) {
+        $tax_query[] = array(
+            'taxonomy' => 'regiao',
+            'field' => 'slug',
+            'terms' => $regiao,
+        );
+    }
+    
+    if (!empty($perfil)) {
+        $tax_query[] = array(
+            'taxonomy' => 'perfil',
+            'field' => 'slug',
+            'terms' => $perfil,
+        );
+    }
+    
+    if (!empty($plataforma)) {
+        $tax_query[] = array(
+            'taxonomy' => 'plataforma',
+            'field' => 'slug',
+            'terms' => $plataforma,
+        );
+    }
+    
+    if (!empty($tax_query)) {
+        $args['tax_query'] = $tax_query;
+        if (count($tax_query) > 1) {
+            $args['tax_query']['relation'] = 'AND';
+        }
+    }
+    
+    // Executar query
+    $cases_query = new WP_Query($args);
+    
+    $html = '';
+    $paginacao = '';
+    
+    if ($cases_query->have_posts()) {
+        while ($cases_query->have_posts()) {
+            $cases_query->the_post();
+            
+            // Verificar se é crossmedia
+            $is_crossmedia = get_post_meta(get_the_ID(), '_is_crossmedia', true);
+            
+            // Verificar se tem thumbnail
+            $thumbnail_url = '';
+            if (has_post_thumbnail()) {
+                $thumbnail_url = get_the_post_thumbnail_url(get_the_ID(), 'large');
+            } else {
+                // Imagem padrão se não tiver thumbnail
+                $thumbnail_url = get_template_directory_uri() . '/assets/img/img-cases-mulher.jpg';
+            }
+            
+            $html .= '<a href="' . get_permalink() . '" class="case-item">';
+            if ($is_crossmedia) {
+                $html .= '<div class="crossmedia-tag">Crossmedia</div>';
+            }
+            $html .= '<div class="image-container">';
+            $html .= '<img src="' . esc_url($thumbnail_url) . '" alt="' . esc_attr(get_the_title()) . '">';
+            $html .= '</div>';
+            $html .= '<div class="case-title">';
+            $html .= '<h3>' . esc_html(get_the_title()) . '</h3>';
+            $html .= '</div>';
+            $html .= '</a>';
+        }
+        
+        // Gerar paginação
+        $total_pages = $cases_query->max_num_pages;
+        if ($total_pages > 1) {
+            $paginacao .= '<div class="paginacao" id="paginacao-container">';
+            
+            // Página anterior
+            if ($paged > 1) {
+                $paginacao .= '<button class="pagina prev" data-page="' . ($paged - 1) . '">';
+                $paginacao .= '<svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">';
+                $paginacao .= '<path d="M6.5 11L1.5 6L6.5 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
+                $paginacao .= '</svg>';
+                $paginacao .= '</button>';
+            }
+            
+            // Páginas numeradas
+            $start_page = max(1, $paged - 2);
+            $end_page = min($total_pages, $paged + 2);
+            
+            for ($i = $start_page; $i <= $end_page; $i++) {
+                $active_class = ($i == $paged) ? ' active' : '';
+                $paginacao .= '<button class="pagina' . $active_class . '" data-page="' . $i . '">' . $i . '</button>';
+            }
+            
+            // Próxima página
+            if ($paged < $total_pages) {
+                $paginacao .= '<button class="pagina next" data-page="' . ($paged + 1) . '">';
+                $paginacao .= '<svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">';
+                $paginacao .= '<path d="M1.5 1L6.5 6L1.5 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
+                $paginacao .= '</svg>';
+                $paginacao .= '</button>';
+            }
+            
+            $paginacao .= '</div>';
+        }
+        
+    } else {
+        $html = '<div class="no-cases"><p>Nenhum case encontrado com os filtros selecionados.</p></div>';
+    }
+    
+    wp_reset_postdata();
+    
+    // Retornar resposta JSON
+    wp_send_json_success(array(
+        'html' => $html,
+        'paginacao' => $paginacao,
+        'total_pages' => $cases_query->max_num_pages,
+        'found_posts' => $cases_query->found_posts
+    ));
+}
+
+// Registrar AJAX para usuários logados e não logados
+add_action('wp_ajax_buscar_cases', 'ric_ajax_buscar_cases');
+add_action('wp_ajax_nopriv_buscar_cases', 'ric_ajax_buscar_cases');
 
 // Adicionar meta box para o mês do projeto
 function ric_add_projeto_mes_meta_box() {
@@ -1093,7 +1292,14 @@ function ric_register_menus() {
         'top-menu' => 'Top Menu',
         'negocios-menu' => 'Menu Negócios',
         'fs-menu' => 'FS Menu',
-        'footer-menu' => 'Footer Menu'
+        'footer-menu' => 'Footer Menu',
+        'footer-menu-sobre-nos' => 'Footer Menu Sobre Nós',
+        'footer-menu-pessoas' => 'Footer Menu Pessoas',
+        'footer-menu-negocios' => 'Footer Menu Negócios',
+        'footer-menu-social' => 'Footer Menu Social',
+        'footer-menu-politicas' => 'Footer Menu Políticas',
+        'header-menu-quem-somos' => 'Header Menu Quem Somos',
+        'header-menu-topo' => 'Header Menu Topo'
     ));
 }
 add_action('init', 'ric_register_menus');
@@ -1140,6 +1346,13 @@ class RIC_Mega_Menu_Walker extends Walker_Nav_Menu {
         $classes = empty($item->classes) ? array() : (array) $item->classes;
         $has_children = in_array('menu-item-has-children', $classes);
         
+        // Prepara a URL com RIC_URL
+        $item_url = $item->url;
+        if (defined('RIC_URL') && strpos($item_url, 'http') !== 0) {
+            // Se a URL não começa com http (é relativa), adiciona RIC_URL
+            $item_url = rtrim(RIC_URL, '/') . '/' . ltrim($item_url, '/');
+        }
+        
         // DEPTH 0: Colunas (.mega-column)
         if ($depth == 0) {
             $output .= "\n{$indent}<div class=\"mega-column\">\n";
@@ -1151,10 +1364,12 @@ class RIC_Mega_Menu_Walker extends Walker_Nav_Menu {
                 $output .= "\n{$indent}<div class=\"mega-submenu\">\n";
                 $output .= "{$indent}    <div class=\"mega-submenu-header\">\n";
                 $output .= "{$indent}        <span>" . esc_html($item->title) . "</span>\n";
-                $output .= "{$indent}        <div class=\"mega-toggle\">▼</div>\n";
+                $output .= "{$indent}        <div class=\"mega-toggle\" aria-hidden=\"true\">\n";
+                $output .= "{$indent}            <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"12\" viewBox=\"0 0 512 512\" aria-hidden=\"true\" focusable=\"false\"><polygon points=\"396.6,160 416,180.7 256,352 96,180.7 115.3,160 256,310.5\"/></svg>\n";
+                $output .= "{$indent}        </div>\n";
                 $output .= "{$indent}    </div>\n";
             } else {
-                $output .= "{$indent}<a href=\"" . esc_url($item->url) . "\">" . esc_html($item->title) . "</a>\n";
+                $output .= "{$indent}<a href=\"" . esc_url($item_url) . "\">" . esc_html($item->title) . "</a>\n";
             }
         }
         // DEPTH 2: Itens dentro de .mega-submenu-content
@@ -1163,10 +1378,12 @@ class RIC_Mega_Menu_Walker extends Walker_Nav_Menu {
                 $output .= "\n{$indent}<div class=\"mega-nested-submenu\">\n";
                 $output .= "{$indent}    <div class=\"mega-nested-header\">\n";
                 $output .= "{$indent}        <span>" . esc_html($item->title) . "</span>\n";
-                $output .= "{$indent}        <div class=\"mega-nested-toggle\">▼</div>\n";
+                $output .= "{$indent}        <div class=\"mega-nested-toggle\" aria-hidden=\"true\">\n";
+                $output .= "{$indent}            <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"12\" viewBox=\"0 0 512 512\" aria-hidden=\"true\" focusable=\"false\"><polygon points=\"396.6,160 416,180.7 256,352 96,180.7 115.3,160 256,310.5\"/></svg>\n";
+                $output .= "{$indent}        </div>\n";
                 $output .= "{$indent}    </div>\n";
             } else {
-                $output .= "{$indent}<a href=\"" . esc_url($item->url) . "\">" . esc_html($item->title) . "</a>\n";
+                $output .= "{$indent}<a href=\"" . esc_url($item_url) . "\">" . esc_html($item->title) . "</a>\n";
             }
         }
         // DEPTH 3: Itens dentro de .mega-nested-content
@@ -1175,15 +1392,17 @@ class RIC_Mega_Menu_Walker extends Walker_Nav_Menu {
                 $output .= "\n{$indent}<div class=\"mega-deep-submenu\">\n";
                 $output .= "{$indent}    <div class=\"mega-deep-header\">\n";
                 $output .= "{$indent}        <span>" . esc_html($item->title) . "</span>\n";
-                $output .= "{$indent}        <div class=\"mega-deep-toggle\">▼</div>\n";
+                $output .= "{$indent}        <div class=\"mega-deep-toggle\" aria-hidden=\"true\">\n";
+                $output .= "{$indent}            <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"12\" viewBox=\"0 0 512 512\" aria-hidden=\"true\" focusable=\"false\"><polygon points=\"396.6,160 416,180.7 256,352 96,180.7 115.3,160 256,310.5\"/></svg>\n";
+                $output .= "{$indent}        </div>\n";
                 $output .= "{$indent}    </div>\n";
             } else {
-                $output .= "{$indent}<a href=\"" . esc_url($item->url) . "\">" . esc_html($item->title) . "</a>\n";
+                $output .= "{$indent}<a href=\"" . esc_url($item_url) . "\">" . esc_html($item->title) . "</a>\n";
             }
         }
         // DEPTH 4+: Links
         else {
-            $output .= "{$indent}<a href=\"" . esc_url($item->url) . "\">" . esc_html($item->title) . "</a>\n";
+            $output .= "{$indent}<a href=\"" . esc_url($item_url) . "\">" . esc_html($item->title) . "</a>\n";
         }
     }
     
@@ -1230,6 +1449,12 @@ function ric_render_negocios_mega_menu() {
                         'depth' => 5
                     ));
                     ?>
+                    <div class="mega-column mega-column-downloads">
+                        <h3>Tabelas Comerciais</h3>
+                        <button type="button" class="menu-popup-trigger mega-download-button" data-popup-target="popup-tabelas-comerciais">
+                            Tabelas Comerciais
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1266,6 +1491,13 @@ class RIC_Mega_Menu_Mobile_Walker extends Walker_Nav_Menu {
         $classes = empty($item->classes) ? array() : (array) $item->classes;
         $has_children = in_array('menu-item-has-children', $classes);
         
+        // Prepara a URL com RIC_URL
+        $item_url = $item->url;
+        if (defined('RIC_URL') && strpos($item_url, 'http') !== 0) {
+            // Se a URL não começa com http (é relativa), adiciona RIC_URL
+            $item_url = rtrim(RIC_URL, '/') . '/' . ltrim($item_url, '/');
+        }
+        
         // DEPTH 0: Seções principais (.mega-mobile-section)
         if ($depth == 0) {
             $output .= "\n{$indent}<div class=\"mega-mobile-section\">\n";
@@ -1275,9 +1507,9 @@ class RIC_Mega_Menu_Mobile_Walker extends Walker_Nav_Menu {
         else {
             if ($has_children) {
                 $output .= "\n{$indent}<div class=\"mega-mobile-submenu\" data-depth=\"{$depth}\">";
-                $output .= "<div class=\"mega-mobile-toggle\">" . esc_html($item->title) . " ▼</div>";
+                $output .= "<div class=\"mega-mobile-toggle\">" . esc_html($item->title) . "<span aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"12\" viewBox=\"0 0 512 512\" aria-hidden=\"true\" focusable=\"false\"><polygon points=\"396.6,160 416,180.7 256,352 96,180.7 115.3,160 256,310.5\"/></svg></span></div>";
             } else {
-                $output .= "\n{$indent}<a href=\"" . esc_url($item->url) . "\">" . esc_html($item->title) . "</a>";
+                $output .= "\n{$indent}<a href=\"" . esc_url($item_url) . "\">" . esc_html($item->title) . "</a>";
             }
         }
     }
@@ -1309,7 +1541,303 @@ function ric_render_negocios_mega_menu_mobile() {
                 'depth' => 5 // Mobile: todos os níveis (igual ao desktop)
             ));
             ?>
+            <div class="mega-mobile-section mega-mobile-section-downloads">
+                <h4>Downloads</h4>
+                <button type="button" class="menu-popup-trigger mega-download-button" data-popup-target="popup-tabelas-comerciais">
+                    Tabelas Comerciais
+                </button>
+            </div>
         </div>
         <?php
     }
+}
+
+// adicionar acf options page
+if( function_exists('acf_add_options_page') ) {
+    acf_add_options_page(array(
+        'page_title' => 'Opções do Tema (Geral)',
+        'menu_title' => 'Opções do Tema (Geral)',
+        'menu_slug' => 'theme-options-geral',
+        'capability' => 'edit_posts',
+        'redirect' => false
+    ));
+}
+
+// ===== CUSTOM POST TYPE: FORMULÁRIO MÍDIA KIT =====
+
+// Registrar Custom Post Type para Formulários do Mídia Kit
+function ric_register_formulario_midia_kit_post_type() {
+    $labels = array(
+        'name'                  => 'Formulários Mídia Kit',
+        'singular_name'         => 'Formulário Mídia Kit',
+        'menu_name'             => 'Formulários Mídia Kit',
+        'name_admin_bar'        => 'Formulário Mídia Kit',
+        'archives'              => 'Arquivo de Formulários',
+        'attributes'            => 'Atributos',
+        'parent_item_colon'     => 'Formulário Pai:',
+        'all_items'             => 'Todos os Formulários',
+        'add_new_item'          => 'Adicionar Novo',
+        'add_new'               => 'Adicionar Novo',
+        'new_item'              => 'Novo Formulário',
+        'edit_item'             => 'Editar Formulário',
+        'update_item'           => 'Atualizar Formulário',
+        'view_item'             => 'Ver Formulário',
+        'view_items'            => 'Ver Formulários',
+        'search_items'          => 'Buscar Formulários',
+        'not_found'             => 'Nenhum formulário encontrado',
+        'not_found_in_trash'    => 'Nenhum formulário na lixeira',
+    );
+    
+    $args = array(
+        'label'                 => 'Formulário Mídia Kit',
+        'description'           => 'Registro dos formulários de download do Mídia Kit',
+        'labels'                => $labels,
+        'supports'              => array('title', 'custom-fields'),
+        'hierarchical'          => false,
+        'public'                => false,
+        'show_ui'               => true,
+        'show_in_menu'          => true,
+        'menu_position'         => 26,
+        'menu_icon'             => 'dashicons-feedback',
+        'show_in_admin_bar'     => false,
+        'show_in_nav_menus'     => false,
+        'can_export'            => true,
+        'has_archive'           => false,
+        'exclude_from_search'   => true,
+        'publicly_queryable'    => false,
+        'capability_type'       => 'post',
+        'show_in_rest'          => false,
+    );
+    
+    register_post_type('form_midia_kit', $args);
+}
+add_action('init', 'ric_register_formulario_midia_kit_post_type');
+
+// Adicionar colunas personalizadas na lista de formulários
+function ric_form_midia_kit_columns($columns) {
+    $new_columns = array(
+        'cb' => $columns['cb'],
+        'title' => 'Nome',
+        'empresa' => 'Empresa',
+        'email' => 'Email',
+        'telefone' => 'Telefone',
+        'regiao' => 'Região',
+        'pagina' => 'Página',
+        'date' => 'Data'
+    );
+    return $new_columns;
+}
+add_filter('manage_form_midia_kit_posts_columns', 'ric_form_midia_kit_columns');
+
+// Preencher conteúdo das colunas personalizadas
+function ric_form_midia_kit_column_content($column, $post_id) {
+    switch ($column) {
+        case 'empresa':
+            echo esc_html(get_post_meta($post_id, 'empresa', true));
+            break;
+        case 'email':
+            echo esc_html(get_post_meta($post_id, 'email', true));
+            break;
+        case 'telefone':
+            echo esc_html(get_post_meta($post_id, 'telefone', true));
+            break;
+        case 'regiao':
+            echo esc_html(get_post_meta($post_id, 'regiao', true));
+            break;
+        case 'pagina':
+            echo esc_html(get_post_meta($post_id, 'pagina', true));
+            break;
+    }
+}
+add_action('manage_form_midia_kit_posts_custom_column', 'ric_form_midia_kit_column_content', 10, 2);
+
+// Tornar as colunas ordenáveis
+function ric_form_midia_kit_sortable_columns($columns) {
+    $columns['empresa'] = 'empresa';
+    $columns['email'] = 'email';
+    $columns['regiao'] = 'regiao';
+    $columns['pagina'] = 'pagina';
+    return $columns;
+}
+add_filter('manage_edit-form_midia_kit_sortable_columns', 'ric_form_midia_kit_sortable_columns');
+
+// Salvar dados do formulário do Contact Form 7 (MESMO COM ERRO DE EMAIL)
+function ric_save_form_midia_kit_data($contact_form) {
+    // Pegar ID do formulário
+    $form_id = $contact_form->id();
+    
+    // Verificar se é o formulário do Mídia Kit (substitua pelo ID correto)
+    // Você pode verificar pelo título ou ID
+    $form_title = $contact_form->title();
+    
+    if (strpos($form_title, 'Popup Midia Kit') === false && strpos($form_title, 'Mídia Kit') === false) {
+        return; // Não é o formulário do Mídia Kit, sair
+    }
+    
+    // Pegar dados enviados
+    $submission = WPCF7_Submission::get_instance();
+    
+    if ($submission) {
+        $posted_data = $submission->get_posted_data();
+        
+        // DEBUG: Salvar todos os dados para análise (pode comentar depois)
+        error_log('Contact Form 7 - Dados recebidos: ' . print_r($posted_data, true));
+        
+        // Extrair campos
+        $nome = isset($posted_data['nome']) ? sanitize_text_field($posted_data['nome']) : '';
+        $empresa = isset($posted_data['empresa']) ? sanitize_text_field($posted_data['empresa']) : '';
+        $cargo = isset($posted_data['cargo']) ? sanitize_text_field($posted_data['cargo']) : '';
+        $telefone = isset($posted_data['telefone']) ? sanitize_text_field($posted_data['telefone']) : '';
+        $email = isset($posted_data['email']) ? sanitize_email($posted_data['email']) : '';
+        
+        // Captura da região - pode vir como array ou string
+        $regiao = '';
+        if (isset($posted_data['regiao'])) {
+            if (is_array($posted_data['regiao'])) {
+                $regiao = sanitize_text_field($posted_data['regiao'][0]);
+            } else {
+                $regiao = sanitize_text_field($posted_data['regiao']);
+            }
+            // Se vier "Região de Interesse" (label), deixar vazio
+            if ($regiao === 'Região de Interesse') {
+                $regiao = '';
+            }
+        }
+        
+        // Criar o post
+        $post_data = array(
+            'post_title'    => $nome . ' - ' . $empresa,
+            'post_type'     => 'form_midia_kit',
+            'post_status'   => 'publish',
+            'post_author'   => 1,
+        );
+        
+        // Inserir o post
+        $post_id = wp_insert_post($post_data);
+        
+        // Capturar a página de origem (HTTP_REFERER)
+        $pagina = '';
+        if (isset($_SERVER['HTTP_REFERER'])) {
+            $pagina_url = $_SERVER['HTTP_REFERER'];
+            // Extrair apenas o caminho da URL (sem domínio)
+            $parsed_url = parse_url($pagina_url);
+            if (isset($parsed_url['path'])) {
+                $pagina = $parsed_url['path'];
+                // Remover barra inicial se existir
+                $pagina = ltrim($pagina, '/');
+                // Se estiver vazio, é a home
+                if (empty($pagina)) {
+                    $pagina = 'Home';
+                }
+            } else {
+                $pagina = $pagina_url;
+            }
+        }
+        
+        // Se o post foi criado com sucesso, salvar os meta campos
+        if ($post_id && !is_wp_error($post_id)) {
+            update_post_meta($post_id, 'nome', $nome);
+            update_post_meta($post_id, 'empresa', $empresa);
+            update_post_meta($post_id, 'cargo', $cargo);
+            update_post_meta($post_id, 'telefone', $telefone);
+            update_post_meta($post_id, 'email', $email);
+            update_post_meta($post_id, 'regiao', $regiao);
+            update_post_meta($post_id, 'pagina', $pagina);
+            update_post_meta($post_id, 'form_id', $form_id);
+            update_post_meta($post_id, 'ip_address', isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '');
+            update_post_meta($post_id, 'user_agent', isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '');
+            
+            // DEBUG: Confirmar salvamento
+            error_log('Formulário Mídia Kit salvo - ID: ' . $post_id . ' - Região: ' . $regiao . ' - Página: ' . $pagina);
+        }
+    }
+}
+
+// Hook que executa ANTES do envio do email (sempre executa, mesmo se email falhar)
+add_action('wpcf7_before_send_mail', 'ric_save_form_midia_kit_data');
+
+// Meta box para exibir detalhes do formulário
+function ric_add_form_midia_kit_meta_box() {
+    add_meta_box(
+        'form_midia_kit_details',
+        'Detalhes do Formulário',
+        'ric_form_midia_kit_meta_box_callback',
+        'form_midia_kit',
+        'normal',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'ric_add_form_midia_kit_meta_box');
+
+// Callback do meta box
+function ric_form_midia_kit_meta_box_callback($post) {
+    $nome = get_post_meta($post->ID, 'nome', true);
+    $empresa = get_post_meta($post->ID, 'empresa', true);
+    $cargo = get_post_meta($post->ID, 'cargo', true);
+    $telefone = get_post_meta($post->ID, 'telefone', true);
+    $email = get_post_meta($post->ID, 'email', true);
+    $regiao = get_post_meta($post->ID, 'regiao', true);
+    $pagina = get_post_meta($post->ID, 'pagina', true);
+    $ip = get_post_meta($post->ID, 'ip_address', true);
+    $user_agent = get_post_meta($post->ID, 'user_agent', true);
+    
+    ?>
+    <table class="form-table">
+        <tr>
+            <th><strong>Nome:</strong></th>
+            <td><?php echo esc_html($nome); ?></td>
+        </tr>
+        <tr>
+            <th><strong>Empresa:</strong></th>
+            <td><?php echo esc_html($empresa); ?></td>
+        </tr>
+        <tr>
+            <th><strong>Cargo:</strong></th>
+            <td><?php echo esc_html($cargo); ?></td>
+        </tr>
+        <tr>
+            <th><strong>Telefone:</strong></th>
+            <td><?php echo esc_html($telefone); ?></td>
+        </tr>
+        <tr>
+            <th><strong>Email:</strong></th>
+            <td><a href="mailto:<?php echo esc_attr($email); ?>"><?php echo esc_html($email); ?></a></td>
+        </tr>
+        <tr>
+            <th><strong>Região de Interesse:</strong></th>
+            <td><?php echo esc_html($regiao); ?></td>
+        </tr>
+        <tr>
+            <th><strong>Página de Origem:</strong></th>
+            <td><?php echo esc_html($pagina); ?></td>
+        </tr>
+        <tr>
+            <th><strong>Endereço IP:</strong></th>
+            <td><?php echo esc_html($ip); ?></td>
+        </tr>
+        <tr>
+            <th><strong>Navegador:</strong></th>
+            <td><?php echo esc_html($user_agent); ?></td>
+        </tr>
+        <tr>
+            <th><strong>Data de Envio:</strong></th>
+            <td><?php echo get_the_date('d/m/Y H:i:s', $post->ID); ?></td>
+        </tr>
+    </table>
+    
+    <style>
+        .form-table th {
+            width: 200px;
+            font-weight: bold;
+            padding: 10px;
+            text-align: left;
+        }
+        .form-table td {
+            padding: 10px;
+        }
+        .form-table tr {
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+    <?php
 }

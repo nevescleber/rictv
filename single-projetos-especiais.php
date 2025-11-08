@@ -1,20 +1,55 @@
 <?php get_header(); ?>
 
- <main class="content">
-        <div class="banners">
-            <div class="swiper main-slider">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <?php if (has_post_thumbnail()) : ?>
-                            <?php the_post_thumbnail('full', array('alt' => get_the_title())); ?>
-                        <?php else : ?>
-                        <?php endif; ?>
+ <main class="content projetos-especiais">
+    <div class="banners">
+        <div class="banner-content">
+            <?php
+            $imagem_grande = get_field('projetos_imagem_grande');
+
+            if (!empty($imagem_grande)) :
+                $imagem_grande = esc_url($imagem_grande);
+            ?>
+                <img src="<?php echo $imagem_grande; ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
+            <?php elseif (has_post_thumbnail()) : ?>
+                <?php the_post_thumbnail('full', array('alt' => get_the_title())); ?>
+            <?php else : ?>
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/bg-projetos-especiais.jpg" alt="Projetos Especiais">
+            <?php endif; ?>
+            <div class="banner-overlay">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <!--<h1 class="text-bigger"><?php the_title(); ?></h1>-->
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <section class="projetos-info" style="background-color: #7f3893;">
+        <?php
+        $projetos_cor_principal = get_field('projetos_cor_principal');
+        $default_cor = '#7f3893';
+        $cor_background = '';
+
+        if (is_array($projetos_cor_principal)) {
+            if (!empty($projetos_cor_principal['rgba'])) {
+                $cor_background = sanitize_text_field($projetos_cor_principal['rgba']);
+            } elseif (!empty($projetos_cor_principal['hex'])) {
+                $cor_background = sanitize_hex_color($projetos_cor_principal['hex']);
+            }
+        } elseif (is_string($projetos_cor_principal)) {
+            $cor_background = sanitize_hex_color($projetos_cor_principal);
+            if (!$cor_background) {
+                $cor_background = sanitize_text_field($projetos_cor_principal);
+            }
+        }
+
+        if (!$cor_background) {
+            $cor_background = $default_cor;
+        }
+        ?>
+        <section class="projetos-info" style="background-color: <?php echo esc_attr($cor_background); ?>;">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
@@ -46,9 +81,28 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="projeto-categoria">
-                            <div class="categorias">
+                            <?php
+                                $projetos_cor_fundo_categorias = get_field('projetos_cor_fundo_categorias');
+                                $categorias_background = '';
+
+                                if (is_array($projetos_cor_fundo_categorias)) {
+                                    if (!empty($projetos_cor_fundo_categorias['rgba'])) {
+                                        $categorias_background = sanitize_text_field($projetos_cor_fundo_categorias['rgba']);
+                                    } elseif (!empty($projetos_cor_fundo_categorias['hex'])) {
+                                        $categorias_background = sanitize_hex_color($projetos_cor_fundo_categorias['hex']);
+                                    }
+                                } elseif (is_string($projetos_cor_fundo_categorias)) {
+                                    $categorias_background = sanitize_hex_color($projetos_cor_fundo_categorias);
+                                    if (!$categorias_background) {
+                                        $categorias_background = sanitize_text_field($projetos_cor_fundo_categorias);
+                                    }
+                                }
+
+                                $categorias_style_attr = $categorias_background ? ' style="background-color: ' . esc_attr($categorias_background) . ';"' : '';
+                            ?>
+                            <div class="categorias"<?php echo $categorias_style_attr; ?>>
                                 <?php
-                                // Buscar taxonomias de perfil
+                                    // Buscar taxonomias de perfil
                                     $perfis = get_the_terms(get_the_ID(), 'perfil');
                                     if ($perfis && !is_wp_error($perfis)) {
                                         foreach ($perfis as $perfil) {
@@ -84,8 +138,9 @@
                                             // Plataformas
                                             $plataformas = get_the_terms(get_the_ID(), 'plataforma');
                                             if ($plataformas && !is_wp_error($plataformas)) {
+                                                $plataforma_style_attr = $categorias_background ? ' style="background-color: ' . esc_attr($categorias_background) . ';"' : '';
                                                 foreach ($plataformas as $plataforma) {
-                                                    echo '<span class="text-small type">' . strtoupper(esc_html($plataforma->name)) . '</span>';
+                                                    echo '<span class="text-small type"' . $plataforma_style_attr . '>' . strtoupper(esc_html($plataforma->name)) . '</span>';
                                                 }
                                             }
                                             ?>
@@ -104,14 +159,82 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="perfil-content">
-                            <h1 class="text-big"><?php the_title(); ?></h1>
+                            <?php
+                            $projetos_cor_titulo = get_field('projetos_cor_principal');
+                            $titulo_style = '';
+
+                            if (is_array($projetos_cor_titulo)) {
+                                if (!empty($projetos_cor_titulo['rgba'])) {
+                                    $titulo_style = sanitize_text_field($projetos_cor_titulo['rgba']);
+                                } elseif (!empty($projetos_cor_titulo['hex'])) {
+                                    $titulo_style = sanitize_hex_color($projetos_cor_titulo['hex']);
+                                }
+                            } elseif (is_string($projetos_cor_titulo)) {
+                                $titulo_style = sanitize_hex_color($projetos_cor_titulo);
+                                if (!$titulo_style) {
+                                    $titulo_style = sanitize_text_field($projetos_cor_titulo);
+                                }
+                            }
+
+                            $titulo_style_attr = $titulo_style ? ' style="color: ' . esc_attr($titulo_style) . ';"' : '';
+                            ?>
+                            <h1 class="text-big"<?php echo $titulo_style_attr; ?>><?php the_title(); ?></h1>
 
                             <?php 
-                            if (get_the_content()) {
-                                the_content();
-                            } else {
-                                echo '<p></p>';
-                            }
+                                $projetos_cor_texto = get_field('projetos_cor_principal');
+                                $heading_color = '';
+
+                                if (is_array($projetos_cor_texto)) {
+                                    if (!empty($projetos_cor_texto['rgba'])) {
+                                        $heading_color = sanitize_text_field($projetos_cor_texto['rgba']);
+                                    } elseif (!empty($projetos_cor_texto['hex'])) {
+                                        $heading_color = sanitize_hex_color($projetos_cor_texto['hex']);
+                                    }
+                                } elseif (is_string($projetos_cor_texto)) {
+                                    $heading_color = sanitize_hex_color($projetos_cor_texto);
+                                    if (!$heading_color) {
+                                        $heading_color = sanitize_text_field($projetos_cor_texto);
+                                    }
+                                }
+
+                                $conteudo = get_the_content();
+
+                                if ($conteudo) {
+                                    if ($heading_color) {
+                                        $conteudo = preg_replace_callback(
+                                            '/<(h[1-4])( [^>]*)?>/i',
+                                            function ($matches) use ($heading_color) {
+                                                $tag = $matches[1];
+                                                $attrs = isset($matches[2]) ? $matches[2] : '';
+
+                                                if (stripos($attrs, 'style=') !== false) {
+                                                    $attrs = preg_replace_callback(
+                                                        '/style=("|\')(.*?)\1/i',
+                                                        function ($styleMatches) use ($heading_color) {
+                                                            $quote = $styleMatches[1];
+                                                            $styleContent = trim($styleMatches[2]);
+                                                            if ($styleContent !== '' && substr(trim($styleContent), -1) !== ';') {
+                                                                $styleContent = rtrim($styleContent) . ';';
+                                                            }
+                                                            $styleContent .= ' color: ' . esc_attr($heading_color) . ';';
+                                                            return 'style=' . $quote . $styleContent . $quote;
+                                                        },
+                                                        $attrs
+                                                    );
+                                                } else {
+                                                    $attrs .= ' style="color: ' . esc_attr($heading_color) . ';"';
+                                                }
+
+                                                return '<' . $tag . $attrs . '>';
+                                            },
+                                            $conteudo
+                                        );
+                                    }
+
+                                    echo apply_filters('the_content', $conteudo);
+                                } else {
+                                    echo '<p></p>';
+                                }
                             ?>
                         </div>
                     </div>
@@ -133,16 +256,18 @@
                             </div>
                             <div>
                                 <?php 
-                                $pdf_url = get_field('PDF'); // Campo ACF
+                                $pdf_url = get_field('projetos_pdf'); // Campo ACF
                                 if ($pdf_url) : 
+                                    $pdf_url = esc_url($pdf_url);
                                 ?>
-                                    <a href="<?php echo esc_url($pdf_url); ?>" class="btn btn-success btn-lg px-4 py-3 anuncie-btn" target="_blank">
-                                        Baixe o PDF
-                                        <img src="<?php echo get_template_directory_uri(); ?>/assets/img/download.svg" alt="Download" class="ms-2 download-icon">
-                                    </a>
+                                    <button type="button" class="btn btn-success btn-lg px-4 py-3 anuncie-btn" onclick="event.preventDefault(); openPopupMidiaKit('<?php echo esc_js($pdf_url); ?>'); return false;">
+                                        Baixa o nosso PDF
+                                        <!--<img src="<?php echo get_template_directory_uri(); ?>/assets/img/download.svg" alt="Download" class="ms-2 download-icon">-->
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="ms-2"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4"/></svg>
+                                    </button>
                                 <?php else : ?>
                                     <button class="btn btn-secondary btn-lg px-4 py-3" disabled>
-                                        PDF não disponível
+                                        Estamos atualizando o PDF
                                     </button>
                                 <?php endif; ?>
                             </div>
@@ -251,5 +376,7 @@
         <div class="divisor"></div>
         
     </main>
+
+<?php include_once get_template_directory() . '/components/popup.php'; ?>
 
 <?php get_footer(); ?>

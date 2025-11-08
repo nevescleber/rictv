@@ -1,46 +1,32 @@
 <div class="banner-slider">
     <div class="swiper main-slider">
         <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <div class="slide-content">
-                    <!--<div class="container">
-                        <div class="slide-text">
-                            <h2>RIC<span>tv</span></h2>
-                            <div class="conectada">conectada</div>
-                            <h3>Seu público <strong>interagindo com</strong><br>sua marca <strong>pela TV</strong></h3>
-                            <a href="#" class="btn-secondary">Saiba Mais</a>
+            <?php if( have_rows('banners_lista') ): ?>
+                <?php while( have_rows('banners_lista') ): the_row(); 
+                    $banner_tipo = get_sub_field('banner_tipo');
+                    $banner_imagem = get_sub_field('banner_imagem');
+                    $banner_video = get_sub_field('banner_video');
+                ?>
+                    <div class="swiper-slide">
+                        <div class="slide-content">
+                            <!--<div class="container">
+                                <div class="slide-text">
+                                    // Adicione aqui campos ACF para textos se necessário
+                                </div>
+                            </div>-->
                         </div>
-                    </div>-->
-                </div>
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/Banner.jpg" alt="RIC TV">
-            </div>
-            <div class="swiper-slide">
-                <div class="slide-content">
-                    <!--<div class="container">
-                        <div class="slide-text">
-                            <h2>Você é o <span>Chef</span></h2>
-                            <h3><strong>MÉDICOS</strong></h3>
-                            <div class="badge-wrapper">
-                                <div class="badge">desafio dos campeões</div>
-                            </div>
-                            <a href="#" class="btn-secondary">Saiba Mais</a>
-                        </div>
-                    </div>-->
-                </div>
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/Banner.jpg" alt="RIC TV">
-            </div>
-            <div class="swiper-slide">
-                <div class="slide-content">
-                    <!--<div class="container">
-                        <div class="slide-text">
-                            <h2>Grupo<span>RIC</span></h2>
-                            <h3>Comunicação multimídia para todo o Brasil</h3>
-                            <a href="#" class="btn-secondary">Saiba Mais</a>
-                        </div>
-                    </div>-->
-                </div>
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/Banner.jpg" alt="RIC TV">
-            </div>
+                        
+                        <?php if( $banner_tipo == 'Imagem' && $banner_imagem ): ?>
+                            <img src="<?php echo esc_url($banner_imagem); ?>" alt="Banner RIC">
+                        <?php elseif( $banner_tipo == 'Video' && $banner_video ): ?>
+                            <video autoplay muted loop playsinline>
+                                <source src="<?php echo esc_url($banner_video); ?>" type="video/mp4">
+                                Seu navegador não suporta vídeos HTML5.
+                            </video>
+                        <?php endif; ?>
+                    </div>
+                <?php endwhile; ?>
+            <?php endif; ?>
         </div>
         
         <div class="swiper-pagination-progress">

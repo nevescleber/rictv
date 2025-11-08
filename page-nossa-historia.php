@@ -7,21 +7,17 @@ Template Name: Nossa História
 <?php get_header(); ?>
 
     <div class="banners">
-        <div class="swiper main-slider">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <?php if (has_post_thumbnail()) : ?>
-                        <?php the_post_thumbnail('full', array('alt' => get_the_title())); ?>
-                    <?php else : ?>
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/img/banner-historia.png" alt="RIC TV">
-                    <?php endif; ?>
-                    <div class="slide-content">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-12">
-                                    <h1 class="text-bigger"><?php echo get_the_title(); ?></h1>
-                                </div>
-                            </div>
+        <div class="banner-content">
+            <?php if (has_post_thumbnail()) : ?>
+                <?php the_post_thumbnail('full', array('alt' => get_the_title())); ?>
+            <?php else : ?>
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/banner-historia.png" alt="RIC TV">
+            <?php endif; ?>
+            <div class="banner-overlay">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <h1 class="text-bigger"><?php echo get_the_title(); ?></h1>
                         </div>
                     </div>
                 </div>
@@ -32,27 +28,25 @@ Template Name: Nossa História
     <section class="nossa-historia">
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
-                    <h2 class="text-medium-big">
-                        Prazer, <br>
-                        somos o maior grupo<br>
-                        multiplataforma do Paraná.
-                    </h2>
-
-                    <p class="text-small desc">
-                        A nossa história começa com um nome que se tornou sinônimo de comunicação e inovação no sul do Brasil:
-                        <br><br>
-                        <strong>Mário José Gonzaga Petrelli.</strong>
-                    </p>
+                <div class="col-md-6 col-right">
+                    <?php 
+                    $secao_1_descricao_esquerda = get_field('secao_1_descricao_esquerda');
+                    if ($secao_1_descricao_esquerda): 
+                    ?>
+                        <div class="content">
+                            <?php echo $secao_1_descricao_esquerda; ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
-                <div class="col-md-6">
-                    <p class="text-small">
-                        Nascido em 31 de maio de 1935, em Florianópolis (SC), Mário se formou em Direito pela UFPR, mas a sua trajetória foi muito além dos tribunais! Ainda nos anos 1950, ingressou no setor de seguros.
-                        <br><br>
-                        Mas a sua verdadeira paixão sempre foi a comunicação! Em 1956, ele deu os primeiros passos no Jornalismo, atuando como repórter de política nos jornais O Dia e A Tarde, em Curitiba.
-                        <br><br>
-                        Filho do engenheiro Leonardo Petrelli e da servidora pública Alice Guilhon Gonzaga Petrelli, Mário construiu a sua família ao lado de Dircea Corrêa Petrelli, com quem teve cinco filhos — incluindo Leonardo Petrelli Neto, que mais tarde seguiria os seus passos na comunicação.
-                    </p>
+                <div class="col-md-6 col-left">
+                    <?php 
+                        $secao_1_descricao_direito = get_field('secao_1_descricao_direito');
+                        if ($secao_1_descricao_direito): 
+                        ?>
+                            <div class="text-small desc">
+                                <?php echo $secao_1_descricao_direito; ?>
+                            </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -62,21 +56,22 @@ Template Name: Nossa História
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                   <img src="<?php echo get_template_directory_uri(); ?>/assets/img/mario-gonzaga.png" alt="Mário Petrelli" class="img-fluid">
+                    <?php 
+                        $secao_1_imagem_direita = get_field('secao_1_imagem_direita');
+                        if ($secao_1_imagem_direita): 
+                        ?>
+                        <img src="<?php echo $secao_1_imagem_direita; ?>" alt="Mário Petrelli" class="img-fluid">
+                    <?php endif; ?>
                 </div>
                 <div class="col-md-6">
-                   <h2 class="text-medium-big">
-                        O começo de um império<br> da comunicação no Paraná
-                   </h2>
-                   <p class="text-small">
-                        A grande virada aconteceu em 1976, quando Mário fundou a sua primeira rádio, a Floresta Negra, em  Joinville. No mesmo período, conquistou a concessão  da TV Cultura, em Chapecó, a primeira emissora  de TV da cidade. Era o começo de um império da  comunicação, que rapidamente se tornaria referência no jornalismo regional. 
-                        <br><br>
-                        Enquanto expandia a sua atuação em Santa Catarina,  Mário enxergou novas oportunidades no Paraná. Ainda  em 1976, inaugurou a Rádio Curitibana, seguida pela  TV Vanguarda em Curitiba e Londrina, então afiliada à  Rede Manchete. 
-                        <br><br>
-                        Foi em 1988 que Leonardo Petrelli Neto passou a atuar  ao lado do pai, consolidando a Rede Independência de  Comunicação, o Grupo Ric. 
-                        <br><br>
-                        O espírito inovador de Mário Petrelli não parou por aí…
-                   </p>
+                    <?php 
+                        $secao_1_descricao_imagem = get_field('secao_1_descricao_imagem');
+                        if ($secao_1_descricao_imagem): 
+                        ?>
+                            <div class="content">
+                                <?php echo $secao_1_descricao_imagem; ?>
+                            </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -86,22 +81,24 @@ Template Name: Nossa História
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h2 class="text-medium-big">Uma comunicação forte, <br>
-                    regional e conectada às pessoas</h2>
-                    <p class="text-small">
-                        Em 2006, o grupo ampliou a sua presença no mercado  impresso com o lançamento do jornal Notícias do  Dia (hoje conhecido como ND) em Santa Catarina.  
-                        <br><br>
-                        Já em 2007, veio um grande marco: a unificação  das operações no Paraná e em Santa Catarina,  transformando o Grupo Ric no maior conglomerado de  comunicação do sul do Brasil. 
-                    </p>
+                    <?php 
+                        $secao_2_descricao_esquerda = get_field('secao_2_descricao_esquerda');
+                        if ($secao_2_descricao_esquerda): 
+                        ?>
+                            <div class="content">
+                                <?php echo $secao_2_descricao_esquerda; ?>
+                            </div>
+                    <?php endif; ?>
                 </div>
                 <div class="col-md-6">
-                    <p class="text-small">
-                    O braço catarinense, que era afiliado ao SBT, passou  a integrar a Rede Record, assim como já acontecia no  Paraná desde 1999. 
-                        <br><br>
-                        Com a chegada do digital, o Grupo Ric seguiu inovando!  Em 2012, lançou o portal RIC Mais, que mais tarde foi  regionalizado, dando origem ao ND+ em Santa Catarina  e ao RIC.com.br em Curitiba. 
-                        <br><br>
-                        Após 38 anos à frente dos negócios, em 2013, Mário Petrelli reestruturou o grupo, passando a  presidência para seus filhos: Leonardo Petrelli, no  Paraná, e Marcello Petrelli, em Santa Catarina. Em 2019, veio uma nova reestruturação que resultou no  Grupo ND, focado no mercado catarinense.
-                    </p>
+                    <?php 
+                        $secao_2_descricao_direita = get_field('secao_2_descricao_direita');
+                        if ($secao_2_descricao_direita): 
+                        ?>
+                            <div class="content">
+                                <?php echo $secao_2_descricao_direita; ?>
+                            </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -118,77 +115,31 @@ Template Name: Nossa História
                         
                         <div class="swiper historia-timeline-swiper">
                             <div class="swiper-wrapper">
-                                <!-- 1987 -->
-                                <div class="swiper-slide">
-                                    <div class="timeline-item">
-                                        <div class="timeline-year">1987</div>
-                                        <div class="timeline-dot"></div>
-                                        <div class="timeline-content">
-                                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/img-timeline.png" alt="1987" class="timeline-image">
-                                            <p class="text-small">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a iaculis augue</p>
+                                <?php if (have_rows('secao_3_itens')): ?>
+                                    <?php while (have_rows('secao_3_itens')): the_row(); ?>
+                                        <?php 
+                                        $linha_ano = get_sub_field('linha_ano');
+                                        $linha_imagem = get_sub_field('linha_imagem');
+                                        $linha_descricao = get_sub_field('linha_descricao');
+                                        ?>
+                                        <div class="swiper-slide">
+                                            <div class="timeline-item">
+                                                <?php if ($linha_ano): ?>
+                                                    <div class="timeline-year"><?php echo esc_html($linha_ano); ?></div>
+                                                <?php endif; ?>
+                                                <div class="timeline-dot"></div>
+                                                <div class="timeline-content">
+                                                    <?php if ($linha_imagem): ?>
+                                                        <img src="<?php echo esc_url($linha_imagem); ?>" alt="<?php echo esc_attr($linha_ano); ?>" class="timeline-image">
+                                                    <?php endif; ?>
+                                                    <?php if ($linha_descricao): ?>
+                                                        <p class="text-small"><?php echo $linha_descricao; ?></p>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- 1989 -->
-                                <div class="swiper-slide">
-                                    <div class="timeline-item">
-                                        <div class="timeline-year">1989</div>
-                                        <div class="timeline-dot"></div>
-                                        <div class="timeline-content">
-                                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/img-timeline.png" alt="1989" class="timeline-image">
-                                            <p class="text-small">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a iaculis augue</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- 1994 -->
-                                <div class="swiper-slide">
-                                    <div class="timeline-item">
-                                        <div class="timeline-year">1994</div>
-                                        <div class="timeline-dot"></div>
-                                        <div class="timeline-content">
-                                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/img-timeline.png" alt="1994" class="timeline-image">
-                                            <p class="text-small">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a iaculis augue</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- 1999 -->
-                                <div class="swiper-slide">
-                                    <div class="timeline-item">
-                                        <div class="timeline-year">1999</div>
-                                        <div class="timeline-dot"></div>
-                                        <div class="timeline-content">
-                                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/img-timeline.png" alt="1999" class="timeline-image">
-                                            <p class="text-small">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a iaculis augue</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- 2006 -->
-                                <div class="swiper-slide">
-                                    <div class="timeline-item">
-                                        <div class="timeline-year">2006</div>
-                                        <div class="timeline-dot"></div>
-                                        <div class="timeline-content">
-                                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/img-timeline.png" alt="2006" class="timeline-image">
-                                            <p class="text-small">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a iaculis augue</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- 2013 -->
-                                <div class="swiper-slide">
-                                    <div class="timeline-item">
-                                        <div class="timeline-year">2013</div>
-                                        <div class="timeline-dot"></div>
-                                        <div class="timeline-content">
-                                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/img-timeline.png" alt="2013" class="timeline-image">
-                                            <p class="text-small">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a iaculis augue</p>
-                                        </div>
-                                    </div>
-                                </div>
+                                    <?php endwhile; ?>
+                                <?php endif; ?>
                             </div>
                         </div>
                         
@@ -222,16 +173,30 @@ Template Name: Nossa História
                         </div>
 
                         <p class="text-small">
-                            visão, inovação e proximidade
+                            <?php 
+                                $secao_4_visao = get_field('secao_4_visao');
+                                if ($secao_4_visao): 
+                                ?>
+                                    <?php echo $secao_4_visao; ?>
+                            <?php endif; ?>
                         </p>
 
                         <p class="text-medium">
-                            A história do Grupo Ric é feita de <b>visão, inovação e proximidade</b>.
+                            <?php 
+                                $secao_4_historia = get_field('secao_4_historia');
+                                if ($secao_4_historia): 
+                                ?>
+                                     <?php echo $secao_4_historia; ?>
+                            <?php endif; ?>
                         </p>
 
                         <p class="text-medium-big">
-                            Mais do que um conglomerado de comunicação,
-                            somos um time que acredita no poder da informação para transformar vidas e comunidades.
+                            <?php 
+                                $secao_4_descricao = get_field('secao_4_descricao');
+                                if ($secao_4_descricao): 
+                                ?>
+                                    <?php echo $secao_4_descricao; ?>
+                            <?php endif; ?>
                         </p>
 
                         <div class="img-right">
@@ -247,130 +212,108 @@ Template Name: Nossa História
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h2 class="text-medium-big">Multiplataforma, <br>
-                    multiconteúdo e multiconexão </h2>
+                    <?php 
+                        $secao_5_descricao = get_field('secao_5_descricao');
+                        if ($secao_5_descricao): 
+                        ?>
+                            <div class="content">
+                                <?php echo $secao_5_descricao; ?>
+                            </div>
+                    <?php endif; ?>
 
-                    <p class="text-small">
-                        A Rede Independência de Comunicação, <b>sob o comando de Leonardo Petrelli</b>, 
-                        consolidou-se como o <b>maior grupo multiplataforma do Paraná</b>. 
-                        Com emissoras em Curitiba, Londrina, Maringá e Cascavel, a <b>RICtv é a maior afiliada da RECORD no estado!</b>
-                    </p>
-
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/img/bg-historia.png" alt="Multiplataforma, multiconteúdo e multiconexão" class="img-fluid">
 
                 </div>
 
                 <div class="col-md-6">
                     <div class="historia-faq-container">
-                        <div class="faq-item">
-                            <div class="faq-header">
-                                <h4>Dezembro de 2024 nós expandimos</h4>
-                                <span class="faq-toggle">+</span>
-                            </div>
-                            <div class="faq-content">
-                                <div class="faq-content-inner">
-                                    <p class="text-small">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <div class="faq-header">
-                                <h4>Principais sites no Digital</h4>
-                                <span class="faq-toggle">+</span>
-                            </div>
-                            <div class="faq-content">
-                                <div class="faq-content-inner">
-                                    <p class="text-small">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <div class="faq-header">
-                                <h4>Realities Shows Regionais</h4>
-                                <span class="faq-toggle">+</span>
-                            </div>
-                            <div class="faq-content">
-                                <div class="faq-content-inner">
-                                    <p class="text-small">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <div class="faq-header">
-                                <h4>Já no agronegócio nós temos a solução</h4>
-                                <span class="faq-toggle">+</span>
-                            </div>
-                            <div class="faq-content">
-                                <div class="faq-content-inner">
-                                    <p class="text-small">Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <div class="faq-header">
-                                <h4>Inovação e Empreendedorismo</h4>
-                                <span class="faq-toggle">+</span>
-                            </div>
-                            <div class="faq-content">
-                                <div class="faq-content-inner">
-                                    <p class="text-small">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <div class="faq-header">
-                                <h4>Impacto Social</h4>
-                                <span class="faq-toggle">+</span>
-                            </div>
-                            <div class="faq-content">
-                                <div class="faq-content-inner">
-                                    <p class="text-small">Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <div class="faq-header">
-                                <h4>Eventos: Shows e Convenções</h4>
-                                <span class="faq-toggle">+</span>
-                            </div>
-                            <div class="faq-content">
-                                <div class="faq-content-inner">
-                                    <p class="text-small">Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <div class="faq-header">
-                                <h4>Publicidade Out of Home</h4>
-                                <span class="faq-toggle">+</span>
-                            </div>
-                            <div class="faq-content">
-                                <div class="faq-content-inner">
-                                    <p class="text-small">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.</p>
-                                </div>
-                            </div>
-                        </div>
+                        <?php 
+                            $secao_5_imagem = get_field('secao_5_imagem');
+                            if ($secao_5_imagem): 
+                            ?>
+                                <img src="<?php echo $secao_5_imagem; ?>" alt="Multiplataforma, multiconteúdo e multiconexão" class="img-fluid">
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
         </div>
     </section>	
 
-    <section class="historia-video">
+    <!--<section class="historia-faq">
         <div class="container">
             <div class="row">
-                <div class="col-12">
-                    <p>
-                        Esse é o Grupo Ric: o maior grupo de comunicação
-                        multiplataforma do Paraná e um dos maiores do país, sempre inovando e conectando pessoas.
-                    </p>
+                <div class="col-md-6">
+                    <?php 
+                        $secao_5_descricao = get_field('secao_5_descricao');
+                        if ($secao_5_descricao): 
+                        ?>
+                            <div class="content">
+                                <?php echo $secao_5_descricao; ?>
+                            </div>
+                    <?php endif; ?>
+
+                    <?php 
+                        $secao_5_imagem = get_field('secao_5_imagem');
+                        if ($secao_5_imagem): 
+                        ?>
+                            <img src="<?php echo $secao_5_imagem; ?>" alt="Multiplataforma, multiconteúdo e multiconexão" class="img-fluid">
+                    <?php endif; ?>
+
+                </div>
+
+                <div class="col-md-6">
+                    <div class="historia-faq-container">
+                        <?php if (have_rows('faq')): ?>
+                            <?php while (have_rows('faq')): the_row(); ?>
+                                <?php 
+                                $faq_titulo = get_sub_field('faq_titulo');
+                                $faq_descricao = get_sub_field('faq_descricao');
+                                ?>
+                                <div class="faq-item">
+                                    <div class="faq-header">
+                                        <?php if ($faq_titulo): ?>
+                                            <h4><?php echo esc_html($faq_titulo); ?></h4>
+                                        <?php endif; ?>
+                                        <span class="faq-toggle">+</span>
+                                    </div>
+                                    <div class="faq-content">
+                                        <div class="faq-content-inner">
+                                            <?php if ($faq_descricao): ?>
+                                                <p class="text-small"><?php echo $faq_descricao; ?></p>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endwhile; ?>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>-->
+
+    <section class="historia-video">
+        <div class="video-background">
+            <?php 
+            $secao_5_video = get_field('secao_5_video');
+            if ($secao_5_video): 
+            ?>
+                <video autoplay muted loop playsinline>
+                    <source src="<?php echo esc_url($secao_5_video); ?>" type="video/mp4">
+                </video>
+            <?php endif; ?>
+            <div class="video-overlay">
+                <div class="container">
+                    <div class="video-content">
+                        <div class="video-logo">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logo-vertical.png" alt="Grupo RIC" class="img-fluid">
+                        </div>
+                        <div class="video-text">
+                            <p class="text-medium-big">
+                                Esse é o Grupo Ric: o maior grupo de comunicação
+                                multiplataforma do Paraná e um dos maiores do país, sempre inovando e conectando pessoas.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -384,17 +327,26 @@ Template Name: Nossa História
             <div class="row">
                 <div class="col-12">
                     <div class="logos-list">
-                       <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logo-ric-white.png" alt="Grupo RIC" class="img-fluid">
-                       <img src="<?php echo get_template_directory_uri(); ?>/assets/img/LOGO-JP-FM---TODAS-PRAÇAS(WHITE).png" alt="Grupo RIC" class="img-fluid">
-                       <img src="<?php echo get_template_directory_uri(); ?>/assets/img/LOGO-JP-FM---TODAS-PRAÇAS(WHITE)2.png" alt="Grupo RIC" class="img-fluid">
-                       <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logo-grupo-ric.png" alt="Grupo RIC" class="img-fluid">
-                       <img src="<?php echo get_template_directory_uri(); ?>/assets/img/LOGO-TOPVIEW-BRANCA.png" alt="Grupo RIC" class="img-fluid">
-                       <img src="<?php echo get_template_directory_uri(); ?>/assets/img/LOGO-INSTITUTO RIC-BRANCA-HORIZONTAL1.png" alt="Grupo RIC" class="img-fluid">
+                       <?php if (have_rows('logotipos')): ?>
+                           <?php while (have_rows('logotipos')): the_row(); ?>
+                               <?php $logo_imagem = get_sub_field('logo_imagem'); ?>
+                               <?php if ($logo_imagem): ?>
+                                   <img src="<?php echo esc_url($logo_imagem); ?>" alt="Grupo RIC" class="img-fluid">
+                               <?php endif; ?>
+                           <?php endwhile; ?>
+                       <?php endif; ?>
                     </div>
                 </div>
 
                 <div class="col-12">
-                    <a href="#" class="btn-saiba-mais text-medium">Veja Nossa Apresentação Institucional</a>
+                    <?php 
+                    $apresentacao_institucional = get_field('opcao_apresentacao_institucional', 'option');
+                    if ($apresentacao_institucional): 
+                    ?>
+                        <a href="<?php echo esc_url($apresentacao_institucional); ?>" class="btn-saiba-mais text-medium" data-fancybox data-type="iframe">Veja Nossa Apresentação Institucional</a>
+                    <?php else: ?>
+                        <a href="#" class="btn-saiba-mais text-medium">Veja Nossa Apresentação Institucional</a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

@@ -893,22 +893,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (typeof $.fancybox !== 'undefined') {
             // Inicializa Fancybox para elementos com data-fancybox
             $('[data-fancybox]').fancybox();
-
-            // Adiciona comportamento para links PDF sem data-fancybox
-            $(document).on('click', 'a[href*=".pdf"]:not([data-fancybox])', function(e) {
-                e.preventDefault();
-                $.fancybox.open({
-                    src: this.href,
-                    type: 'iframe',
-                    buttons: ['close'],
-                    iframe: {
-                        css: {
-                            width: '100%',
-                            height: '100%'
-                        }
-                    }
-                });
-            });
         }
         
         // Inicializa FAQ
@@ -1035,4 +1019,123 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Inicializar funcionalidades
     initEquipeComercialCards();
+
+    // Swiper da seção OOH
+    if (document.querySelector('.ooh-swiper')) {
+        const oohSwiper = new Swiper('.ooh-swiper', {
+            slidesPerView: 3,
+            spaceBetween: 30,
+            centeredSlides: true,
+            loop: true,
+            pagination: {
+                el: '.ooh-pagination',
+                clickable: true,
+            },
+            breakpoints: {
+                320: {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 25,
+                },
+                992: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                }
+            }
+        });
+    }
+
+    // Popup Tabelas Comerciais
+    const tabelasPopup = document.getElementById('popup-tabelas-comerciais');
+    const tabelasOpenButtons = document.querySelectorAll('[data-popup-target="popup-tabelas-comerciais"]');
+
+    if (tabelasPopup && tabelasOpenButtons.length) {
+        const closeBtn = tabelasPopup.querySelector('.popup-tabelas-close');
+
+        const openTabelasPopup = () => {
+            tabelasPopup.classList.add('active');
+            document.body.classList.add('popup-open');
+        };
+
+        const closeTabelasPopup = () => {
+            tabelasPopup.classList.remove('active');
+            document.body.classList.remove('popup-open');
+        };
+
+        tabelasOpenButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                event.preventDefault();
+
+                // Fecha mega menus e remove estado ativo dos triggers (desktop)
+                document.querySelectorAll('.mega-menu').forEach(menu => {
+                    menu.classList.remove('active');
+                    menu.style.display = 'none';
+                });
+                document.querySelectorAll('.mega-trigger').forEach(trigger => {
+                    trigger.classList.remove('active');
+                });
+
+                // Fecha estruturas móveis caso estejam abertas
+                document.querySelectorAll('.mega-mobile-menu, .mobile-submenu').forEach(menu => {
+                    menu.classList.remove('active');
+                    menu.style.display = 'none';
+                });
+                document.querySelectorAll('.menu-trigger').forEach(trigger => {
+                    trigger.classList.remove('active');
+                });
+
+                if (typeof closeMobileMenu === 'function' && menuIsOpen) {
+                    closeMobileMenu();
+                }
+
+                openTabelasPopup();
+            });
+        });
+
+        if (closeBtn) {
+            closeBtn.addEventListener('click', closeTabelasPopup);
+        }
+
+        tabelasPopup.addEventListener('click', (event) => {
+            if (event.target === tabelasPopup) {
+                closeTabelasPopup();
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && tabelasPopup.classList.contains('active')) {
+                closeTabelasPopup();
+            }
+        });
+    }
+
+    // Contact Form 7 - Configuração AJAX
+    // Aguardar que o CF7 esteja totalmente carregado
+    document.addEventListener('wpcf7mailsent', function(event) {
+        // Formulário enviado com sucesso
+        console.log('Formulário enviado com sucesso!');
+    }, false);
+
+    document.addEventListener('wpcf7invalid', function(event) {
+        // Validação falhou - mostrar erros sem reload
+        console.log('Validação falhou');
+    }, false);
+
+    document.addEventListener('wpcf7spam', function(event) {
+        // Spam detectado
+        console.log('Spam detectado');
+    }, false);
+
+    document.addEventListener('wpcf7mailfailed', function(event) {
+        // Falha no envio
+        console.log('Falha no envio');
+    }, false);
+
+    document.addEventListener('wpcf7submit', function(event) {
+        // Formulário foi submetido
+        console.log('Formulário submetido');
+    }, false);
 });

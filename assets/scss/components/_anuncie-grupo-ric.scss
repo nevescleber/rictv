@@ -72,12 +72,17 @@
                     box-shadow: none;
                     text-decoration: none;
                     text-align: center;
+                    cursor: pointer;
 
                     &:hover,
                     &:focus-visible {
                         background-color: #43a047;
                         color: #fff;
                         text-decoration: none;
+                    }
+                    
+                    svg{
+                        vertical-align: middle;
                     }
                 }
             }

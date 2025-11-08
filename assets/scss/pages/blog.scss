@@ -296,6 +296,11 @@
                             background-color: rgba($blue, 0.1);
                             color: $blue;
                         }
+
+                        &.cat {
+                            background-color: rgba($blue, 0.1);
+                            color: $blue;
+                        }
                     }
                 }
                 
@@ -373,6 +378,7 @@
             border-radius: .3rem;
             transition: background 0.2s, color 0.2s;
             cursor: pointer;
+            text-transform: uppercase;
 
             &.active {
                 background: #1976d2;
@@ -540,6 +546,7 @@
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
+            text-decoration: none;
             &:hover {
                 background: rgba(0, 102, 204, 0.1);
                 color: #0066CC;

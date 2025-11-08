@@ -1,3 +1,143 @@
+.rodape-flutuante {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: clamp(1rem, 3vw, 1.75rem) clamp(1.5rem, 4vw, 3rem);
+    background: #ffffff;
+    box-shadow: 0 -12px 45px rgba(8, 14, 33, 0.18);
+    z-index: 1050;
+    transform: translateY(100%);
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+
+    &.is-visible {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+        visibility: visible;
+    }
+
+    &.is-hidden {
+        opacity: 0;
+        transform: translateY(100%);
+        pointer-events: none;
+        visibility: hidden;
+    }
+
+    &__inner {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(1rem, 2vw, 1.5rem);
+        align-items: flex-start;
+        justify-content: center;
+        margin: 0 auto;
+        width: 100%;
+        max-width: 1180px;
+        position: relative;
+    }
+
+    &__title {
+        margin: 0;
+        font-size: clamp(1.15rem, 3vw, 1.6rem);
+        font-weight: 700;
+        color: #081e33;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+    }
+
+    &__cta {
+        align-self: flex-start;
+        padding: 0.75rem clamp(2.25rem, 6vw, 3.5rem);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: $white;
+        text-decoration: none;
+    }
+
+    &__close {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translate(120%, -50%);
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        border: 1px solid rgba(8, 30, 51, 0.2);
+        background: transparent;
+        color: #081e33;
+        font-size: 1.5rem;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+    }
+
+    @media (max-width: 991px) {
+        &__inner {
+            max-width: none;
+        }
+
+        &__title {
+            font-size: clamp(1.1rem, 3.8vw, 1.4rem);
+        }
+
+        &__cta {
+            width: 100%;
+            text-align: center;
+        }
+
+        &__inner {
+            align-items: center;
+        }
+
+        &__close {
+            position: static;
+            transform: none;
+            width: 2.25rem;
+            height: 2.25rem;
+            margin: 0 auto;
+
+            &:hover,
+            &:focus-visible {
+                transform: scale(1.05);
+                color: #ffffff;
+                border-color: transparent;
+                background-color: #0f5ad4;
+            }
+        }
+    }
+
+    @media (min-width: 992px) {
+        &__inner {
+            flex-direction: row;
+            gap: clamp(1.5rem, 4vw, 3.5rem);
+            align-items: center;
+        }
+
+        &__cta {
+            margin-left: auto;
+        }
+
+        &__close {
+            transform: translate(120%, -50%);
+
+            &:hover,
+            &:focus-visible {
+                transform: translate(120%, -50%) scale(1.05);
+                color: #ffffff;
+                border-color: transparent;
+                background-color: #0f5ad4;
+            }
+        }
+    }
+}
+
 .footer{
     padding: 3rem 0;
     color: $white;

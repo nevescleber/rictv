@@ -29,30 +29,30 @@
         ?>
            
             <section class="planos-comerciais-sobre">
-             <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <?php 
-                        $sessao_1_imagem_esquerda = get_field('sessao_1_imagem_esquerda');
-                        if ($sessao_1_imagem_esquerda) : ?>
-                            <img src="<?php echo $sessao_1_imagem_esquerda; ?>" alt="<?php the_title(); ?>">
-                        <?php else : ?>
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/imagem-record-2.png" alt="<?php the_title(); ?>">
-                        <?php endif; ?>
-                    </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php 
+                            $sessao_1_imagem_esquerda = get_field('sessao_1_imagem_esquerda');
+                            if ($sessao_1_imagem_esquerda) : ?>
+                                <img src="<?php echo $sessao_1_imagem_esquerda; ?>" alt="<?php the_title(); ?>">
+                            <?php else : ?>
+                                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/imagem-record-2.png" alt="<?php the_title(); ?>">
+                            <?php endif; ?>
+                        </div>
 
-                    <div class="col-md-6">
-                        <?php 
-                        $sessao_1_texto_direito = get_field('sessao_1_texto_direito');
-                        if ($sessao_1_texto_direito) : ?>
-                            <div class="content">
-                                <?php echo $sessao_1_texto_direito; ?>
-                            </div>
-                        <?php else : ?>
-                        <?php endif; ?>
+                        <div class="col-md-6">
+                            <?php 
+                            $sessao_1_texto_direito = get_field('sessao_1_texto_direito');
+                            if ($sessao_1_texto_direito) : ?>
+                                <div class="content">
+                                    <?php echo $sessao_1_texto_direito; ?>
+                                </div>
+                            <?php else : ?>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
-             </div>
             </section>
 
             <section class="planos-duracao">
@@ -116,23 +116,41 @@
                             <div class="social-info">
                                 <h2 class="social-title">Alcance nas<br>Redes</h2>
                                 <p class="social-subtitle">Nos siga nas redes sociais</p>
-                                <div class="social-icons">
-                                    <a href="#" target="_blank">
-                                        <div class="social-icon">
-                                            <i class="fab fa-instagram"></i>
-                                        </div>
-                                    </a>
-                                    <a href="#" target="_blank">
-                                        <div class="social-icon">
-                                        <i class="fab fa-facebook-f"></i>
-                                        </div>
-                                    </a>
-                                    <a href="#" target="_blank">
-                                        <div class="social-icon">
-                                            <i class="fab fa-youtube"></i>
-                                        </div>
-                                    </a>
-                                </div>
+                                <?php
+                                $social_facebook = get_field('opcao_facebook', 'option');
+                                $social_instagram = get_field('opcao_instagram', 'option');
+                                $social_linkedin = get_field('opcao_linkedin', 'option');
+
+                                $social_facebook = $social_facebook ? esc_url($social_facebook) : '';
+                                $social_instagram = $social_instagram ? esc_url($social_instagram) : '';
+                                $social_linkedin = $social_linkedin ? esc_url($social_linkedin) : '';
+
+                                if ($social_facebook || $social_instagram || $social_linkedin) :
+                                ?>
+                                    <div class="social-icons">
+                                        <?php if ($social_instagram) : ?>
+                                            <a href="<?php echo $social_instagram; ?>" target="_blank" rel="noopener">
+                                                <div class="social-icon">
+                                                    <i class="fab fa-instagram"></i>
+                                                </div>
+                                            </a>
+                                        <?php endif; ?>
+                                        <?php if ($social_facebook) : ?>
+                                            <a href="<?php echo $social_facebook; ?>" target="_blank" rel="noopener">
+                                                <div class="social-icon">
+                                                    <i class="fab fa-facebook-f"></i>
+                                                </div>
+                                            </a>
+                                        <?php endif; ?>
+                                        <?php if ($social_linkedin) : ?>
+                                            <a href="<?php echo $social_linkedin; ?>" target="_blank" rel="noopener">
+                                                <div class="social-icon">
+                                                    <i class="fab fa-linkedin-in"></i>
+                                                </div>
+                                            </a>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endif; ?>
                             </div>
                         </div>
                         <div class="col-md-8">
@@ -178,22 +196,174 @@
                 </div>
             </section>
 
-        <?php else : ?>
-            <p>Sessão para TV</p>
-        <?php endif; ?>
+            <section class="anuncie-section py-5 position-relative">
+                <div class="container-fluid">
+                    <div class="container">
+                        <div class="anuncie-container">
+                            <div class="anuncie-bg"></div>
+                            <div class="anuncie-flex">
+                                    <div>
+                                        <h2 class="text-big">Baixe Agora Nosso <br>Mídia Kit</h2>
+                                    </div>
+                                    <div class="anuncie-text">
+                                        <p class="text-white text-medium">
+                                            Criamos estratégias personalizadas para levar sua campanha ainda mais longe.
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <?php 
+                                        // Buscar PDF do meta campo ou ACF
+                                        $pdf_url = get_post_meta(get_the_ID(), 'PDF', true);
+                                        if (!$pdf_url) {
+                                            $pdf_url = get_field('midia_kit_arquivo'); // Tenta ACF também
+                                        }
+                                        if ($pdf_url) : 
+                                        ?>
+                                            <button type="button" onclick="event.preventDefault(); openPopupMidiaKit('<?php echo esc_url($pdf_url); ?>'); return false;" class="btn btn-success btn-lg px-4 py-3 anuncie-btn">
+                                                Baixe o Mídia Kit
+                                                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/download.svg" alt="Download" class="ms-2 download-icon">
+                                            </button>
+                                        <?php else : ?>
+                                            <button class="btn btn-secondary btn-lg px-4 py-3" disabled>
+                                                Estamos atualizando <br> o mídia kit
+                                            </button>
+                                        <?php endif; ?>
+                                    </div>
+                                </div> <!-- Fecha projeto-content -->
+                            </div> <!-- Fecha projeto-categoria -->
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-        <section class="anuncie-section py-5 position-relative">
+        <?php else : ?>
+            <section class="projetos-info">
+                <div class="container">
+                    <div class="row align-items-center">
+
+                        <div class="col-md-6">
+                            <?php 
+                            $sessao_1_imagem_esquerda = get_field('sessao_1_imagem_esquerda');
+                            if ($sessao_1_imagem_esquerda) : ?>
+                                <div class="image">
+                                    <img src="<?php echo $sessao_1_imagem_esquerda; ?>" alt="<?php the_title(); ?>">
+                                </div>
+                            <?php else : ?>
+                                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/imagem-record-2.png" alt="<?php the_title(); ?>">
+                            <?php endif; ?>
+                        </div>
+
+                        <div class="col-md-6">
+                            <?php 
+                            $sessao_1_texto_direito = get_field('sessao_1_texto_direito');
+                            if ($sessao_1_texto_direito) : ?>
+                                <div class="content">
+                                    <?php echo $sessao_1_texto_direito; ?>
+                                </div>
+                            <?php else : ?>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="audiencia-info py-5">
+                <div class="container px-0">
+                    <div class="row g-0 text-white audiencia-row">
+                        <?php 
+                        $sessao_2_azul_tv = get_field('sessao_2_azul_tv');
+                        if ($sessao_2_azul_tv) :
+                            $index = 0;
+                            foreach ($sessao_2_azul_tv as $item) :
+                                $numero = isset($item['sessao_2_azul_tv_numero']) ? $item['sessao_2_azul_tv_numero'] : '';
+                                $titulo = isset($item['sessao_2_azul_tv_titulo']) ? $item['sessao_2_azul_tv_titulo'] : '';
+                                $texto = isset($item['sessao_2_azul_tv_texto']) ? $item['sessao_2_azul_tv_texto'] : '';
+                                
+                                // Primeiro item sem número
+                                if ($index === 0) :
+                        ?>
+                            <div class="col-lg-4 col-12 d-flex flex-column justify-content-center align-items-center audiencia-col text-center text-lg-start px-4 py-5">
+                                <h2 class="text-big"><?php echo esc_html($titulo); ?></h2>
+                                <p class="text-small"><?php echo wp_kses_post($texto); ?></p>
+                            </div>
+                        <?php 
+                                else : 
+                                    // Demais itens com número
+                        ?>
+                            <div class="col-lg-4 col-12 d-flex flex-column justify-content-center align-items-center audiencia-col text-center px-4 py-5">
+                                <?php if ($numero) : ?>
+                                    <div class="text-bigger bold"><?php echo esc_html($numero); ?></div>
+                                <?php endif; ?>
+                                <?php if ($titulo) : ?>
+                                    <div class="text-medium-small bold"><?php echo esc_html($titulo); ?></div>
+                                <?php endif; ?>
+                                <?php if ($texto) : ?>
+                                    <div class="text-small"><?php echo wp_kses_post($texto); ?></div>
+                                <?php endif; ?>
+                            </div>
+                        <?php 
+                                endif;
+                                $index++;
+                            endforeach;
+                        else :
+                            // Fallback com dados padrão
+                        ?>  
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </section>
+
+            <section class="como-anunciar-section py-5">
+                <div class="container">
+                    <div class="row justify-content-center align-items-stretch">
+                        <div class="col-lg-3 col-md-12 d-flex flex-column justify-content-center align-items-start mb-4 mb-lg-0 text-lg-start text-center">
+                            <h2 class="text-big">Como anunciar?</h2>
+                            <?php 
+                            $como_anunciar_texto = get_field('como_anunciar_texto');
+                            if ($como_anunciar_texto) : ?>
+                                <div class="text-medium"><?php echo wp_kses_post($como_anunciar_texto); ?></div>
+                            <?php endif; ?>
+                        </div>
+                        <?php 
+                        $como_anunciar_itens = get_field('como_anunciar_itens');
+                        if ($como_anunciar_itens) :
+                            foreach ($como_anunciar_itens as $item) :
+                                $titulo = isset($item['como_anunciar_item_titulo']) ? $item['como_anunciar_item_titulo'] : '';
+                                $descricao = isset($item['como_anunciar_descricao']) ? $item['como_anunciar_descricao'] : '';
+                        ?>
+                            <div class="col-lg-3 col-md-4 mb-4 mb-lg-0">
+                                <div class="anunciar-box h-100 d-flex flex-column align-items-center text-center">
+                                    <?php if ($titulo) : ?>
+                                        <h3 class="text-medium-big"><?php echo esc_html($titulo); ?></h3>
+                                    <?php endif; ?>
+                                    <hr class="anunciar-box-line">
+                                    <?php if ($descricao) : ?>
+                                        <div class="text-medium"><?php echo wp_kses_post($descricao); ?></div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        <?php 
+                            endforeach;
+                        endif; 
+                        ?>
+                    </div>
+                </div>
+            </section>
+
+            <section class="anuncie-section py-5 position-relative">
             <div class="container-fluid">
                 <div class="container">
                     <div class="anuncie-container">
                         <div class="anuncie-bg"></div>
                         <div class="anuncie-flex">
                             <div>
-                                <h2 class="text-big">Baixe Agora Nosso <br>Mídia Kit</h2>
+                                <h2 class="text-big">Precisa de uma <br>solução sob medida?</h2>
                             </div>
                             <div class="anuncie-text">
                                 <p class="text-white text-medium">
-                                    Criamos estratégias personalizadas para levar sua campanha ainda mais longe.
+                                    Criamos estratégias <br>
+                                    personalizadas para levar sua <br>
+                                    campanha ainda mais longe.
                                 </p>
                             </div>
                             <div>
@@ -205,10 +375,11 @@
                                 }
                                 if ($pdf_url) : 
                                 ?>
-                                    <a href="<?php echo esc_url($pdf_url); ?>" class="btn btn-success btn-lg px-4 py-3 anuncie-btn" target="_blank">
+                                    <button type="button" onclick="event.preventDefault(); openPopupMidiaKit('<?php echo esc_url($pdf_url); ?>'); return false;" class="btn btn-success btn-lg px-4 py-3 anuncie-btn">
                                         Baixe o Mídia Kit
-                                        <img src="<?php echo get_template_directory_uri(); ?>/assets/img/download.svg" alt="Download" class="ms-2 download-icon">
-                                    </a>
+                                        <!--<img src="<?php echo get_template_directory_uri(); ?>/assets/img/download.svg" alt="Download" class="ms-2 download-icon">-->
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="ms-2"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4"/></svg>
+                                    </button>
                                 <?php else : ?>
                                     <button class="btn btn-secondary btn-lg px-4 py-3" disabled>
                                         Estamos atualizando <br> o mídia kit
@@ -222,10 +393,13 @@
             </div>
         </section>
 
+        <?php endif; ?>
+
+
         <section class="midia-kit-busca">
             <div class="container">
                 <div class="midia-kit-header">
-                    <div class="midia-kit-header-titulo">
+                    <div class="text-big bold">
                         Outros Planos Comerciais
                     </div>
                     <div class="midia-kit-header-botao">
@@ -349,5 +523,16 @@
         });
         </script>
         
+<!-- Incluir popup do Mídia Kit -->
+<?php include get_template_directory() . '/components/popup.php'; ?>
+
+<script>
+// Script de verificação - pode remover após testar
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Página carregada');
+    console.log('Popup existe:', document.getElementById('popup-midia-kit') ? 'SIM' : 'NÃO');
+    console.log('Função openPopupMidiaKit existe:', typeof openPopupMidiaKit !== 'undefined' ? 'SIM' : 'NÃO');
+});
+</script>
 
 <?php get_footer(); ?>

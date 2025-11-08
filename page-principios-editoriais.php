@@ -17,7 +17,7 @@ Template Name: Principios Editoriais
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <h1 class="text-bigger">Principios Editoriais</h1>
+                            <h1 class="text-bigger"><?php the_title(); ?></h1>
                         </div>
                     </div>
                 </div>
@@ -33,20 +33,23 @@ Template Name: Principios Editoriais
             <div class="row">
                 <div class="col-md-6">
                     <h2 class="text-big text-white">
-                        O Grupo RIC Paraná, é composto por veículos de rádio, televisão e plataformas digitais.
+                        <?php 
+                        $conteudo_texto_esquerdo = get_field('conteudo_texto_esquerdo');
+                        if ($conteudo_texto_esquerdo): 
+                        ?>
+                            <?php echo $conteudo_texto_esquerdo; ?>
+                        <?php endif; ?>
                     </h2>
                 </div>
                 <div class="col-md-6">
-                    <p class="text-medium text-white">
-                        Nas plataformas digitais RIC.com.br e Banda B, a atuação jornalística é guiada por um <b>compromisso inegociável</b>
-                        com a verdade, a ética e o interesse público.
-
-                        <br>
-                        <br>
-                        <b>Nosso valor editorial</b> tem como fundamento o jornalismo independente, responsável e plural,
-                        que respeita a diversidade de opniões, assegura o contraditório e prioriza a veracidade dos fatos. Atuamos
-                        com imparcialidade, sempre atentos ao propósito de informar e contribuir para o desenvolvimento de uma sociedade mais bem informada e consiente.
-                    </p>
+                    <div class="content text-medium text-white">
+                        <?php 
+                        $conteudo_descricao_direita = get_field('conteudo_descricao_direita');
+                        if ($conteudo_descricao_direita): 
+                        ?>
+                            <?php echo $conteudo_descricao_direita; ?>
+                        <?php endif; ?>
+                    </div>
                 </div>
             </div>
         </div>
@@ -56,18 +59,22 @@ Template Name: Principios Editoriais
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/img/principios-imagem.png" alt="RIC TV">
+                    <?php 
+                    $conteudo_imagem = get_field('conteudo_imagem');
+                    if ($conteudo_imagem): 
+                    ?>
+                        <img src="<?php echo esc_url($conteudo_imagem); ?>" alt="">
+                    <?php endif; ?>
                 </div>
                 <div class="col-md-6">
-                    <p class="text-medium">
-                        Nossos conteúdos são pautados por critérios técnicos de relevância, atualidade, confiabilidade e interesse público, com o objetivo de oferecer informação verdadeira de qualidade e promover uma comunicação transparente com nossos públicos. Seja por meio da televisão, do rádio ou dos portais de notícias, buscamos refletir a realidade regional com profundidade, contexto e responsabilidade social.
-                        <br>
-                        <br>
-                        O Grupo RIC Paraná valoriza o jornalismo como instrumento essencial da democracia e reafirma seu compromisso diário com a integridade editorial, a inovação nos formatos e a proximidade com a população que confia em nossos veículos como fontes seguras de informação. 
-                        <br>
-                        <br>
-                        Ao promover a convergência entre TV, rádio e plataformas digitais, o Grupo Ric Paraná reafirma sua missão de ser referência em informação de qualidade, mantendo um vínculo sólido com seu público  e com os princípios que regem o bom jornalismo.
-                    </p>
+                    <div class="content text-medium">
+                        <?php 
+                        $conteudo_descricao_imagem = get_field('conteudo_descricao_imagem');
+                        if ($conteudo_descricao_imagem): 
+                        ?>
+                            <?php echo $conteudo_descricao_imagem; ?>
+                        <?php endif; ?>
+                    </div>
                 </div>
             </div>
         </div>

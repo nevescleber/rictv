@@ -128,7 +128,6 @@
             </div>
         </section>
 
-        <!-- gerar aqui -->
         <section class="contato-section">
             <div class="container">
                 <div class="contato-wrapper">

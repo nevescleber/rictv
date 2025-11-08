@@ -3,21 +3,31 @@
         margin-top: 0;
         position: relative;
         overflow: hidden;
-        
-        @media #{$mq-md-max} {
-            margin-top: 4.375rem;
-        }
-
+  
         .banner-static {
             width: 100%;
             height: 25.5rem;
             position: relative;
             overflow: hidden;
 
+            &::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.45);
+                z-index: 1;
+            }
+
             img {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
+                object-position: top;
+                position: relative;
+                z-index: 0;
             }
 
             .slide-content {
@@ -30,6 +40,7 @@
                 align-items: center;
                 text-align: center;
                 color: $white;
+                z-index: 2;
             }
 
             .titulo {
@@ -90,16 +101,36 @@
         gap: 1.5rem;
         align-items: center;
         margin-top: 0.5rem;
-        a img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #f4f4f4;
-            transition: box-shadow 0.2s;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        
+        a {
+            text-decoration: none;
+            transition: transform 0.3s ease;
+            
+            &:hover {
+                transform: scale(1.1);
+            }
         }
-        a img:hover {
-            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+        
+        .share-icon-circle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 3.125rem; // 50px
+            height: 3.125rem; // 50px
+            border-radius: 50%;
+            background-color: #0066CC; // Azul
+            transition: all 0.3s ease;
+            
+            svg {
+                fill: $white;
+                width: 1.25rem; // 20px
+                height: 1.25rem; // 20px
+            }
+        }
+        
+        a:hover .share-icon-circle {
+            background-color: #0052A3; // Azul mais escuro no hover
+            box-shadow: 0 0.25rem 1rem rgba(0, 102, 204, 0.3);
         }
     }
     
@@ -107,17 +138,43 @@
         flex: 1;
         font-family: $font-body;
 
+        div{
+            p{
+                margin: 0;
+                color: $black;
+    
+                @extend .text-medium;
+            }
+    
+            h2{
+                color: $black;
+                @extend .text-medium-big;
+            }
+        }
+
         p{
             margin: 0;
             color: $black;
+            padding-bottom: 1rem;
 
             @extend .text-medium;
         }
 
         h2{
+            color: $black;
             @extend .text-medium-big;
         }
-       
+
+        ol, ul{
+            li{
+                @extend .text-medium;
+            }
+        }
+
+       a{
+        color: #111;
+        font-weight: $bold;
+       }
     }
     
     .content-description img {

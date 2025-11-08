@@ -45,11 +45,13 @@ body.home{
             h2{
                 color: $black;
                 line-height: 1.2;
+                @extend .text-medium-big;
             }
     
             p{
                 color: $gray-dark;
                 line-height: 1.5;
+                @extend .text-medium;
             }
     
             .btn-saiba-mais{
@@ -286,6 +288,17 @@ body.home{
 
         .row {
             min-height: 500px;
+
+            .content{
+                h2{
+                    color: $white;
+                    @extend .text-medium-big;
+                }
+                p{
+                    @extend .text-medium;
+                    color: $white;
+                }
+            }
         }
 
         .col-left{
@@ -748,7 +761,7 @@ body.home{
     
     }
 
-    .anuncie-section {
+    /*.anuncie-section {
         position: relative;
         background: linear-gradient(90deg, #0066B3 0%, #1B9B54 100%);
         overflow: hidden;
@@ -856,7 +869,7 @@ body.home{
                 }
             }
         }
-    }
+    }*/
 }
 
 
@@ -968,8 +981,8 @@ body.home{
   
   @media (min-width: 1380px){
     .ric-map img{
-      width: 1000px;
-      max-width: 1000px;
+      width: 930px;
+      max-width: 930px;
     }
   }
 

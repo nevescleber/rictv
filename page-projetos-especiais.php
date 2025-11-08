@@ -3,25 +3,17 @@
 <?php get_header(); ?>
 
     <div class="banners">
-        <div class="swiper main-slider">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <?php if (has_post_thumbnail()) : ?>
-                        <?php the_post_thumbnail('full', array('alt' => get_the_title())); ?>
-                    <?php else : ?>
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/img/bg-projetos-especiais.jpg" alt="RIC TV">
-                    <?php endif; ?>
-                    <div class="slide-content">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-12">
-                                    <h1 class="text-big">Projetos</h1>
-                                    <!--<p>
-                                        Aqui você encontra nossa seleção de Projetos Especiais vigentes em todos os nossos canais.
-                                        Busque e <br> confira nossas linhas mais segmentadas para mídia e perfomance crossmedia.
-                                    </p>-->
-                                </div>
-                            </div>
+        <div class="banner-content">
+            <?php if (has_post_thumbnail()) : ?>
+                <?php the_post_thumbnail('full', array('alt' => get_the_title())); ?>
+            <?php else : ?>
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/bg-projetos-especiais.jpg" alt="RIC TV">
+            <?php endif; ?>
+            <div class="banner-overlay">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <h1 class="text-big">Projetos</h1>
                         </div>
                     </div>
                 </div>

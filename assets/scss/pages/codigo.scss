@@ -8,7 +8,7 @@
         .banner-content {
             position: relative;
             width: 100%;
-            height: auto;
+            height: clamp(260px, 50vw, 400px);
          
             img {
                 width: 100%;
@@ -24,13 +24,14 @@
                 height: 100%;
                 display: flex;
                 align-items: center;
+                justify-content: center;
                 text-align: center;
                 color: $white;
                 z-index: 2;
-  
+                padding: 0 1.5rem;
+
                 @media #{$mq-lg-max} {
-                  height: auto;
-                  padding-top: 3rem;
+                  padding: 2rem 1.5rem;
                 }
   
                 .text-bigger{
@@ -41,7 +42,37 @@
     }
 
     .proposito{
-        // Placeholder para futuros estilos
+        background: linear-gradient(90deg, #1E71B8 0%, #2C9942 100%);
+        padding: 3rem 0;
+        position: relative;
+        margin-top: -.75rem;
+
+        .proposito-overlay{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        .content{
+            h2{
+                color: $white;
+                @extend .text-big;
+            }
+
+            p{
+                color: $white;
+                @extend .text-medium;
+            }
+        }
     }
 
     .proposito-content{
@@ -369,14 +400,19 @@
     .visao{
         padding: 3rem 0;
 
-        h2{
-            color: $blue-light;
+        .content{
+            h2{
+                color: $blue-light;
+                @extend .text-big;
+            }
+    
+            p{
+                color: $gray-dark;
+                @extend .text-medium;
+            }
         }
 
-        p{
-            color: $gray-dark;
-        }
-
+       
         img{
             width: 100%;
             max-width: 100%;
@@ -890,19 +926,107 @@
                             height: 40px;
                             font-size: 1rem;
                         }
-                        
-                        .slide-text {
-                        }
                     }
                 }
             }
         }
     }
 
+    .video{
+        position: relative;
+        height: 500px;
+        overflow: hidden;
+        
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            
+            video {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+        
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .video-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+            padding: 2rem;
+            
+            @media #{$mq-md-max} {
+                flex-direction: column;
+                gap: 2rem;
+                text-align: center;
+            }
+        }
+        
+        .video-text-left {
+            flex: 1;
+            
+            h2 {
+                color: $white !important;
+                margin: 0;
+                line-height: 1.3;
+                
+                @media #{$mq-md-max} {
+                    br {
+                        display: none;
+                    }
+                }
+            }
+        }
+        
+        .video-text-right {
+            flex: 1;
+            
+            p {
+                color: $white !important;
+                margin: 0;
+                text-align: left;
+                line-height: 1.6;
+                
+                strong {
+                    font-weight: bold;
+                }
+                
+                @media #{$mq-md-max} {
+                    text-align: center;
+                }
+            }
+        }
+        
+        @media #{$mq-md-max} {
+            height: 600px;
+        }
+        
+        @media #{$mq-sm-max} {
+            height: 450px;
+        }
+    }
+
     .lideranca{
         padding: 5rem 0;
 
-        .text-medium-big{
+        .text-big{
             color: $blue-light;
         }
 

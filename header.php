@@ -3,7 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ric TV</title>
+    <title><?php
+    if (is_front_page() || is_home()) {
+        $page_title = 'Conheça e Anuncie no Grupo RIC | Mídias Kits, Projetos e mais';
+    } else {
+        $document_title = wp_get_document_title();
+        $site_name = get_bloginfo('name');
+
+        if ($site_name !== '') {
+            $document_title = preg_replace(
+                '/\s*[-|–—]\s*' . preg_quote($site_name, '/') . '$/u',
+                '',
+                $document_title
+            );
+        }
+
+        $page_title = trim($document_title);
+
+        if ($page_title === '') {
+            $page_title = get_bloginfo('name');
+        }
+    }
+
+    echo esc_html($page_title . ' - GRUPO RIC');
+    ?></title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Swiper CSS -->
@@ -16,6 +39,10 @@
     <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/css/framework.min.css">
     <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/css/main.css">
 
+    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo get_template_directory_uri(); ?>/assets/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo get_template_directory_uri(); ?>/assets/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo get_template_directory_uri(); ?>/assets/img/favicon-16x16.png">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     
     <!-- GSAP CDN -->
@@ -23,7 +50,21 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 
+    <?php
+    $opcoes_pixels = get_field('opcoes_pixels', 'option');
+    if (!empty($opcoes_pixels)) {
+        echo $opcoes_pixels;
+    }
+    ?>
+
     <?php wp_head(); ?>
+
+    <?php
+    $opcoes_pixels_body = get_field('opcoes_pixels_body', 'option');
+    if (!empty($opcoes_pixels_body)) {
+        echo $opcoes_pixels_body;
+    }
+    ?>
 
     <style>
         html{

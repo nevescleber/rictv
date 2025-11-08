@@ -1,10 +1,27 @@
 <?php get_header(); ?>
 
     <div class="banners">
-        <div class="swiper main-slider">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <img src="<?php the_post_thumbnail_url('full'); ?>" alt="<?php the_title(); ?>">
+        <div class="banner-content">
+            <?php
+            $imagem_grande = get_field('imagem_grande');
+
+            if (!empty($imagem_grande)) :
+            ?>
+                <img src="<?php echo esc_url($imagem_grande); ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
+            <?php
+            elseif (has_post_thumbnail()) :
+                the_post_thumbnail('full', array('alt' => get_the_title()));
+            else :
+            ?>
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/banner-equipe.png" alt="RIC TV">
+            <?php endif; ?>
+            <div class="banner-overlay">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <!--<h1 class="text-bigger"><?php the_title(); ?></h1>-->
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -80,7 +97,19 @@
                     </div>
                 </div>
                 <div class="contato-action">
-                    <a href="#" class="btn-preencher text-big">Preencher Formulário</a>
+                    <?php 
+                    // Buscar PDF do ACF Options
+                    $pdf_url = get_field('arquivo_pagina_interna_cases', 'option');
+                    if ($pdf_url) : 
+                    ?>
+                        <button type="button" onclick="event.preventDefault(); openPopupMidiaKit('<?php echo esc_url($pdf_url); ?>'); return false;" class="btn-preencher text-big">
+                            Preencher Formulário
+                        </button>
+                    <?php else : ?>
+                        <button class="btn-preencher text-big" disabled style="opacity: 0.5; cursor: not-allowed;">
+                            Estamos atualizando
+                        </button>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -154,5 +183,8 @@
     </section>
 
     <div class="divisor"></div>
+
+<!-- Incluir popup do Mídia Kit -->
+<?php include get_template_directory() . '/components/popup.php'; ?>
 
 <?php get_footer(); ?>

@@ -43,47 +43,45 @@ Template Name: Equipe Comercial
     <section class="equipe-comercial-diretoria">
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
-
-                    <div class="equipe-comercial-diretoria-card">
-                        <div class="card-image-container">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/imagem_01.png" alt="Leonardo Petrelli Neto">
-                            <div class="card-overlay">
-                                <h2 class="text-medium-big text-white">
-                                    Leonardo <br />Petrelli Neto
-                                </h2>
-                            </div>
-                            <div class="card-badge">
-                                <p class="text-small">Presidente</p>
+                <?php if (have_rows('diretoria_pessoas')): ?>
+                    <?php while (have_rows('diretoria_pessoas')): the_row(); ?>
+                        <?php 
+                        $imagem = get_sub_field('diretoria_imagem');
+                        $nome = get_sub_field('diretoria_nome');
+                        $funcao = get_sub_field('diretoria_funcao');
+                        $descricao = get_sub_field('diretoria_descricao');
+                        
+                        // Se não tiver imagem, usa a imagem padrão
+                        $imagem_url = $imagem ? esc_url($imagem) : get_template_directory_uri() . '/assets/img/sem-foto.png';
+                        ?>
+                        <div class="col-md-6">
+                            <div class="equipe-comercial-diretoria-card">
+                                <div class="card-image-container">
+                                    <img src="<?php echo $imagem_url; ?>" alt="<?php echo esc_attr($nome); ?>">
+                                    <div class="card-overlay">
+                                        <?php if ($nome): ?>
+                                            <h2 class="text-medium-big text-white">
+                                                <?php echo str_replace(' ', '<br>', $nome); ?>
+                                            </h2>
+                                        <?php endif; ?>
+                                    </div>
+                                    <?php if ($funcao): ?>
+                                        <div class="card-badge">
+                                            <p class="text-small"><?php echo $funcao; ?></p>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                                <?php if ($descricao): ?>
+                                    <div class="card-content">
+                                        <p class="text-medium">
+                                            <?php echo $descricao; ?>
+                                        </p>
+                                    </div>
+                                <?php endif; ?>
                             </div>
                         </div>
-                        <div class="card-content">
-                            <p class="text-medium">
-                                Fundou em 2000 a Dtcom, empresa paranaense que é pioneira no Brasil na utilização interligada dos recursos de TV (teleaulas) e da Internet (LMS) para promover a educação à distância e o desenvolvimento humano e profissional no ambiente corporativo, privado e público em todo o território nacional.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="equipe-comercial-diretoria-card">
-                        <div class="card-image-container">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/imagem_02.png" alt="Leonardo Petrelli Neto">
-                            <div class="card-overlay">
-                                <h2 class="text-medium-big text-white">
-                                    Marcelo <br />Requena
-                                </h2>
-                            </div>
-                            <div class="card-badge">
-                                <p class="text-small">Diretor Corp. de Mercado e Soluções Integradas</p>
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <p class="text-medium">
-                                Com mais de 20 anos de experiência em cargos executivos, tive a oportunidade de construir uma carreira sólida no setor de mídia, sempre com um olhar estratégico para o futuro da comunicação. Atualmente, como Diretor de Mercado no Grupo RIC, sou especialista em negociação B2B, vendas e estratégias comerciais de alto impacto.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                    <?php endwhile; ?>
+                <?php endif; ?>
             </div>
         </div>
     </section>
@@ -99,156 +97,90 @@ Template Name: Equipe Comercial
             </div>
 
             <div class="row">
-                <div class="col-md-3">
-                    <div class="equipe-comercial-nacional-card">
-                        <button class="card-btn-more">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                        <div class="card-image-wrapper">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/imagem-diretoria-01.png" alt="José Paulo Travagin">
-                        </div>
-                        <div class="card-info">
-                            <div class="card-tag">Diretoria Nacional</div>
-                            <h3 class="card-name">José Paulo Travagin</h3>
-                            <p class="card-position">Diretor Exec. Mercado Nacional</p>
-                        </div>
-                        <div class="card-contact-info">
-                            <div class="contact-item">
-                                <i class="fas fa-phone"></i>
-                                <span>41 99685-0225</span>
+                <?php if (have_rows('nacional_pessoas')): ?>
+                    <?php while (have_rows('nacional_pessoas')): the_row(); ?>
+                        <?php 
+                        $imagem = get_sub_field('nacional_imagem');
+                        $localidade = get_sub_field('nacional_localidade');
+                        $nome = get_sub_field('nacional_nome');
+                        $funcao = get_sub_field('nacional_funcao');
+                        $telefone = get_sub_field('nacional_telefone');
+                        $email = get_sub_field('nacional_email');
+                        
+                        // Se não tiver imagem, usa a imagem padrão
+                        $imagem_url = $imagem ? esc_url($imagem) : get_template_directory_uri() . '/assets/img/sem-foto.png';
+                        
+                        // Verifica se tem telefone ou email para mostrar o botão
+                        $has_contact = ($telefone || $email);
+                        ?>
+                        <div class="col-md-3">
+                            <div class="equipe-comercial-nacional-card">
+                                <?php if ($has_contact): ?>
+                                    <button class="card-btn-more">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                <?php endif; ?>
+                                <div class="card-image-wrapper">
+                                    <img src="<?php echo $imagem_url; ?>" alt="<?php echo esc_attr($nome); ?>">
+                                </div>
+                                <div class="card-info">
+                                    <?php if ($localidade): ?>
+                                        <div class="card-tag"><?php echo esc_html($localidade); ?></div>
+                                    <?php endif; ?>
+                                    <?php if ($nome): ?>
+                                        <h3 class="card-name"><?php echo esc_html($nome); ?></h3>
+                                    <?php endif; ?>
+                                    <?php if ($funcao): ?>
+                                        <p class="card-position"><?php echo esc_html($funcao); ?></p>
+                                    <?php endif; ?>
+                                </div>
+                                <?php if ($has_contact): ?>
+                                    <div class="card-contact-info">
+                                        <?php if ($telefone): ?>
+                                            <div class="contact-item">
+                                                <i class="fas fa-phone"></i>
+                                                <span><?php echo esc_html($telefone); ?></span>
+                                            </div>
+                                        <?php endif; ?>
+                                        <?php if ($email): ?>
+                                            <div class="contact-item">
+                                                <i class="fas fa-envelope"></i>
+                                                <span><?php echo esc_html($email); ?></span>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endif; ?>
                             </div>
-                            <div class="contact-item">
-                                <i class="fas fa-envelope"></i>
-                                <span>jose.travagin@gruporic.com.br</span>
-                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="equipe-comercial-nacional-card">
-                        <button class="card-btn-more">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                        <div class="card-image-wrapper">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/imagem-diretoria-01.png" alt="Maria Silva">
-                        </div>
-                        <div class="card-info">
-                            <div class="card-tag">Diretoria Nacional</div>
-                            <h3 class="card-name">Maria Silva</h3>
-                            <p class="card-position">Diretora de Vendas</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="equipe-comercial-nacional-card">
-                        <button class="card-btn-more">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                        <div class="card-image-wrapper">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/imagem-diretoria-01.png" alt="João Santos">
-                        </div>
-                        <div class="card-info">
-                            <div class="card-tag">Diretoria Nacional</div>
-                            <h3 class="card-name">João Santos</h3>
-                            <p class="card-position">Diretor de Marketing</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="equipe-comercial-nacional-card">
-                        <button class="card-btn-more">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                        <div class="card-image-wrapper">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/imagem-diretoria-01.png" alt="Ana Costa">
-                        </div>
-                        <div class="card-info">
-                            <div class="card-tag">Diretoria Nacional</div>
-                            <h3 class="card-name">Ana Costa</h3>
-                            <p class="card-position">Diretora Comercial</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="equipe-comercial-nacional-card">
-                        <button class="card-btn-more">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                        <div class="card-image-wrapper">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/imagem-diretoria-01.png" alt="Carlos Oliveira">
-                        </div>
-                        <div class="card-info">
-                            <div class="card-tag">Diretoria Nacional</div>
-                            <h3 class="card-name">Carlos Oliveira</h3>
-                            <p class="card-position">Diretor de Operações</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="equipe-comercial-nacional-card">
-                        <button class="card-btn-more">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                        <div class="card-image-wrapper">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/imagem-diretoria-01.png" alt="Fernanda Lima">
-                        </div>
-                        <div class="card-info">
-                            <div class="card-tag">Diretoria Nacional</div>
-                            <h3 class="card-name">Fernanda Lima</h3>
-                            <p class="card-position">Diretora de Estratégia</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="equipe-comercial-nacional-card">
-                        <button class="card-btn-more">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                        <div class="card-image-wrapper">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/imagem-diretoria-01.png" alt="Roberto Mendes">
-                        </div>
-                        <div class="card-info">
-                            <div class="card-tag">Diretoria Nacional</div>
-                            <h3 class="card-name">Roberto Mendes</h3>
-                            <p class="card-position">Diretor de Desenvolvimento</p>
-                        </div>
-                    </div>
-                </div>
+                    <?php endwhile; ?>
+                <?php endif; ?>
             </div>
         </div>
     </section>
 
-    <section class="equipe-comercial-acionistas">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <h2 class="text-big">
-                        Conselho de Acionistas
-                    </h2>
-                </div>
-                <div class="col-md-6">
-                    <p class="text-medium">
-                        John Doe
-                    </p>
-                </div>
-                <div class="col-md-6">
-                    <p class="text-medium">
-                        John Doe
-                    </p>
-                </div>
-                <div class="col-md-6">
-                    <p class="text-medium">
-                        John Doe
-                    </p>
-                </div>
-                <div class="col-md-6">
-                    <p class="text-medium">
-                        John Doe
-                    </p>
+    <?php if (have_rows('acionistas_pessoas')): ?>
+        <section class="equipe-comercial-acionistas">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="text-big">
+                            Conselho de Acionistas
+                        </h2>
+                    </div>
+                    <?php while (have_rows('acionistas_pessoas')): the_row(); ?>
+                        <?php $acionista_nome = get_sub_field('acionistas_nome'); ?>
+                        <?php if ($acionista_nome): ?>
+                            <div class="col-md-6">
+                                <p class="text-medium">
+                                    <?php echo esc_html($acionista_nome); ?>
+                                </p>
+                            </div>
+                        <?php endif; ?>
+                    <?php endwhile; ?>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    <?php endif; ?>
 
 
     <?php get_template_part('components/anuncie-grupo-ric'); ?>

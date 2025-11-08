@@ -26,16 +26,12 @@
             <div class="swiper main-slider">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                        <img src="assets/img/bg-blog.jpg" alt="RIC TV">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/img/bg-blog.jpg" alt="RIC TV">
                         <div class="slide-content">
                             <div class="container">
                                 <div class="row">
                                     <div class="col-12">
-                                        <h1>Ric Talks</h1>
-                                        <p>
-                                            O RIC Talks é o nosso palco de notícias, tendências, análises e estudos 
-                                            <br> sobre os novos hábitos do consumidor e da mídia. Aproveite.
-                                        </p>
+                                        <h1 class="text-big">Ric Talks</h1>
                                     </div>
                                 </div>
                             </div>
